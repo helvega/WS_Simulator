@@ -1,0 +1,69 @@
+package simulator.model;
+
+import simulator.misc.Vector2D;
+
+public class Sheep extends Animal {
+	//It is a class representing a sheep. It is an herbivorous animal with genetic code "Sheep". 
+	//It is an animal that does not hunt other animals, only eats what the region it is in provides, 
+	//and can mate with other animals with the same genetic code.
+	
+	private Animal dangerSource; // another animal that is considered a danger at a given moment
+	private SelectionStrategy dangerStrategy; // another animal that is considered a danger at a given moment
+	
+	public Sheep(SelectionStrategy mateStrategy, SelectionStrategy dangerStrategy,  Vector2D pos) {
+		super("sheep", Diet.HERBIVORE, 40.0, 35.0, mateStrategy, pos);
+		this.dangerStrategy = dangerStrategy;
+		dangerSource = null;
+	}
+	
+	protected Sheep(Sheep p1, Animal p2) {
+		super(p1, p2);
+		this.dangerStrategy = p1.dangerStrategy;
+		dangerSource = null;
+	}
+
+	public void update() {
+		if(state != State.DEAD && state != null) {
+			if(state = State.DANGER)
+				dangerSource = regionMngr.getAnimalsInRange(dangerStrategy);
+			else if(state = State.MATE)
+				mateTarjet = regionMngr.getAnimalsInRange(mateStrategy);
+			
+			
+		}
+	}
+	
+	@Override
+	protected void setNormalStateAction() {
+		dangerSource = null;
+		mateTarjet = null;
+		// TODO...
+
+	}
+
+	@Override
+	protected void setMateStateAction() {
+		dangerSource = null;
+		// TODO...
+	}
+
+	@Override
+	protected void setHungerStateAction() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void setDangerStateAction() {
+		mateTarjet = null;
+		// TODO...
+
+	}
+
+	@Override
+	protected void setDeadStateAction() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

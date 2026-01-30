@@ -76,14 +76,16 @@ public abstract class Animal {
 		if(this.pos == null)
 			this.pos = Vector2D.getRandomVector(-1,1).scale(60.0*(Utils.RAND.nextGaussian()+1));
 		else {
-			//TODO... I don't know how to use the code provided to adjust the position. It has to be used in 2D Vector class, in regionManager class, here??
+			//TODO... I don't know how to use the code provided to adjust the position. It has to be used in 2D Vector class, 
+			//in regionManager class, here??
 		}
-		this.dest = Vector2D.getRandomVector(-1,1).scale(60.0*(Utils.RAND.nextGaussian()+1)); // next position where the animal moves. I just used the position way of random
+		this.dest = Vector2D.getRandomVector(-1,1).scale(60.0*(Utils.RAND.nextGaussian()+1)); // next position where the animal moves. 
+		//I just used the position way of random
 	}
 	
 	Animal deliverBaby() { //The simulator will invoke this method so that animals are born. Returns the attribute baby;
 		Animal baby = this.baby;
-		baby = null;
+		this.baby = null;
 		return baby;
 	}
 	
