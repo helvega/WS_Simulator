@@ -24,9 +24,9 @@ public class Sheep extends Animal {
 
 	public void update() {
 		if(state != State.DEAD && state != null) {
-			if(state = State.DANGER)
+			if(state == State.DANGER)
 				dangerSource = regionMngr.getAnimalsInRange(dangerStrategy);
-			else if(state = State.MATE)
+			else if(state == State.MATE)
 				mateTarjet = regionMngr.getAnimalsInRange(mateStrategy);
 			
 			
