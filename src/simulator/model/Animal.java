@@ -55,11 +55,15 @@ public abstract class Animal implements Entity, AnimalInfo {
 		this.state = State.NORMAL;
 		this.energy = INIT_ENERGY;
 		this.desire = 0.0;
-		this.dest = this.mateTarjet = this.baby = this.regionMngr = null;
+		this.dest = null;
+		this.mateTarjet = this.baby = null;
+		this.regionMngr = null;
 	}//for creating initial objects (God (us) created them)
 	
 	protected Animal(Animal p1, Animal p2) {
-		this.dest = this.mateTarjet = this.baby = this.regionMngr = null;
+		this.dest = null;
+		this.mateTarjet = this.baby = null;
+		this.regionMngr = null;
 		this.state = State.NORMAL;
 		this.desire = 0.0;	
 		this.geneticCode = p1.geneticCode;

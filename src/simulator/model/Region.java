@@ -9,21 +9,19 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo { //imp
 	protected List<Animal> animal;
 	
 	public Region() {
-		animal = new ArrayList<Animal>(1);
+		animal = new ArrayList<Animal>();
 	}
 	
 	final void addAnimal(Animal a) {
-		
+		animal.add(a);
 	}
 	
 	final void removeAnimal(Animal a) {
-		
+		//TODO
 	}
 	
 	final List<Animal> getAnimals(){
-		//TODO
-		return null;
-		
+		return animal;
 	}
 	
 	public JSONObject asJSON() {
