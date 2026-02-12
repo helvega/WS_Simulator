@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import simulator.misc.Utils;
 import simulator.misc.Vector2D;
 
-public abstract class Animal {
+public abstract class Animal implements Entity, AnimalInfo {
 	
 	//Constants for Animals
 	final static double INIT_ENERGY = 100.0;

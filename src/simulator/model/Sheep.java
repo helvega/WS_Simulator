@@ -66,4 +66,68 @@ public class Sheep extends Animal {
 
 	}
 
+	@Override
+	public void update(double dt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector2D getPosition() {
+		
+		return pos;
+	}
+
+	@Override
+	public String getGeneticCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Diet getDiet() {
+		return diet;
+	}
+
+	@Override
+	public double getSpeed() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getSightRange() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getEnergy() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getAge() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Vector2D getDestination() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isPregnant() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
