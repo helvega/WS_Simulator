@@ -124,6 +124,7 @@ public class Main {
 	}
 
 	private static void initFactories() {
+		// TODO ...
 	}
 
 	private static JSONObject loadJSONFile(InputStream in) {
@@ -133,6 +134,7 @@ public class Main {
 
 	private static void startBatchMode() throws Exception {
 		InputStream is = new FileInputStream(new File(inFile));
+		// TODO ...
 	}
 
 	private static void startGUIMode() throws Exception {

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import simulator.factories.Factory;
+
 public class Simulator implements JSONable{
 	private Factory<Animal> animalsFactory;
 	private Factory<Region> regionsFactory;
@@ -71,6 +73,7 @@ public class Simulator implements JSONable{
 	
 	public JSONObject asJSON() {
 		//TODO...
+		return null;
 	}
 	
 }

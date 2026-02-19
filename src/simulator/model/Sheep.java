@@ -24,12 +24,12 @@ public class Sheep extends Animal {
 
 	public void update() {
 		if(state != State.DEAD && state != null) {
-			if(state == State.DANGER)
-				dangerSource = regionMngr.getAnimalsInRange(dangerStrategy);
-			else if(state == State.MATE)
-				mateTarjet = regionMngr.getAnimalsInRange(mateStrategy);
-			
-			
+			if(state == State.DANGER) {}
+				//one must ask the region manager for the list of carnivorous animals in the visual field, 
+				//using the getAnimalsInRange method, and then choose one using the corresponding selection strategy
+			else if(state == State.MATE) {}
+				//one must ask the region manager for the list of carnivorous animals in the visual field, 
+				//using the getAnimalsInRange method, and then choose one using the corresponding selection strategy
 		}
 	}
 	
