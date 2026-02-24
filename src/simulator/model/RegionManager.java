@@ -89,7 +89,8 @@ public class RegionManager implements AnimalMapView{
 		for(int i = minR; i <= maxR; i++) { //for possible regions
 			for(int j = minC; j <= maxC; j++) {
 				for(Animal a: region[i][j].getAnimals()) //get animals of that region
-					animals.add(a);
+					if(!a.getPosition().equals(e.getPosition())) //it's not the animal itself
+						animals.add(a);
 			}
 		}
 		

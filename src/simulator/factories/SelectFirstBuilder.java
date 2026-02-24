@@ -22,4 +22,10 @@ public class SelectFirstBuilder extends Builder<Animal> {
 		return null;
 	}
 
+	@Override
+	void fillInData(JSONObject o) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

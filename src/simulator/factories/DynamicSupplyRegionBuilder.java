@@ -15,14 +15,19 @@ public class DynamicSupplyRegionBuilder extends Builder<DynamicSupplyRegion>{
 //	}
 
 
-public DynamicSupplyRegionBuilder(String typeTag, String desc) throws IllegalArgumentException {
-	super(typeTag, desc);
-	// TODO Auto-generated constructor stub
-}
-
-@Override
-protected DynamicSupplyRegion createInstance(JSONObject data) {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public DynamicSupplyRegionBuilder(String typeTag, String desc) throws IllegalArgumentException {
+		super(typeTag, desc);
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected DynamicSupplyRegion createInstance(JSONObject data) {
+		return new DynamicSupplyRegion(data.getDouble("food"), data.getDouble("factor"));
+	}
+	
+	@Override
+	void fillInData(JSONObject o) {
+		// TODO Auto-generated method stub
+		
+	}
 }

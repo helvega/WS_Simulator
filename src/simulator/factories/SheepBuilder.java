@@ -29,4 +29,10 @@ protected Sheep createInstance(JSONObject data) {
 	// TODO Auto-generated method stub
 	return null;
 }
+
+@Override
+void fillInData(JSONObject o) {
+	// TODO Auto-generated method stub
+	
+}
 }

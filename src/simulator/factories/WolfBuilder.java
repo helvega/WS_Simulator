@@ -29,4 +29,10 @@ public class WolfBuilder extends Builder<Wolf>{
 		
 		return null;
 	}
+
+	@Override
+	void fillInData(JSONObject o) {
+		// TODO Auto-generated method stub
+		
+	}
 }

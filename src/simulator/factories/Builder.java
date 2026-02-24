@@ -29,9 +29,7 @@ public abstract class Builder<T> {
 		return info;  
 	}
 
-	protected void fillInData(JSONObject o) {  
-		// subclasses will override this method 
-	}
+	abstract void fillInData(JSONObject o); // subclasses will override this method 
 
 	@Override  
 	public String toString() {  
