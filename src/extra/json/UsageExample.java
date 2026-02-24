@@ -31,7 +31,7 @@ public class UsageExample {
 		// You can ask if it has a key
 		//
 		System.out.println();
-		System.out.println("** Check is a key is defined");
+		System.out.println("** Check if a key is defined");
 		System.out.println();
 
 		if (jo.has("a"))
