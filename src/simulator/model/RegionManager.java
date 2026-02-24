@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.stream.IntStream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import simulator.misc.Vector2D;
 
 public class RegionManager implements AnimalMapView{
 	
@@ -26,6 +29,8 @@ public class RegionManager implements AnimalMapView{
 		this.rows = rows;
 		this.mapWidth = width;
 		this.mapHeight = height;
+		this.cellWidth = mapWidth / rows;
+		this.cellHeight = mapHeight / cols;
 		region = new Region[cols][rows];
 		IntStream.range(0, rows).forEach(i -> Arrays.setAll(region[i], j -> new DefaultRegion())); //fill the matrix with DefaultRegions
 		animalRegion = new HashMap<>(); //initialize map object	
@@ -63,8 +68,32 @@ public class RegionManager implements AnimalMapView{
 	}
 
 	public List<Animal> getAnimalsInRange(Animal e, Predicate<Animal> filter) {
-		e.getSightRange();
-		return null;
+		List<Animal> animals = new ArrayList();
+		
+		double sr = (int) e.getSightRange(); // sight range
+		
+		int minR = (int) (e.getPosition().getX() - sr) / cellWidth; //minimun and maximun region rows
+		int maxR = (int) (e.getPosition().getX() + sr) / cellWidth;
+		if(maxR > region.length - 1) //correct any wrong value
+			maxR = region.length - 1;
+		if(minR < 1)
+			minR = 1;
+		
+		int minC = (int) (e.getPosition().getY() - sr) / cellHeight; //minimun and maximun region cols
+		int maxC = (int) (e.getPosition().getY() + sr) / cellHeight;
+		if(minC > region.length - 1) //correct any wrong value
+			minC = region.length - 1;
+		if(maxC < 1)
+			maxC = 1;
+		
+		for(int i = minR; i <= maxR; i++) { //for possible regions
+			for(int j = minC; j <= maxC; j++) {
+				for(Animal a: region[i][j].getAnimals()) //get animals of that region
+					animals.add(a);
+			}
+		}
+		
+		return animals;
 	}
 	
 	public void setRegion(int row, int col, Region r) {
