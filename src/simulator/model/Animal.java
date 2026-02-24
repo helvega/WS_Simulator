@@ -127,17 +127,75 @@ public abstract class Animal implements Entity, AnimalInfo {
 	abstract protected void setDangerStateAction();
 	abstract protected void setDeadStateAction();
 	
+	@Override
+	public State getState() {
+		
+		return state;
+	}
+
+	@Override
+	public Vector2D getPosition() {
+		
+		return pos;
+	}
+
+	@Override
+	public String getGeneticCode() {
+		
+		return geneticCode;
+	}
+
+	public Diet getDiet() {
+		return diet;
+	}
+
+	@Override
+	public double getSpeed() {
+		
+		return speed;
+	}
+
+	@Override
+	public double getSightRange() {
+		
+		return sightRange;
+	}
+
+	@Override
+	public double getEnergy() {
+		
+		return energy;
+	}
+
+	@Override
+	public double getAge() {
+		
+		return age;
+	}
+
+	@Override
+	public Vector2D getDestination() {
+		
+		return dest;
+	}
+
+	@Override
+	public boolean isPregnant() {
+		
+		return baby != null;
+	}
+	
 	public JSONObject asJSON() {
 		JSONObject obj = new JSONObject();
 	    
 	    JSONArray pos = new JSONArray();
-	    pos.put(28.90696391797469);
-	    pos.put(22.009772194487613);
+	    pos.put(this.pos.getX());
+	    pos.put(this.pos.getY());
 	    
 	    obj.put("pos", pos);
-	    obj.put("gcode", "Sheep");
-	    obj.put("diet", "HERBIVORE");
-	    obj.put("state", "NORMAL");
+	    obj.put("gcode", geneticCode);
+	    obj.put("diet", diet);
+	    obj.put("state", state);
 	    
 	    return obj;
 	}

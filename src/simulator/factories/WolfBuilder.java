@@ -19,14 +19,14 @@ public class WolfBuilder extends Builder<Wolf>{
 //	}
 
 
-public WolfBuilder(String typeTag, String desc) throws IllegalArgumentException {
-	super(typeTag, desc);
-	// TODO Auto-generated constructor stub
-}
-
-@Override
-protected Wolf createInstance(JSONObject data) {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public WolfBuilder(String typeTag, String desc) throws IllegalArgumentException {
+		super(typeTag, desc);
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected Wolf createInstance(JSONObject data) {
+		
+		return null;
+	}
 }

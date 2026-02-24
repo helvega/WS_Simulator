@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RegionManager implements AnimalMapView{
@@ -62,7 +63,7 @@ public class RegionManager implements AnimalMapView{
 	}
 
 	public List<Animal> getAnimalsInRange(Animal e, Predicate<Animal> filter) {
-		//TODO...
+		e.getSightRange();
 		return null;
 	}
 	
@@ -118,8 +119,23 @@ public class RegionManager implements AnimalMapView{
 	}
 	
 	public JSONObject asJSON() {
-		//TODO...
-		return null;
+		JSONObject obj = new JSONObject();
+	    
+		JSONArray ja = new JSONArray(); //JSON Array for regions
+		
+	    for(int ri = 0; ri < region.length; ri++) {
+	    	for(int rj = 0; rj < region.length; rj++) { //for every region in the matrix
+	    		JSONObject rng = new JSONObject(); //a region is an object to add to the array
+	    		rng.put("row", ri); //put row
+	    		rng.put("col", rj); //put col
+	    		rng.put("data", region[ri][rj].asJSON()); //put region object
+	    		ja.put(rng); //put total region info in the array
+	    	}
+	    }
+	    
+	    obj.put("regions", ja); //put the array in the object
+	    
+		return obj;
 	}
 
 }
