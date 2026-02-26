@@ -1,6 +1,8 @@
 package simulator.model;
 
+import simulator.misc.Utils;
 import simulator.misc.Vector2D;
+import java.util.List;
 
 public class Sheep extends Animal {
 	//It is a class representing a sheep. It is an herbivorous animal with genetic code "Sheep". 
@@ -21,22 +23,11 @@ public class Sheep extends Animal {
 		this.dangerStrategy = p1.dangerStrategy;
 		dangerSource = null;
 	}
-
-	public void update(double dt) {
-		if(state != State.DEAD && state != null) {
-			if(state == State.DANGER) {}
-				//one must ask the region manager for the list of carnivorous animals in the visual field, 
-				//using the getAnimalsInRange method, and then choose one using the corresponding selection strategy
-			else if(state == State.MATE) {}
-				//one must ask the region manager for the list of carnivorous animals in the visual field, 
-				//using the getAnimalsInRange method, and then choose one using the corresponding selection strategy
-		}
-	}
 	
 	@Override
 	protected void setNormalStateAction() {
 		dangerSource = null;
-		mateTarjet = null;
+		mateTarget = null;
 		// TODO...
 
 	}
@@ -55,7 +46,7 @@ public class Sheep extends Animal {
 
 	@Override
 	protected void setDangerStateAction() {
-		mateTarjet = null;
+		mateTarget = null;
 		// TODO...
 
 	}
@@ -63,7 +54,172 @@ public class Sheep extends Animal {
 	@Override
 	protected void setDeadStateAction() {
 		dangerSource = null;
-		mateTarjet = null;
+		mateTarget = null;
+	}
+	
+	protected void doNormalAction(double dt) {
+		if (pos.distanceTo(dest) > 8) {
+			pos = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
+		}
+		move(speed*dt*Math.exp((energy-100.0)*0.007));
+		age += dt;
+		energy -= 20*dt;
+		if (energy < 0) energy = 0;
+		else if (energy > 100) energy = 100;
+		desire -= 20*dt;
+		if (desire < 0) desire = 0;
+		else if (desire > 100) desire = 100;
+		if (dangerSource == null) {
+			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
+			if (!dangerous_animals.isEmpty()) {
+				dangerSource = dangerStrategy.select(this, dangerous_animals);
+				setState(State.DANGER);
+			}
+		}
+		if (dangerSource == null) {
+			if (desire > 65) {
+				setState(State.MATE);
+			}
+		}
+	}
+	
+	protected void doDangerAction(double dt) {
+		if (dangerSource != null && dangerSource.getState() == State.DEAD) {
+			dangerSource = null;
+		}
+		if (dangerSource == null) {
+			if (pos.distanceTo(dest) > 8) {
+				pos = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
+			}
+			move(speed*dt*Math.exp((energy-100.0)*0.007));
+			age += dt;
+			energy -= 20*dt;
+			if (energy < 0) energy = 0;
+			else if (energy > 100) energy = 100;
+			desire += 20*dt;
+			if (desire < 0) desire = 0;
+			else if (desire > 100) desire = 100;
+		}
+		else {
+			dest = pos.plus(pos.minus(dangerSource.getPosition()).direction());
+			move(2.0*speed*dt*Math.exp((energy-100.0)*0.007));
+			age += dt;
+			energy -= 20.0*1.2*dt;
+			if (energy < 0) energy = 0;
+			else if (energy > 100) energy = 100;
+			desire += 40*dt;
+			if (desire < 0) desire = 0;
+			else if (desire > 100) desire = 100;
+		}
+		
+		if (dangerSource == null || !regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE).contains(dangerSource)) {
+			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
+			if (!dangerous_animals.isEmpty()) {
+				dangerSource = dangerStrategy.select(this, dangerous_animals);
+				setState(State.DANGER);
+			}
+			if (dangerSource == null) {
+				if (desire > 65) setState(State.MATE);
+				else setState(State.NORMAL);
+			}
+		}
+	}
+	
+	protected void doMateAction(double dt) {
+		if (mateTarget != null && mateTarget.getState() == State.DEAD) {
+			mateTarget = null;
+		}
+		
+		if (mateTarget == null) {
+			List<Animal> mate_partners = regionMngr.getAnimalsInRange(this, p -> p.getGeneticCode() == this.geneticCode);
+			if (!mate_partners.isEmpty()) mateTarget = mateStrategy.select(this, mate_partners);
+		}
+		if (mateTarget == null) {
+				if (pos.distanceTo(dest) > 8) {
+					pos = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
+				}
+				move(speed*dt*Math.exp((energy-100.0)*0.007));
+				age += dt;
+				energy -= 20*dt;
+				if (energy < 0) energy = 0;
+				else if (energy > 100) energy = 100;
+				desire -= 20*dt;
+				if (desire < 0) desire = 0;
+				else if (desire > 100) desire = 100;
+			}
+		
+		if (mateTarget != null) {
+			dest = mateTarget.getPosition();
+			move(2.0*speed*dt*Math.exp((energy-100.0)*0.007));
+			age += dt;
+			energy -= 20.0*1.2*dt;
+			if (energy < 0) energy = 0;
+			else if (energy > 100) energy = 100;
+			desire += 40*dt;
+			if (desire < 0) desire = 0;
+			else if (desire > 100) desire = 100;
+			
+			if (pos.distanceTo(dest) < 8) {
+				desire = mateTarget.desire = 0;
+				if (Utils.RAND.nextInt(10) != 9 && baby == null) {
+					baby = new Sheep(this, mateTarget);
+				}
+				mateTarget = null;
+			}
+		}
+		
+		if (dangerSource == null) {
+			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
+			if (!dangerous_animals.isEmpty()) {
+				dangerSource = dangerStrategy.select(this, dangerous_animals);
+				setState(State.DANGER);
+			}
+			if (dangerSource == null) {
+				if(desire < 65) setState(State.NORMAL);
+			}
+		}
+	}
+
+	@Override
+	public void update(double dt) {
+		// TODO Auto-generated method stub
+		
+		if (state != State.DEAD) {
+			switch(state) {
+			case NORMAL:
+				doNormalAction(dt);
+				break;
+				
+			case DANGER:
+				doDangerAction(dt);
+				break;
+				
+			case MATE:
+				doMateAction(dt);
+				break;
+				
+			case HUNGER:
+				break;
+				
+			case DEAD:
+				break;
+			}
+			
+			if (0 > pos.getX() || pos.getX() > regionMngr.getWidth() || 0 > pos.getY() || pos.getY() > regionMngr.getHeight()) {
+				while (pos.getX() >= regionMngr.getWidth()) pos = pos.plus(new Vector2D(pos.getX() - regionMngr.getWidth(), 0));  
+				while (pos.getX() < 0) pos = pos.plus(new Vector2D(pos.getX() + regionMngr.getWidth(), 0));  
+				while (pos.getY() >= regionMngr.getHeight()) pos = pos.plus(new Vector2D(pos.getY() - regionMngr.getHeight(), 0));  
+				while (pos.getY() < 0) pos = pos.plus(new Vector2D(pos.getY() + regionMngr.getHeight(), 0));
+				setState(State.NORMAL);
+			}
+			if(energy < 0.0 || age > 8.0) {
+				setState(State.DEAD);
+			}
+			if (state != State.DEAD) {
+				energy += regionMngr.getFood(this, dt);
+			}
+			
+		}
 	}
 
 }

@@ -34,7 +34,7 @@ public abstract class Animal implements Entity, AnimalInfo {
 	protected double desire; //the desire of the animal, which changes during the simulation. We will use it to 
 	//decide if an animal enters (or exits) a mating state
 	protected double sightRange; //the radius of the animal's visual field (to decide which animals it can see)
-	protected Animal mateTarjet; //a reference to an animal with which it wants to mate
+	protected Animal mateTarget; //a reference to an animal with which it wants to mate
 	protected Animal baby; //a reference indicating if the animal is carrying a baby that hasn't been born yet
 	protected AnimalMapView regionMngr; //is the region manager to be able to query information or perform 
 	//corresponding operations (see the section The Region Manager). When we create the object, we initialize them 
@@ -56,13 +56,13 @@ public abstract class Animal implements Entity, AnimalInfo {
 		this.energy = INIT_ENERGY;
 		this.desire = 0.0;
 		this.dest = null;
-		this.mateTarjet = this.baby = null;
+		this.mateTarget = this.baby = null;
 		this.regionMngr = null;
 	}//for creating initial objects (God (us) created them)
 	
 	protected Animal(Animal p1, Animal p2) {
 		this.dest = null;
-		this.mateTarjet = this.baby = null;
+		this.mateTarget = this.baby = null;
 		this.regionMngr = null;
 		this.state = State.NORMAL;
 		this.desire = 0.0;	
