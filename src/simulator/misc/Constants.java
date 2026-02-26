@@ -49,5 +49,17 @@ public class Constants {
 	// desc for builders
 	public final static String DESC_SELECT_FIRST = "build a Select Firs class";
 	public final static String TYPE_SELECT_FIRST = "first";
+	public final static String DESC_SELECT_CLOSEST = "build a Select Closest class";
+	public final static String TYPE_SELECT_CLOSEST = "closest";
+	public final static String DESC_SELECT_YOUNGEST = "build a Select Youngest class";
+	public final static String TYPE_SELECT_YOUNGEST = "youngest";
+	public final static String DESC_SHEEP_BUILDER = "build a Sheep class";
+	public final static String TYPE_SHEEP_BUILDER = "sheep";
+	public final static String DESC_WOLF_BUILDER = "build a Wolf class";
+	public final static String TYPE_WOLF_BUILDER = "wolf";
+	public final static String DESC_DEFAULT_REGION_BUILDER= "build a Default Region class";
+	public final static String TYPE_DEFAULT_REGION_BUILDER = "default";
+	public final static String DESC_DYNAMIC_REGION_BUILDER= "build a Dynamic Supply Regiion class";
+	public final static String TYPE_DYNAMIC_REGION_BUILDER = "dynamic";
 
 }

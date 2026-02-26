@@ -20,6 +20,7 @@ import org.json.JSONTokener;
 import simulator.factories.*;
 import simulator.misc.Utils;
 import simulator.model.Animal;
+import simulator.model.Region;
 import simulator.model.SelectionStrategy;
 import simulator.view.SimpleObjectViewer;
 
@@ -57,6 +58,7 @@ public class Main {
 	
 	private static Factory <SelectionStrategy> SsFactory;
 	private static Factory <Animal> AnFactory;
+	private static Factory <Region> RnFactory;
 
 	private static void parseArgs(String[] args) {
 
@@ -103,8 +105,7 @@ public class Main {
 		// steps
 		cmdLineOptions.addOption(Option.builder("t").longOpt("time").hasArg()
 				.desc("A real number representing the total simulation time in seconds. Default value: "
-						+ DEFAULT_TIME + ".")
-				.build());
+						+ DEFAULT_TIME + ".").build());
 
 		return cmdLineOptions;
 	}
@@ -137,6 +138,17 @@ public class Main {
 	private static void initFactories() {
 		List <Builder<SelectionStrategy>> bss = new ArrayList<>();
 		bss.add(new SelectFirstBuilder(Constants.TYPE_SELECT_FIRST, Constants.DESC_SELECT_FIRST));
+		bss.add(new SelectClosestBuilder(Constants.TYPE_SELECT_CLOSEST, Constants.DESC_SELECT_CLOSEST));
+		bss.add(new SelectYoungestBuilder(Constants.TYPE_SELECT_YOUNGEST, Constants.DESC_SELECT_YOUNGEST));
+		SsFactory = new BuilderBasedFactory<SelectionStrategy>(bss);
+		List <Builder<Animal>> ba = new ArrayList<>();
+		ba.add(new SheepBuilder(Constants.TYPE_SHEEP_BUILDER, Constants.DESC_SHEEP_BUILDER));
+		ba.add(new WolfBuilder(Constants.TYPE_WOLF_BUILDER, Constants.DESC_WOLF_BUILDER));
+		AnFactory = new BuilderBasedFactory<Animal>(ba);
+		List <Builder<Region>> br = new ArrayList<>();
+		br.add(new DefaultRegionBuilder(Constants.TYPE_DEFAULT_REGION_BUILDER, Constants.DESC_DEFAULT_REGION_BUILDER));
+		br.add(new DynamicSupplyRegionBuilder(Constants.TYPE_DYNAMIC_REGION_BUILDER, Constants.DESC_DYNAMIC_REGION_BUILDER));
+		RnFactory = new BuilderBasedFactory<Region>(br);
 	}
 
 	private static JSONObject loadJSONFile(InputStream in) {
