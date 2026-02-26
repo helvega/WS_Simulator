@@ -2,9 +2,10 @@ package simulator.factories;
 
 import org.json.JSONObject;
 
+import simulator.model.Animal;
 import simulator.model.Sheep;
 
-public class SheepBuilder extends Builder<Sheep>{
+public class SheepBuilder extends Builder<Animal>{
 	
 //	{
 //	  "type": "sheep",
@@ -25,9 +26,9 @@ public class SheepBuilder extends Builder<Sheep>{
 	}
 
 	@Override
-	protected Sheep createInstance(JSONObject data) {
-		// TODO Auto-generated method stub
-		return null;
+	protected Animal createInstance(JSONObject data) {
+		Sheep e = null;
+		return e;
 	}
 
 	@Override

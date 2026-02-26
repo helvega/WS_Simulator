@@ -4,8 +4,9 @@ import org.json.JSONObject;
 
 import simulator.model.Animal;
 import simulator.model.SelectClosest;
+import simulator.model.SelectionStrategy;
 
-public class SelectClosestBuilder extends Builder<SelectClosest>{ 
+public class SelectClosestBuilder extends Builder<SelectionStrategy>{ 
 	
 //	{  
 //	  "type": "closest",
@@ -17,12 +18,10 @@ public class SelectClosestBuilder extends Builder<SelectClosest>{
 		super(typeTag, desc);
 	}
 	
-	@Override
-	protected SelectClosest createInstance(JSONObject data) {
+	protected SelectionStrategy createInstance(JSONObject data) {
 		return new SelectClosest();
 	}
 
-	@Override
 	void fillInData(JSONObject o) {
 		
 	}

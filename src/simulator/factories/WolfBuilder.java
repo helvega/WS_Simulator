@@ -2,9 +2,10 @@ package simulator.factories;
 
 import org.json.JSONObject;
 
+import simulator.model.Animal;
 import simulator.model.Wolf;
 
-public class WolfBuilder extends Builder<Wolf>{
+public class WolfBuilder extends Builder<Animal>{
 	
 //	{
 //	  "type": "wolf",
@@ -25,9 +26,9 @@ public class WolfBuilder extends Builder<Wolf>{
 	}
 	
 	@Override
-	protected Wolf createInstance(JSONObject data) {
-		
-		return null;
+	protected Animal createInstance(JSONObject data) {
+		Wolf w = null;
+		return w;
 	}
 
 	@Override
