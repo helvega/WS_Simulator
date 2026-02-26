@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import simulator.model.Animal;
 import simulator.model.SelectYoungest;
 
-public class SelectYoungestBuilder extends Builder<Animal>{ 
+public class SelectYoungestBuilder extends Builder<SelectYoungest>{ 
 	
 //	{  
 //	  "type": "youngest",
@@ -19,7 +19,7 @@ public SelectYoungestBuilder(String typeTag, String desc) throws IllegalArgument
 }
 
 @Override
-protected Animal createInstance(JSONObject data) {
+protected SelectYoungest createInstance(JSONObject data) {
 	// TODO Auto-generated method stub
 	return new SelectYoungest();
 }

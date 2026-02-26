@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import simulator.model.Animal;
 import simulator.model.SelectFirst;
 
-public class SelectFirstBuilder extends Builder<Animal> {
+public class SelectFirstBuilder extends Builder<SelectFirst> {
 	
 //	{  
 //	  "type": "first", 
@@ -18,7 +18,7 @@ public class SelectFirstBuilder extends Builder<Animal> {
 	}
 
 	@Override
-	protected Animal createInstance(JSONObject data) {
+	protected SelectFirst createInstance(JSONObject data) {
 		// TODO Auto-generated method stub
 		return new SelectFirst();
 	}

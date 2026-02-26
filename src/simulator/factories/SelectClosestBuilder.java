@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import simulator.model.Animal;
 import simulator.model.SelectClosest;
 
-public class SelectClosestBuilder extends Builder<Animal>{ 
+public class SelectClosestBuilder extends Builder<SelectClosest>{ 
 	
 //	{  
 //	  "type": "closest",
@@ -18,7 +18,7 @@ public class SelectClosestBuilder extends Builder<Animal>{
 	}
 	
 	@Override
-	protected Animal createInstance(JSONObject data) {
+	protected SelectClosest createInstance(JSONObject data) {
 		return new SelectClosest();
 	}
 
