@@ -3,6 +3,7 @@ package simulator.factories;
 import org.json.JSONObject;
 
 import simulator.model.Animal;
+import simulator.model.SelectYoungest;
 
 public class SelectYoungestBuilder extends Builder<Animal>{ 
 	
@@ -20,7 +21,7 @@ public SelectYoungestBuilder(String typeTag, String desc) throws IllegalArgument
 @Override
 protected Animal createInstance(JSONObject data) {
 	// TODO Auto-generated method stub
-	return null;
+	return new SelectYoungest();
 }
 
 @Override

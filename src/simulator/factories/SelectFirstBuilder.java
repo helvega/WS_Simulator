@@ -3,6 +3,7 @@ package simulator.factories;
 import org.json.JSONObject;
 
 import simulator.model.Animal;
+import simulator.model.SelectFirst;
 
 public class SelectFirstBuilder extends Builder<Animal> {
 	
@@ -19,7 +20,7 @@ public class SelectFirstBuilder extends Builder<Animal> {
 	@Override
 	protected Animal createInstance(JSONObject data) {
 		// TODO Auto-generated method stub
-		return null;
+		return new SelectFirst();
 	}
 
 	@Override

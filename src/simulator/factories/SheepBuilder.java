@@ -19,20 +19,20 @@ public class SheepBuilder extends Builder<Sheep>{
 //	}
 
 
-public SheepBuilder(String typeTag, String desc) throws IllegalArgumentException {
-	super(typeTag, desc);
-	// TODO Auto-generated constructor stub
-}
+	public SheepBuilder(String typeTag, String desc) throws IllegalArgumentException {
+		super(typeTag, desc);
+		// TODO Auto-generated constructor stub
+	}
 
-@Override
-protected Sheep createInstance(JSONObject data) {
-	// TODO Auto-generated method stub
-	return null;
-}
+	@Override
+	protected Sheep createInstance(JSONObject data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-@Override
-void fillInData(JSONObject o) {
-	// TODO Auto-generated method stub
-	
-}
+	@Override
+	void fillInData(JSONObject o) {
+		// TODO Auto-generated method stub
+		
+	}
 }
