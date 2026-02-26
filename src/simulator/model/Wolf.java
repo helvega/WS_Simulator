@@ -14,56 +14,6 @@ public class Wolf extends Animal {
 
 	}
 
-
-	public State getState() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Vector2D getPosition() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getGeneticCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Diet getDiet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public double getSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public double getSightRange() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public double getEnergy() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public double getAge() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public Vector2D getDestination() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean isPregnant() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	protected void setNormalStateAction() {
 		// TODO Auto-generated method stub
 
