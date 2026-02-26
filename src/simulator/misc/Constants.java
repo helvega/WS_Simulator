@@ -45,5 +45,9 @@ public class Constants {
 	// used in DynamicSupplyRegion
 	final static double INIT_FOOD = 100.0;
 	final static double FACTOR = 2.0;
+	
+	// desc for builders
+	public final static String DESC_SELECT_FIRST = "build a Select Firs class";
+	public final static String TYPE_SELECT_FIRST = "first";
 
 }

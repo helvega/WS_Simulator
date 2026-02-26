@@ -1,8 +1,12 @@
 package simulator.launcher;
 
+import simulator.misc.Constants;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -13,7 +17,11 @@ import org.apache.commons.cli.ParseException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import simulator.factories.*;
 import simulator.misc.Utils;
+import simulator.model.Animal;
+import simulator.model.SelectionStrategy;
+import simulator.view.SimpleObjectViewer;
 
 public class Main {
 
@@ -46,6 +54,9 @@ public class Main {
 	private static Double time = null;
 	private static String inFile = null;
 	private static ExecMode mode = ExecMode.BATCH;
+	
+	private static Factory <SelectionStrategy> SsFactory;
+	private static Factory <Animal> AnFactory;
 
 	private static void parseArgs(String[] args) {
 
@@ -124,7 +135,8 @@ public class Main {
 	}
 
 	private static void initFactories() {
-		// TODO ...
+		List <Builder<SelectionStrategy>> bss = new ArrayList<>();
+		bss.add(new SelectFirstBuilder(Constants.TYPE_SELECT_FIRST, Constants.DESC_SELECT_FIRST));
 	}
 
 	private static JSONObject loadJSONFile(InputStream in) {
@@ -138,7 +150,7 @@ public class Main {
 	}
 
 	private static void startGUIMode() throws Exception {
-		//TO DO...
+		// TODO ...
 		throw new UnsupportedOperationException("GUI mode is not ready yet ...");
 	}
 
