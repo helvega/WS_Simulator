@@ -4,8 +4,9 @@ import org.json.JSONObject;
 
 import simulator.model.Animal;
 import simulator.model.SelectYoungest;
+import simulator.model.SelectionStrategy;
 
-public class SelectYoungestBuilder extends Builder<Animal>{ 
+public class SelectYoungestBuilder extends Builder<SelectionStrategy>{ 
 	
 //	{  
 //	  "type": "youngest",
@@ -13,20 +14,16 @@ public class SelectYoungestBuilder extends Builder<Animal>{
 //	}
 
 
-public SelectYoungestBuilder(String typeTag, String desc) throws IllegalArgumentException {
-	super(typeTag, desc);
-	// TODO Auto-generated constructor stub
-}
+	public SelectYoungestBuilder(String typeTag, String desc) throws IllegalArgumentException {
+		super(typeTag, desc);
+	}
 
-@Override
-protected Animal createInstance(JSONObject data) {
-	// TODO Auto-generated method stub
-	return new SelectYoungest();
-}
+	@Override
+	protected SelectYoungest createInstance(JSONObject data) {
+		return new SelectYoungest();
+	}
 
-@Override
-void fillInData(JSONObject o) {
-	// TODO Auto-generated method stub
-	
-}
+	@Override
+	void fillInData(JSONObject o) {
+	}
 }

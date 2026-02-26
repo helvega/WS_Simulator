@@ -22,7 +22,7 @@ public class Sheep extends Animal {
 		dangerSource = null;
 	}
 
-	public void update() {
+	public void update(double dt) {
 		if(state != State.DEAD && state != null) {
 			if(state == State.DANGER) {}
 				//one must ask the region manager for the list of carnivorous animals in the visual field, 
@@ -62,14 +62,8 @@ public class Sheep extends Animal {
 
 	@Override
 	protected void setDeadStateAction() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update(double dt) {
-		// TODO Auto-generated method stub
-		
+		dangerSource = null;
+		mateTarjet = null;
 	}
 
 }
