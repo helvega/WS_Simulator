@@ -28,7 +28,7 @@ public class Sheep extends Animal {
 	protected void setNormalStateAction() {
 		dangerSource = null;
 		mateTarget = null;
-		state = State.NORMAL;
+		setState(State.NORMAL);
 		// TODO...
 
 	}
@@ -36,20 +36,20 @@ public class Sheep extends Animal {
 	@Override
 	protected void setMateStateAction() {
 		dangerSource = null;
-		state = State.MATE;
+		setState(State.MATE);
 		// TODO...
 	}
 
 	@Override
 	protected void setHungerStateAction() {
-		state = State.HUNGER;
+		setState(State.HUNGER);
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	protected void setDangerStateAction() {
-		state = State.DANGER;
+		setState(State.DANGER);
 		mateTarget = null;
 		// TODO...
 
@@ -59,7 +59,7 @@ public class Sheep extends Animal {
 	protected void setDeadStateAction() {
 		dangerSource = null;
 		mateTarget = null;
-		state = State.DEAD;
+		setState(State.DEAD);
 	}
 	
 	protected void doNormalAction(double dt) {
@@ -78,12 +78,12 @@ public class Sheep extends Animal {
 			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
 			if (!dangerous_animals.isEmpty()) {
 				dangerSource = dangerStrategy.select(this, dangerous_animals);
-				setDangerStateAction();
+				setState(State.DANGER);
 			}
 		}
 		if (dangerSource == null) {
 			if (desire > 65) {
-				setMateStateAction();
+				setState(State.MATE);
 			}
 		}
 	}
@@ -101,7 +101,7 @@ public class Sheep extends Animal {
 			energy -= 20*dt;
 			if (energy < 0) energy = 0;
 			else if (energy > 100) energy = 100;
-			desire -= 20*dt;
+			desire += 20*dt;
 			if (desire < 0) desire = 0;
 			else if (desire > 100) desire = 100;
 		}
@@ -123,8 +123,8 @@ public class Sheep extends Animal {
 				dangerSource = dangerStrategy.select(this, dangerous_animals);
 			}
 			if (dangerSource == null) {
-				if (desire > 65) setMateStateAction();
-				else setNormalStateAction();
+				if (desire > 65) setState(State.MATE);
+				else setState(State.NORMAL);
 			}
 		}
 	}
@@ -178,7 +178,7 @@ public class Sheep extends Animal {
 				dangerSource = dangerStrategy.select(this, dangerous_animals);
 			}
 			if (dangerSource == null) {
-				if(desire < 65) setNormalStateAction();
+				if(desire < 65) setState(State.NORMAL);
 			}
 		}
 	}
@@ -188,6 +188,26 @@ public class Sheep extends Animal {
 		// TODO Auto-generated method stub
 		
 		if (state != State.DEAD) {
+			switch(state) {
+			case NORMAL:
+				doNormalAction(dt);
+				break;
+				
+			case DANGER:
+				doDangerAction(dt);
+				break;
+				
+			case MATE:
+				doMateAction(dt);
+				break;
+				
+			case HUNGER:
+				break;
+				
+			case DEAD:
+				break;
+			}
+			
 			if (0 > pos.getX() || pos.getX() > regionMngr.getWidth() || 0 > pos.getY() || pos.getY() > regionMngr.getHeight()) {
 				while (pos.getX() >= regionMngr.getWidth()) pos = pos.plus(new Vector2D(pos.getX() - regionMngr.getWidth(), 0));  
 				while (pos.getX() < 0) pos = pos.plus(new Vector2D(pos.getX() + regionMngr.getWidth(), 0));  
