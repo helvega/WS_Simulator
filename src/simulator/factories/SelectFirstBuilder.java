@@ -4,8 +4,9 @@ import org.json.JSONObject;
 
 import simulator.model.Animal;
 import simulator.model.SelectFirst;
+import simulator.model.SelectionStrategy;
 
-public class SelectFirstBuilder extends Builder<SelectFirst> {
+public class SelectFirstBuilder extends Builder<SelectionStrategy> {
 	
 //	{  
 //	  "type": "first", 
