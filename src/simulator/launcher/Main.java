@@ -20,14 +20,13 @@ import org.apache.commons.cli.ParseException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import simulator.control.Controler;
+import simulator.control.Controller;
 import simulator.factories.*;
 import simulator.misc.Utils;
 import simulator.model.Animal;
 import simulator.model.Region;
 import simulator.model.SelectionStrategy;
 import simulator.model.Simulator;
-import simulator.view.SimpleObjectViewer;
 
 public class Main {
 
@@ -215,7 +214,7 @@ public class Main {
 		int height = jo.getInt("height");
 		
 		Simulator sim = new Simulator(cols, rows, width, height, AnFactory, RnFactory);
-		Controler controler = new Controler(sim);
+		Controller controler = new Controller(sim);
 		JSONObject data = jo.has("data") ? jo.getJSONObject("data") : new JSONObject();
 		controler.loadData(data);
 		OutputStream out = new FileOutputStream(outFile);
@@ -225,7 +224,7 @@ public class Main {
 	}
 
 	private static void startGUIMode() throws Exception {
-		// TODO ...
+		// implementation for the next assignment
 		throw new UnsupportedOperationException("GUI mode is not ready yet ...");
 	}
 
