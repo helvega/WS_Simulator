@@ -25,7 +25,6 @@ public class Wolf extends Animal {
 	protected void setNormalStateAction() {
 		huntTarget = null;
 		mateTarget = null;
-		setState(State.NORMAL);
 		// TODO...
 
 	}
@@ -33,20 +32,17 @@ public class Wolf extends Animal {
 	@Override
 	protected void setMateStateAction() {
 		huntTarget = null;
-		setState(State.MATE);
 		// TODO...
 	}
 
 	@Override
 	protected void setHungerStateAction() {
-		setState(State.HUNGER);
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	protected void setDangerStateAction() {
-		setState(State.DANGER);
 		mateTarget = null;
 		// TODO...
 
@@ -56,7 +52,6 @@ public class Wolf extends Animal {
 	protected void setDeadStateAction() {
 		huntTarget = null;
 		mateTarget = null;
-		setState(State.DEAD);
 	}
 	
 	protected void doNormalAction(double dt) {

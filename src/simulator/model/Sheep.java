@@ -28,7 +28,6 @@ public class Sheep extends Animal {
 	protected void setNormalStateAction() {
 		dangerSource = null;
 		mateTarget = null;
-		setState(State.NORMAL);
 		// TODO...
 
 	}
@@ -36,20 +35,17 @@ public class Sheep extends Animal {
 	@Override
 	protected void setMateStateAction() {
 		dangerSource = null;
-		setState(State.MATE);
 		// TODO...
 	}
 
 	@Override
 	protected void setHungerStateAction() {
-		setState(State.HUNGER);
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	protected void setDangerStateAction() {
-		setState(State.DANGER);
 		mateTarget = null;
 		// TODO...
 
@@ -59,7 +55,6 @@ public class Sheep extends Animal {
 	protected void setDeadStateAction() {
 		dangerSource = null;
 		mateTarget = null;
-		setState(State.DEAD);
 	}
 	
 	protected void doNormalAction(double dt) {
@@ -121,6 +116,7 @@ public class Sheep extends Animal {
 			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
 			if (!dangerous_animals.isEmpty()) {
 				dangerSource = dangerStrategy.select(this, dangerous_animals);
+				setState(State.DANGER);
 			}
 			if (dangerSource == null) {
 				if (desire > 65) setState(State.MATE);
@@ -176,6 +172,7 @@ public class Sheep extends Animal {
 			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
 			if (!dangerous_animals.isEmpty()) {
 				dangerSource = dangerStrategy.select(this, dangerous_animals);
+				setState(State.DANGER);
 			}
 			if (dangerSource == null) {
 				if(desire < 65) setState(State.NORMAL);
@@ -213,10 +210,10 @@ public class Sheep extends Animal {
 				while (pos.getX() < 0) pos = pos.plus(new Vector2D(pos.getX() + regionMngr.getWidth(), 0));  
 				while (pos.getY() >= regionMngr.getHeight()) pos = pos.plus(new Vector2D(pos.getY() - regionMngr.getHeight(), 0));  
 				while (pos.getY() < 0) pos = pos.plus(new Vector2D(pos.getY() + regionMngr.getHeight(), 0));
-				setNormalStateAction();
+				setState(State.NORMAL);
 			}
 			if(energy < 0.0 || age > 8.0) {
-				setDeadStateAction();
+				setState(State.DEAD);
 			}
 			if (state != State.DEAD) {
 				energy += regionMngr.getFood(this, dt);
