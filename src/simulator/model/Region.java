@@ -45,7 +45,7 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo { //imp
 	    	animals.put(a.asJSON());
 	    }
 	    
-	    obj.put("animala", animals); // puts in the JSON object, the key and the array
+	    obj.put("animals", animals); // puts in the JSON object, the key and the array
 	    
 		return obj;
 	}

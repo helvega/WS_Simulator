@@ -6,6 +6,8 @@ import java.util.List;
 import org.json.JSONObject;
 
 import simulator.factories.Factory;
+import simulator.misc.Utils;
+import simulator.misc.Vector2D;
 
 public class Simulator implements JSONable{
 	private Factory<Animal> animalsFactory;
@@ -40,7 +42,7 @@ public class Simulator implements JSONable{
 	}
 	
 	private void setRegion(int row, int col, JSONObject rJson) {
-		//TODO...
+		setRegion(row, col, regionsFactory.createInstance(rJson));
 	}
 	
 	private void addAnimal(Animal a) {
@@ -49,7 +51,8 @@ public class Simulator implements JSONable{
 	}
 	
 	public void addAnimal(JSONObject aJson) {
-		//TODO...
+		JSONObject info = aJson.has("data") ? aJson.getJSONObject("data") : new JSONObject();
+		addAnimal(animalsFactory.createInstance(info));
 	}
 	
 	public void advance(double dt) {
@@ -72,8 +75,10 @@ public class Simulator implements JSONable{
 	}
 	
 	public JSONObject asJSON() {
-		//TODO...
-		return null;
+		JSONObject jo = new JSONObject();
+		jo.put("time", time);
+		jo.put("state", rgMngr.asJSON());
+		return jo;
 	}
 	
 }

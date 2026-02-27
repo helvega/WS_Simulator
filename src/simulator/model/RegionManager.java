@@ -152,10 +152,12 @@ public class RegionManager implements AnimalMapView{
 		JSONObject obj = new JSONObject();
 	    
 		JSONArray ja = new JSONArray(); //JSON Array for regions
+		JSONArray an = new JSONArray(); //JSON Array for animals
 		
 	    for(int ri = 0; ri < region.length; ri++) {
 	    	for(int rj = 0; rj < region.length; rj++) { //for every region in the matrix
 	    		JSONObject rng = new JSONObject(); //a region is an object to add to the array
+	    		JSONObject anm = new JSONObject();
 	    		rng.put("row", ri); //put row
 	    		rng.put("col", rj); //put col
 	    		rng.put("data", region[ri][rj].asJSON()); //put region object
