@@ -215,8 +215,8 @@ public class Main {
 		
 		Simulator sim = new Simulator(cols, rows, width, height, AnFactory, RnFactory);
 		Controller controler = new Controller(sim);
-		JSONObject data = jo.has("data") ? jo.getJSONObject("data") : new JSONObject();
-		controler.loadData(data);
+		//JSONObject data = jo.has("data") ? jo.getJSONObject("data") : new JSONObject();
+		controler.loadData(jo);
 		OutputStream out = new FileOutputStream(outFile);
 		PrintStream p = new PrintStream(out);
 		controler.run(time, dt, sv, p);

@@ -41,7 +41,7 @@ public class Simulator implements JSONable{
 		rgMngr.setRegion(row, col, r);
 	}
 	
-	private void setRegion(int row, int col, JSONObject rJson) {
+	public void setRegion(int row, int col, JSONObject rJson) {
 		setRegion(row, col, regionsFactory.createInstance(rJson));
 	}
 	
@@ -51,8 +51,7 @@ public class Simulator implements JSONable{
 	}
 	
 	public void addAnimal(JSONObject aJson) {
-		JSONObject info = aJson.has("data") ? aJson.getJSONObject("data") : new JSONObject();
-		addAnimal(animalsFactory.createInstance(info));
+		addAnimal(animalsFactory.createInstance(aJson));
 	}
 	
 	public void advance(double dt) {

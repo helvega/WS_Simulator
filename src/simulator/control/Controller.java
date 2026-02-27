@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.view.SimpleObjectViewer;
 import simulator.view.SimpleObjectViewer.ObjInfo;
@@ -20,7 +21,22 @@ public class Controller {
 	}
 	
 	public void loadData(JSONObject data) {
-		//TODO...
+		JSONArray animals = data.getJSONArray("animals");
+		for(int z = 0; z < animals.length(); z++) {
+			JSONObject aux = animals.getJSONObject(z);
+			for (int i = 0; i < aux.getInt("amount"); i++) {
+				sim.addAnimal(aux.getJSONObject("spec"));
+			}
+		}
+		
+		if (data.has("region")) {
+			JSONObject region = data.getJSONObject("region");
+			JSONArray range_r = region.getJSONArray("row");
+			JSONArray range_c = region.getJSONArray("col");
+			for (int i = range_r.getInt(0); i < range_r.getInt(1); i++)
+				for (int j = range_c.getInt(0); j < range_c.getInt(1); j++)
+					sim.setRegion(i, j, region.getJSONObject("spec"));
+		}
 	}
 	
 	public void run(double t, double dt, boolean sv, OutputStream out) { //it must write to out a JSON structure of the following form:

@@ -31,8 +31,11 @@ public class RegionManager implements AnimalMapView{
 		this.mapHeight = height;
 		this.cellWidth = mapWidth / rows;
 		this.cellHeight = mapHeight / cols;
-		region = new Region[cols][rows];
-		IntStream.range(0, rows).forEach(i -> Arrays.setAll(region[i], j -> new DefaultRegion())); //fill the matrix with DefaultRegions
+		region = new Region[rows][cols];
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++)
+				region[i][j] = new DefaultRegion();
+		}
 		animalRegion = new HashMap<>(); //initialize map object	
 	}
 
@@ -142,9 +145,9 @@ public class RegionManager implements AnimalMapView{
 	}
 	
 	public void updateAllRegions(double dt) { // for all rows of the matrix, for all columns of the rows, update()
-		for(Region[] row: region){
-			for(Region col : row)
-				col.update(dt);
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++)
+				region[i][j].update(dt);
 		}
 	}
 	
