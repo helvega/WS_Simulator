@@ -9,7 +9,8 @@ import simulator.misc.Constants;
 import simulator.misc.Utils;
 import simulator.misc.Vector2D;
 import simulator.model.Animal;
-import simulator.model.SelectYoungest;
+import simulator.model.SelectClosest;
+import simulator.model.SelectFirst;
 import simulator.model.SelectionStrategy;
 import simulator.model.Sheep;
 
@@ -42,7 +43,7 @@ public class SheepBuilder extends Builder<Animal>{
 	protected Animal createInstance(JSONObject data) {
 		Sheep e = null;		
 		Vector2D p = null;
-		SelectionStrategy sel_mate = new SelectYoungest(), sel_danger = new SelectYoungest();
+		SelectionStrategy sel_mate = new SelectFirst(), sel_danger = new SelectClosest();
 		if(data.has("pos")) {
 			JSONObject pos = data.getJSONObject("pos");
 			int max_x = pos.getJSONArray("x_range").getInt(1);
@@ -71,7 +72,5 @@ public class SheepBuilder extends Builder<Animal>{
 
 	@Override
 	void fillInData(JSONObject o) {
-		// TODO Auto-generated method stub
-		
 	}
 }

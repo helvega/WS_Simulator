@@ -80,8 +80,7 @@ public abstract class Animal implements Entity, AnimalInfo {
 		if(this.pos == null)
 			this.pos = Vector2D.getRandomVector(-1,1).scale(60.0*(Utils.RAND.nextGaussian()+1));
 		else {
-			//TODO... I don't know how to use the code provided to adjust the position. It has to be used in 2D Vector class, 
-			//in regionManager class, here??
+			fixPosition();
 		}
 		this.dest = Vector2D.getRandomVector(-1,1).scale(60.0*(Utils.RAND.nextGaussian()+1)); // next position where the animal moves. 
 		//I just used the position way of random

@@ -9,6 +9,7 @@ import simulator.misc.Constants;
 import simulator.misc.Utils;
 import simulator.misc.Vector2D;
 import simulator.model.Animal;
+import simulator.model.SelectClosest;
 import simulator.model.SelectYoungest;
 import simulator.model.SelectionStrategy;
 import simulator.model.Wolf;
@@ -43,7 +44,7 @@ public class WolfBuilder extends Builder<Animal>{
 		Wolf w = null;	
 		Vector2D p = null;
 		
-		SelectionStrategy sel_mate = new SelectYoungest(), sel_hunt = new SelectYoungest();
+		SelectionStrategy sel_mate = new SelectClosest(), sel_hunt = new SelectYoungest();
 		if(data.has("pos")) {
 			JSONObject pos = data.getJSONObject("pos");
 			int max_x = pos.getJSONArray("x_range").getInt(1);
@@ -70,9 +71,7 @@ public class WolfBuilder extends Builder<Animal>{
 		return w;
 	}
 
-	@Override
 	void fillInData(JSONObject o) {
-		// TODO Auto-generated method stub
 		
 	}
 }

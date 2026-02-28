@@ -32,20 +32,15 @@ public class Wolf extends Animal {
 	@Override
 	protected void setMateStateAction() {
 		huntTarget = null;
-		// TODO...
 	}
 
 	@Override
 	protected void setHungerStateAction() {
-		// TODO Auto-generated method stub
-
+		mateTarget = null;
 	}
 
 	@Override
 	protected void setDangerStateAction() {
-		mateTarget = null;
-		// TODO...
-
 	}
 
 	@Override
@@ -58,19 +53,18 @@ public class Wolf extends Animal {
 		if (pos.distanceTo(dest) < 8) {
 			dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 		}
-		move(speed*dt*Math.exp((energy-100.0)*0.007));
+		move(speed * dt * Math.exp((energy - 100.0) * 0.007));
 		age += dt;
 		energy -= 18*dt;
 		if (energy < 0) energy = 0;
-		else if (energy > 100) energy = 100;
-		desire += 30*dt;
+		if (energy > 100) energy = 100;
+		desire += 40 * dt;
 		if (desire < 0) desire = 0;
-		else if (desire > 100) desire = 100;
+		if (desire > 100) desire = 100;
 		
 		if (energy < 50) {
 			setState(State.HUNGER);
 		}
-		
 		else if (desire > 65) {
 			setState(State.MATE);
 		}
@@ -78,8 +72,7 @@ public class Wolf extends Animal {
 	
 	protected void doHungerAction(double dt) {
 		List<Animal> preys = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.HERBIVORE);
-		if (huntTarget == null || huntTarget.getState() == State.DEAD || preys.contains(huntTarget)) {
-			huntTarget = null;
+		if (huntTarget == null || (huntTarget != null && huntTarget.getState() == State.DEAD) || preys.contains(huntTarget)) {
 			if (!preys.isEmpty()) {
 				huntTarget = huntingStrategy.select(this, preys);
 			}
@@ -88,29 +81,31 @@ public class Wolf extends Animal {
 			if (pos.distanceTo(dest) < 8) {
 				dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 			}
-			move(speed*dt*Math.exp((energy-100.0)*0.007));
+			move(speed * dt * Math.exp((energy - 100.0) * 0.007));
 			age += dt;
-			energy -= 18*dt;
+			energy -= 18 * dt;
 			if (energy < 0) energy = 0;
-			desire += 30*dt;
+			if (energy > 100) energy = 100;
+			desire += 40 * dt;
+			if (desire < 0) desire = 0;
 			if (desire > 100) desire = 100;
 		}
 		else {
 			dest = huntTarget.getPosition();
 			move(3.0 * speed * dt * Math.exp((energy - 100.0) * 0.007));
 			age += dt;
-			energy -= 18.0*1.2*dt;
+			energy -= 18.0 * 1.2 * dt;
 			if (energy < 0) energy = 0;
-			else if (energy > 100) energy = 100;
-			desire += 30*dt;
+			if (energy > 100) energy = 100;
+			desire += 20 * dt;
 			if (desire < 0) desire = 0;
-			else if (desire > 100) desire = 100;
+			if (desire > 100) desire = 100;
 			if (pos.distanceTo(huntTarget.getPosition()) < 8) {
 				huntTarget.setState(State.DEAD);
 				huntTarget = null;
 				energy += 50;
 				if (energy < 0) energy = 0;
-				else if (energy > 100) energy = 100;
+				if (energy > 100) energy = 100;
 			}
 		}
 		
@@ -121,33 +116,36 @@ public class Wolf extends Animal {
 	}
 	
 	protected void doMateAction(double dt) {
-		if (mateTarget != null && mateTarget.getState() == State.DEAD) {
+		List<Animal> mate_partners = regionMngr.getAnimalsInRange(this, p -> p.getGeneticCode() == this.geneticCode);
+		if ((mateTarget != null && mateTarget.getState() == State.DEAD) || !mate_partners.contains(mateTarget)) {
 			mateTarget = null;
 		}
 		
-		if (mateTarget == null) {
-			List<Animal> mate_partners = regionMngr.getAnimalsInRange(this, p -> p.getGeneticCode() == this.geneticCode);
-			if (!mate_partners.isEmpty()) mateTarget = mateStrategy.select(this, mate_partners);
+		if (mateTarget == null && !mate_partners.isEmpty()) {
+			mateTarget = mateStrategy.select(this, mate_partners);
 		}
 		if (mateTarget == null) {
-				if (pos.distanceTo(dest) > 8) {
-					dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
-				}
-				move(speed*dt*Math.exp((energy-100.0)*0.007));
-				age += dt;
-				energy -= 18*dt;
-				if (energy < 0) energy = 0;
-				desire += 30*dt;
-				if (desire > 100) desire = 100;
+			if (pos.distanceTo(dest) < 8) {
+				dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 			}
-		
+			move(speed * dt * Math.exp((energy - 100.0) * 0.007));
+			age += dt;
+			energy -= 18 * dt;
+			if (energy < 0) energy = 0;
+			if (energy > 100) energy = 100;
+			desire += 40 * dt;
+			if (desire < 0) desire = 0;
+			if (desire > 100) desire = 100;
+		}
 		if (mateTarget != null) {
 			dest = mateTarget.getPosition();
-			move(3.0*speed*dt*Math.exp((energy-100.0)*0.007));
+			move(3.0 * speed * dt * Math.exp((energy - 100.0) * 0.007));
 			age += dt;
-			energy -= 18.0*1.2*dt;
+			energy -= 18 * dt;
 			if (energy < 0) energy = 0;
-			desire += 30*dt;
+			if (energy > 100) energy = 100;
+			desire += 20 * dt;
+			if (desire < 0) desire = 0;
 			if (desire > 100) desire = 100;
 			
 			if (pos.distanceTo(dest) < 8) {
@@ -163,7 +161,8 @@ public class Wolf extends Animal {
 		if (energy < 50) {
 			setState(State.HUNGER);
 		}
-		else if(desire < 65) setState(State.NORMAL);
+		else if(desire < 65) 
+			setState(State.NORMAL);
 	}
 
 	@Override
@@ -189,6 +188,9 @@ public class Wolf extends Animal {
 				
 			case DEAD:
 				break;
+				
+			default:
+				break;
 			}
 			
 			if (0 > pos.getX() || pos.getX() > regionMngr.getWidth() || 0 > pos.getY() || pos.getY() > regionMngr.getHeight()) {
@@ -196,13 +198,13 @@ public class Wolf extends Animal {
 				setState(State.NORMAL);
 			}
 			
-			if(energy <= 0.0 || age > 14.0) {
+			if(energy <= 0.0 || age > 8.0) {
 				setState(State.DEAD);
 			}
 			
-			if (state != State.DEAD) {
-				energy += regionMngr.getFood(this, dt);
-			}
+//			if (state != State.DEAD) {
+//				energy += regionMngr.getFood(this, dt);
+//			}
 		}
 	}
 

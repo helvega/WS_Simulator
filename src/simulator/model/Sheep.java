@@ -56,10 +56,13 @@ public class Sheep extends Animal {
 		}
 		move(speed * dt * Math.exp((energy - 100.0) * 0.007));
 		age += dt;
-		energy -= 20*dt;
+		energy -= 20 * dt;
 		if (energy < 0) energy = 0;
-		desire += 20*dt;
+		if (energy > 100) energy = 100;
+		desire += 20 * dt;
+		if (desire < 0) desire = 0;
 		if (desire > 100) desire = 100;
+		
 		if (dangerSource == null) {
 			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
 			if (!dangerous_animals.isEmpty()) {
@@ -79,7 +82,7 @@ public class Sheep extends Animal {
 			dangerSource = null;
 		}
 		if (dangerSource == null) {
-			if (pos.distanceTo(dest) > 8) {
+			if (pos.distanceTo(dest) < 8) {
 				dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 			}
 			move(speed*dt*Math.exp((energy-100.0)*0.007));
@@ -100,8 +103,8 @@ public class Sheep extends Animal {
 			if (desire > 100) desire = 100;
 		}
 		
-		if (dangerSource == null || !regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE).contains(dangerSource)) {
-			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
+		List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
+		if (dangerSource == null || !dangerous_animals.contains(dangerSource)) {
 			if (!dangerous_animals.isEmpty()) {
 				dangerSource = dangerStrategy.select(this, dangerous_animals);
 				setState(State.DANGER);
@@ -114,37 +117,40 @@ public class Sheep extends Animal {
 	}
 	
 	protected void doMateAction(double dt) {
-		if (mateTarget != null && mateTarget.getState() == State.DEAD) {
+		List<Animal> mate_partners = regionMngr.getAnimalsInRange(this, p -> p.getGeneticCode() == this.geneticCode);
+		if ((mateTarget != null && mateTarget.getState() == State.DEAD) || !mate_partners.contains(mateTarget)) {
 			mateTarget = null;
 		}
 		
 		if (mateTarget == null) {
-			List<Animal> mate_partners = regionMngr.getAnimalsInRange(this, p -> p.getGeneticCode() == this.geneticCode);
-			if (!mate_partners.isEmpty()) mateTarget = mateStrategy.select(this, mate_partners);
+			if (!mate_partners.isEmpty()) 
+				mateTarget = mateStrategy.select(this, mate_partners);
 		}
 		if (mateTarget == null) {
-				if (pos.distanceTo(dest) > 8) {
+				if (pos.distanceTo(dest) < 8) {
 					dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 				}
 				move(speed*dt*Math.exp((energy-100.0)*0.007));
 				age += dt;
 				energy -= 20*dt;
 				if (energy < 0) energy = 0;
-				desire += 20*dt;
+				if (energy > 100) energy = 100;
+				desire += 40*dt;
 				if (desire > 100) desire = 100;
+				if(desire < 0) desire = 0;
 			}
 		
 		if (mateTarget != null) {
 			dest = mateTarget.getPosition();
-			move(2.0*speed*dt*Math.exp((energy-100.0)*0.007));
+			move(2.0 * speed * dt * Math.exp((energy - 100.0) * 0.007));
 			age += dt;
-			energy -= 20.0*1.2*dt;
+			energy -= 20.0 * 1.2 * dt;
 			if (energy < 0) energy = 0;
 			else if (energy > 100) energy = 100;
-			desire += 40*dt;
+			desire += 40 * dt;
 			if (desire > 100) desire = 100;
 			
-			if (pos.distanceTo(dest) < 8) {
+			if (pos.distanceTo(dest) > 8) {
 				desire = mateTarget.desire = 0;
 				if (Utils.RAND.nextInt(10) != 9 && baby == null) {
 					baby = new Sheep(this, mateTarget);
@@ -153,15 +159,15 @@ public class Sheep extends Animal {
 			}
 		}
 		
+		List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
+		if (dangerSource == null && !dangerous_animals.isEmpty()) {
+			dangerSource = dangerStrategy.select(this, dangerous_animals);
+		}
 		if (dangerSource == null) {
-			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
-			if (!dangerous_animals.isEmpty()) {
-				dangerSource = dangerStrategy.select(this, dangerous_animals);
-				setState(State.DANGER);
-			}
-			if (dangerSource == null) {
-				if(desire < 65) setState(State.NORMAL);
-			}
+			if(desire < 65) setState(State.NORMAL);
+		}
+		else {
+			setState(State.DANGER);
 		}
 	}
 

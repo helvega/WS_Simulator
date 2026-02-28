@@ -135,15 +135,20 @@ public class RegionManager implements AnimalMapView{
 	}
 	
 	public void updateAnimalRegion(Animal a) { //Check if an animal passed to other region
-		int x = (int) Math.floor(a.getPosition().getX() / cellWidth);
-		int y = (int) Math.floor(a.getPosition().getY() / cellHeight);
-		Region currentRegion = animalRegion.get(a);
-		Region newRegion = region[x][y];
-		if(newRegion != currentRegion) {
-			newRegion.addAnimal(a);
-			animalRegion.put(a, newRegion); //updates the map entries
-			currentRegion.removeAnimal(a);
-			animalRegion.remove(a, currentRegion); //updates the map entries
+		if(a.getState() == State.DEAD) {
+			unregisterAnimal(a);
+		}
+		else {
+			int x = (int) Math.floor(a.getPosition().getX() / cellWidth);
+			int y = (int) Math.floor(a.getPosition().getY() / cellHeight);
+			Region currentRegion = animalRegion.get(a);
+			Region newRegion = region[x][y];
+			if(newRegion != currentRegion) {
+				newRegion.addAnimal(a);
+				animalRegion.put(a, newRegion); //updates the map entries
+				currentRegion.removeAnimal(a);
+				animalRegion.remove(a, currentRegion); //updates the map entries
+			}
 		}
 	}
 	
