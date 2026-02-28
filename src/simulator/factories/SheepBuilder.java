@@ -1,7 +1,11 @@
 package simulator.factories;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONObject;
 
+import simulator.misc.Constants;
 import simulator.misc.Utils;
 import simulator.misc.Vector2D;
 import simulator.model.Animal;
@@ -10,6 +14,7 @@ import simulator.model.SelectionStrategy;
 import simulator.model.Sheep;
 
 public class SheepBuilder extends Builder<Animal>{
+	List <Builder<SelectionStrategy>> bss = new ArrayList<>();
 	Factory<SelectionStrategy> strategy_factory;
 //	{
 //	  "type": "sheep",
@@ -26,7 +31,10 @@ public class SheepBuilder extends Builder<Animal>{
 
 	public SheepBuilder(String typeTag, String desc) throws IllegalArgumentException {
 		super(typeTag, desc);
-		strategy_factory = new BuilderBasedFactory<SelectionStrategy>();
+		bss.add(new SelectFirstBuilder(Constants.TYPE_SELECT_FIRST, Constants.DESC_SELECT_FIRST));
+		bss.add(new SelectClosestBuilder(Constants.TYPE_SELECT_CLOSEST, Constants.DESC_SELECT_CLOSEST));
+		bss.add(new SelectYoungestBuilder(Constants.TYPE_SELECT_YOUNGEST, Constants.DESC_SELECT_YOUNGEST));
+		strategy_factory = new BuilderBasedFactory<SelectionStrategy>(bss);
 		// TODO Auto-generated constructor stub
 	}
 
