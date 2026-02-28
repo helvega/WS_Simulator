@@ -55,7 +55,7 @@ public class Wolf extends Animal {
 	}
 	
 	protected void doNormalAction(double dt) {
-		if (pos.distanceTo(dest) > 8) {
+		if (pos.distanceTo(dest) < 8) {
 			dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 		}
 		move(speed*dt*Math.exp((energy-100.0)*0.007));
@@ -77,15 +77,15 @@ public class Wolf extends Animal {
 	}
 	
 	protected void doHungerAction(double dt) {
-		if (huntTarget != null && huntTarget.getState() == State.DEAD) {
+		List<Animal> preys = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.HERBIVORE);
+		if (huntTarget == null || huntTarget.getState() == State.DEAD || preys.contains(huntTarget)) {
 			huntTarget = null;
-			List<Animal> preys = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.HERBIVORE);
 			if (!preys.isEmpty()) {
 				huntTarget = huntingStrategy.select(this, preys);
 			}
 		}
 		if (huntTarget == null) {
-			if (pos.distanceTo(dest) > 8) {
+			if (pos.distanceTo(dest) < 8) {
 				dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 			}
 			move(speed*dt*Math.exp((energy-100.0)*0.007));
@@ -97,7 +97,7 @@ public class Wolf extends Animal {
 		}
 		else {
 			dest = huntTarget.getPosition();
-			move(3.0*speed*dt*Math.exp((energy-100.0)*0.007));
+			move(3.0 * speed * dt * Math.exp((energy - 100.0) * 0.007));
 			age += dt;
 			energy -= 18.0*1.2*dt;
 			if (energy < 0) energy = 0;

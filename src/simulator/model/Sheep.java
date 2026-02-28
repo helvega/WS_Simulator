@@ -28,27 +28,20 @@ public class Sheep extends Animal {
 	protected void setNormalStateAction() {
 		dangerSource = null;
 		mateTarget = null;
-		// TODO...
-
 	}
 
 	@Override
 	protected void setMateStateAction() {
 		dangerSource = null;
-		// TODO...
 	}
 
 	@Override
 	protected void setHungerStateAction() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	protected void setDangerStateAction() {
 		mateTarget = null;
-		// TODO...
-
 	}
 
 	@Override
@@ -58,10 +51,10 @@ public class Sheep extends Animal {
 	}
 	
 	protected void doNormalAction(double dt) {
-		if (pos.distanceTo(dest) > 8) {
+		if (pos.distanceTo(dest) < 8) {
 			dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 		}
-		move(speed*dt*Math.exp((energy-100.0)*0.007));
+		move(speed * dt * Math.exp((energy - 100.0) * 0.007));
 		age += dt;
 		energy -= 20*dt;
 		if (energy < 0) energy = 0;
@@ -206,7 +199,6 @@ public class Sheep extends Animal {
 			if (state != State.DEAD) {
 				energy += regionMngr.getFood(this, dt);
 			}
-			
 		}
 	}
 

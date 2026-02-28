@@ -77,15 +77,15 @@ public class RegionManager implements AnimalMapView{
 		
 		int minR = (int) (e.getPosition().getX() - sr) / cellWidth; //minimun and maximun region rows
 		int maxR = (int) (e.getPosition().getX() + sr) / cellWidth;
-		if(maxR > region.length - 1) //correct any wrong value
-			maxR = region.length - 1;
+		if(maxR > rows - 1) //correct any wrong value
+			maxR = rows - 1;
 		if(minR < 1)
 			minR = 1;
 		
 		int minC = (int) (e.getPosition().getY() - sr) / cellHeight; //minimun and maximun region cols
 		int maxC = (int) (e.getPosition().getY() + sr) / cellHeight;
-		if(minC > region.length - 1) //correct any wrong value
-			minC = region.length - 1;
+		if(minC > cols - 1) //correct any wrong value
+			minC = cols - 1;
 		if (minC < 0)
 			minC = 0;
 		if(maxC < 1)
@@ -94,7 +94,7 @@ public class RegionManager implements AnimalMapView{
 		for(int i = minR; i <= maxR && i < rows; i++) { //for possible regions
 			for(int j = minC; j <= maxC && j < cols; j++) {
 				for(Animal a: region[i][j].getAnimals()) //get animals of that region
-					if(!a.getPosition().equals(e.getPosition())) //it's not the animal itself
+					if(!a.getPosition().equals(e.getPosition()) && filter.test(a)) //it's not the animal itself
 						animals.add(a);
 			}
 		}
@@ -116,8 +116,12 @@ public class RegionManager implements AnimalMapView{
 		int y = (int) Math.floor(a.getPosition().getY() / cellHeight);
 		if(x < 0)
 			x = 0;
+		if(x > rows - 1)
+			x = rows - 1;
 		if (y < 0)
 			y = 0;
+		if(y > cols - 1)
+			y = cols - 1;
 		region[x][y].addAnimal(a);
 		animalRegion.put(a, region[x][y]); //updates the map entries
 		a.init(this);
@@ -148,12 +152,14 @@ public class RegionManager implements AnimalMapView{
 		int y = (int) Math.floor(a.getPosition().getY() / cellHeight);
 		Region aux = animalRegion.get(a);
 		aux.update(dt);
+		updateAnimalRegion(a);
 	}
 	
 	public void updateAllRegions(double dt) { // for all rows of the matrix, for all columns of the rows, update()
 		for(int i = 0; i < rows; i++){
-			for(int j = 0; j < cols; j++)
+			for(int j = 0; j < cols; j++) {
 				region[i][j].update(dt);
+			}
 		}
 	}
 	
@@ -177,14 +183,6 @@ public class RegionManager implements AnimalMapView{
 	    obj.put("regions", ja); //put the array in the object
 	    
 		return obj;
-	}
-	
-	public Vector2D fixPosition(int x, int y) {
-			while (x >= mapWidth) x = (x - mapWidth);  
-			while (x < 0) x = (x + mapWidth);  
-			while (y >= mapHeight) y = (y - mapHeight);  
-			while (y < 0) y = (y + mapHeight);
-		return new Vector2D(x, y);
 	}
 
 }
