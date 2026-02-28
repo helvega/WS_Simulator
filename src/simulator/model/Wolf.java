@@ -168,7 +168,6 @@ public class Wolf extends Animal {
 
 	@Override
 	public void update(double dt) {
-		// TODO Auto-generated method stub
 		
 		if (state != State.DEAD) {
 			
@@ -193,10 +192,7 @@ public class Wolf extends Animal {
 			}
 			
 			if (0 > pos.getX() || pos.getX() > regionMngr.getWidth() || 0 > pos.getY() || pos.getY() > regionMngr.getHeight()) {
-				while (pos.getX() >= regionMngr.getWidth()) pos = pos.plus(new Vector2D(-regionMngr.getWidth(), 0));  
-				while (pos.getX() < 0) pos = pos.plus(new Vector2D(pos.getX() + regionMngr.getWidth(), 0));  
-				while (pos.getY() >= regionMngr.getHeight()) pos = pos.plus(new Vector2D(0, -regionMngr.getHeight()));  
-				while (pos.getY() < 0) pos = pos.plus(new Vector2D(0, pos.getY() + regionMngr.getHeight()));
+				pos = fixPosition();
 				setState(State.NORMAL);
 			}
 			

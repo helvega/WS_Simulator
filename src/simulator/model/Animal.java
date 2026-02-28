@@ -200,6 +200,16 @@ public abstract class Animal implements Entity, AnimalInfo {
 	    return obj;
 	}
 	
-
+	public Vector2D fixPosition() {
+		int w = regionMngr.getWidth();
+		int h = regionMngr.getHeight();
+		double x = pos.getX();
+		double y = pos.getY();
+		while (x >= w) x = (x - w);  
+		while (x < 0) x = (x + w);  
+		while (y >= h) y = (y - h);  
+		while (y < 0) y = (y + h);
+	return new Vector2D(x, y);
+}
 
 }

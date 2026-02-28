@@ -178,5 +178,13 @@ public class RegionManager implements AnimalMapView{
 	    
 		return obj;
 	}
+	
+	public Vector2D fixPosition(int x, int y) {
+			while (x >= mapWidth) x = (x - mapWidth);  
+			while (x < 0) x = (x + mapWidth);  
+			while (y >= mapHeight) y = (y - mapHeight);  
+			while (y < 0) y = (y + mapHeight);
+		return new Vector2D(x, y);
+	}
 
 }
