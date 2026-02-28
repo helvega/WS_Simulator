@@ -37,8 +37,12 @@ public class WolfBuilder extends Builder<Animal>{
 		SelectionStrategy sel_mate = new SelectYoungest(), sel_hunt = new SelectYoungest();
 		if(data.has("pos")) {
 			JSONObject pos = data.getJSONObject("pos");
-			double x = Utils.RAND.nextDouble((pos.getJSONArray("x").getInt(1)) - pos.getJSONArray("x").getInt(0)) + pos.getJSONArray("x").getInt(0);
-			double y = Utils.RAND.nextDouble((pos.getJSONArray("y").getInt(1)) - pos.getJSONArray("y").getInt(0)) + pos.getJSONArray("y").getInt(0);
+			int max_x = pos.getJSONArray("x_range").getInt(1);
+			int min_x = pos.getJSONArray("x_range").getInt(0);
+			int max_y = pos.getJSONArray("y_range").getInt(1);
+			int min_y = pos.getJSONArray("y_range").getInt(0);
+			double x = Utils.RAND.nextDouble(max_x - min_x) + min_x;
+			double y = Utils.RAND.nextDouble(max_y - min_y) + min_y;
 			p = new Vector2D(x, y);
 		}
 		else {

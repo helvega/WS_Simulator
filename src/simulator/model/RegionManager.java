@@ -29,8 +29,8 @@ public class RegionManager implements AnimalMapView{
 		this.rows = rows;
 		this.mapWidth = width;
 		this.mapHeight = height;
-		this.cellWidth = mapWidth / rows;
-		this.cellHeight = mapHeight / cols;
+		this.cellWidth = Math.ceilDiv(mapWidth, rows);
+		this.cellHeight = Math.ceilDiv(mapHeight, cols);
 		region = new Region[rows][cols];
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++)
@@ -86,11 +86,13 @@ public class RegionManager implements AnimalMapView{
 		int maxC = (int) (e.getPosition().getY() + sr) / cellHeight;
 		if(minC > region.length - 1) //correct any wrong value
 			minC = region.length - 1;
+		if (minC < 0)
+			minC = 0;
 		if(maxC < 1)
 			maxC = 1;
 		
-		for(int i = minR; i <= maxR; i++) { //for possible regions
-			for(int j = minC; j <= maxC; j++) {
+		for(int i = minR; i <= maxR && i < rows; i++) { //for possible regions
+			for(int j = minC; j <= maxC && j < cols; j++) {
 				for(Animal a: region[i][j].getAnimals()) //get animals of that region
 					if(!a.getPosition().equals(e.getPosition())) //it's not the animal itself
 						animals.add(a);
@@ -112,6 +114,10 @@ public class RegionManager implements AnimalMapView{
 		int x = (int) Math.floor(a.getPosition().getX() / cellWidth); //in order to know which cell corresponds just divide 
 		//by the size of the cell to know the cell number
 		int y = (int) Math.floor(a.getPosition().getY() / cellHeight);
+		if(x < 0)
+			x = 0;
+		if (y < 0)
+			y = 0;
 		region[x][y].addAnimal(a);
 		animalRegion.put(a, region[x][y]); //updates the map entries
 		a.init(this);

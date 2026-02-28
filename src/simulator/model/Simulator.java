@@ -58,8 +58,11 @@ public class Simulator implements JSONable{
 		time += dt;
 		int aux = participant.size();
 		for(int i = 0; i < aux; i++) { //remove dead animals
-			if(participant.get(i).getState() == State.DEAD)
+			if(participant.get(i).getState() == State.DEAD) {
 				participant.remove(i);
+				aux--;
+			}
+			
 			else {
 				Animal a = participant.get(i);
 				a.update(dt);

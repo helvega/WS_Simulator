@@ -59,16 +59,14 @@ public class Sheep extends Animal {
 	
 	protected void doNormalAction(double dt) {
 		if (pos.distanceTo(dest) > 8) {
-			pos = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
+			dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 		}
 		move(speed*dt*Math.exp((energy-100.0)*0.007));
 		age += dt;
 		energy -= 20*dt;
 		if (energy < 0) energy = 0;
-		else if (energy > 100) energy = 100;
-		desire -= 20*dt;
-		if (desire < 0) desire = 0;
-		else if (desire > 100) desire = 100;
+		desire += 20*dt;
+		if (desire > 100) desire = 100;
 		if (dangerSource == null) {
 			List<Animal> dangerous_animals = regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE);
 			if (!dangerous_animals.isEmpty()) {
@@ -89,16 +87,14 @@ public class Sheep extends Animal {
 		}
 		if (dangerSource == null) {
 			if (pos.distanceTo(dest) > 8) {
-				pos = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
+				dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 			}
 			move(speed*dt*Math.exp((energy-100.0)*0.007));
 			age += dt;
 			energy -= 20*dt;
 			if (energy < 0) energy = 0;
-			else if (energy > 100) energy = 100;
 			desire += 20*dt;
-			if (desire < 0) desire = 0;
-			else if (desire > 100) desire = 100;
+			if (desire > 100) desire = 100;
 		}
 		else {
 			dest = pos.plus(pos.minus(dangerSource.getPosition()).direction());
@@ -108,8 +104,7 @@ public class Sheep extends Animal {
 			if (energy < 0) energy = 0;
 			else if (energy > 100) energy = 100;
 			desire += 40*dt;
-			if (desire < 0) desire = 0;
-			else if (desire > 100) desire = 100;
+			if (desire > 100) desire = 100;
 		}
 		
 		if (dangerSource == null || !regionMngr.getAnimalsInRange(this, p -> p.getDiet() == Diet.CARNIVORE).contains(dangerSource)) {
@@ -136,16 +131,14 @@ public class Sheep extends Animal {
 		}
 		if (mateTarget == null) {
 				if (pos.distanceTo(dest) > 8) {
-					pos = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
+					dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 				}
 				move(speed*dt*Math.exp((energy-100.0)*0.007));
 				age += dt;
 				energy -= 20*dt;
 				if (energy < 0) energy = 0;
-				else if (energy > 100) energy = 100;
-				desire -= 20*dt;
-				if (desire < 0) desire = 0;
-				else if (desire > 100) desire = 100;
+				desire += 20*dt;
+				if (desire > 100) desire = 100;
 			}
 		
 		if (mateTarget != null) {
@@ -156,8 +149,7 @@ public class Sheep extends Animal {
 			if (energy < 0) energy = 0;
 			else if (energy > 100) energy = 100;
 			desire += 40*dt;
-			if (desire < 0) desire = 0;
-			else if (desire > 100) desire = 100;
+			if (desire > 100) desire = 100;
 			
 			if (pos.distanceTo(dest) < 8) {
 				desire = mateTarget.desire = 0;
@@ -206,10 +198,10 @@ public class Sheep extends Animal {
 			}
 			
 			if (0 > pos.getX() || pos.getX() > regionMngr.getWidth() || 0 > pos.getY() || pos.getY() > regionMngr.getHeight()) {
-				while (pos.getX() >= regionMngr.getWidth()) pos = pos.plus(new Vector2D(pos.getX() - regionMngr.getWidth(), 0));  
+				while (pos.getX() >= regionMngr.getWidth()) pos = pos.plus(new Vector2D(-regionMngr.getWidth(), 0));  
 				while (pos.getX() < 0) pos = pos.plus(new Vector2D(pos.getX() + regionMngr.getWidth(), 0));  
-				while (pos.getY() >= regionMngr.getHeight()) pos = pos.plus(new Vector2D(pos.getY() - regionMngr.getHeight(), 0));  
-				while (pos.getY() < 0) pos = pos.plus(new Vector2D(pos.getY() + regionMngr.getHeight(), 0));
+				while (pos.getY() >= regionMngr.getHeight()) pos = pos.plus(new Vector2D(0, -regionMngr.getHeight()));  
+				while (pos.getY() < 0) pos = pos.plus(new Vector2D(0, pos.getY() + regionMngr.getHeight()));
 				setState(State.NORMAL);
 			}
 			if(energy < 0.0 || age > 8.0) {

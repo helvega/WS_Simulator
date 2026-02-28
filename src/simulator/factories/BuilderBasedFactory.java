@@ -54,6 +54,7 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 				if(b != null)
 					return b.createInstance(data);
 			}
+			i++;
 		}
 
 		// Look for a builder with a tag equals to info.getString("type"), in the
