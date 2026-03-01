@@ -152,7 +152,8 @@ public class Sheep extends Animal {
 			if (desire > 100) desire = 100;
 			
 			if (pos.distanceTo(dest) < 8) {
-				desire = mateTarget.desire = 0;
+				desire = 0;
+				mateTarget.setDesire(0);
 				if (Utils.RAND.nextInt(10) != 9 && baby == null) {
 					baby = new Sheep(this, mateTarget);
 				}

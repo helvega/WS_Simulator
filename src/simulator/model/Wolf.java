@@ -142,7 +142,8 @@ public class Wolf extends Animal {
 			if (desire > 100) desire = 100;
 			
 			if (pos.distanceTo(dest) < 8) {
-				desire = mateTarget.desire = 0;
+				desire = 0;
+				mateTarget.setDesire(0);
 				if (Utils.RAND.nextInt(100) < 75 && baby == null) {
 					baby = new Wolf(this, mateTarget);
 				}

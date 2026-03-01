@@ -137,6 +137,10 @@ public abstract class Animal implements Entity, AnimalInfo {
 		
 		return pos;
 	}
+	
+	public void setDesire(double new_desire) {
+		this.desire = new_desire;
+	}
 
 	@Override
 	public String getGeneticCode() {
