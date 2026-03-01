@@ -53,10 +53,7 @@ public class WolfBuilder extends Builder<Animal>{
 			double y = Utils.RAND.nextDouble(max_y - min_y) + min_y;
 			p = new Vector2D(x, y);
 		}
-		else {
-			p = new Vector2D(0, 0);
-		}
-		
+
 		if (data.has("mate_strategy")) {
 			sel_mate = strategy_factory.createInstance(data.getJSONObject("mate_strategy"));
 		}

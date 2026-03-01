@@ -111,6 +111,7 @@ public class RegionManager implements AnimalMapView{
 	}
 	
 	public void registerAnimal(Animal a) {
+		a.init(this);
 		int x = (int) Math.floor(a.getPosition().getX() / cellWidth); //in order to know which cell corresponds just divide 
 		//by the size of the cell to know the cell number
 		int y = (int) Math.floor(a.getPosition().getY() / cellHeight);
@@ -124,7 +125,6 @@ public class RegionManager implements AnimalMapView{
 			y = cols - 1;
 		region[x][y].addAnimal(a);
 		animalRegion.put(a, region[x][y]); //updates the map entries
-		a.init(this);
 	}
 	
 	public void unregisterAnimal(Animal a) {

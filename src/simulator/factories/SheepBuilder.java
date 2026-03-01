@@ -51,9 +51,6 @@ public class SheepBuilder extends Builder<Animal>{
 			double y = Utils.RAND.nextDouble(max_y - min_y) + min_y;
 			p = new Vector2D(x, y); //for passing to the constructor
 		}
-		else {
-			p = new Vector2D(0, 0); //if the position is not defined the default position is (0,0)
-		}
 		
 		if (data.has("mate_strategy")) { // set mate strategy if defined
 			sel_mate = strategy_factory.createInstance(data.getJSONObject("mate_strategy"));
