@@ -15,8 +15,7 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 	public BuilderBasedFactory() {  
 		this.builders = new HashMap<String, Builder<T>>();
 		this.buildersInfo = new LinkedList<JSONObject>();
-      // Create a HashMap for builders, and a LinkedList buildersInfo  
-      // …  
+    // Create a HashMap for builders, and a LinkedList buildersInfo  
 	}
 
 	public BuilderBasedFactory(List<Builder<T>> builders) {  
@@ -24,21 +23,18 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 		for(Builder<T> b: builders) {
 			addBuilder(b);
 		}
-       // call addBuilder(b) for each builder b in builder  
-       // …  
+    // call addBuilder(b) for each builder b in builder  
 	}
 
 	public void addBuilder(Builder<T> b) {  
-      // add an entry "b.getTypeTag() |−> b" to builders.   
-      // ...  
+    // add an entry "b.getTypeTag() |−> b" to builders.   
 		builders.put(b.getTypeTag(), b);
-      // add b.getInfo() to buildersInfo  
+    // add b.getInfo() to buildersInfo  
 		buildersInfo.add(b.getInfo());
-      // ...  
 	}
 
 	@Override  
-	public T createInstance(JSONObject info) {  
+	public T createInstance(JSONObject info) {  //generate the needed builder based on the "type tag"
 		if (info == null) {  
 			throw new IllegalArgumentException("’info’ cannot be null");  
 		}
@@ -46,32 +42,31 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 		int i = 0;
 		String type = info.getString("type");
 		
-		while(i < buildersInfo.size() && searching) {
+		while(i < buildersInfo.size() && searching) { //search for the correct builder
 			if(buildersInfo.get(i).getString("type").equals(type)) {
 				searching = false;
-				JSONObject data = info.has("data") ? info.getJSONObject("data") : new JSONObject();
-				Builder <? extends T> b = builders.get(type);
+				JSONObject data = info.has("data") ? info.getJSONObject("data") : new JSONObject(); //check if there is data about the chosen builder
+				Builder <? extends T> b = builders.get(type); //get the matched builder
 				if(b != null)
-					return b.createInstance(data);
+					return b.createInstance(data); //initialize the matched builder
 			}
 			i++;
 		}
 
-		// Look for a builder with a tag equals to info.getString("type"), in the
+	// Look for a builder with a tag equals to info.getString("type"), in the
     //  map _builder, and call its createInstance method and return the result
     // if it is not null. The value you pass to createInstance is the following
     // because 'data' is optional:
     //
-    //   info.has("data") ? info.getJSONObject("data") : new JSONObject()
-    // …
-
+    // info.has("data") ? info.getJSONObject("data") : new JSONObject()
+	//
     // If no builder is found or the result is null ...  
 		throw new IllegalArgumentException("Unrecognized ‘info’:" + info.toString());  
 	}
 
 	@Override  
 	public List<JSONObject> getInfo() {  
-		return Collections.unmodifiableList(buildersInfo);  
+		return Collections.unmodifiableList(buildersInfo);  //to know about builderBasedFactory
 	}  
 }
 

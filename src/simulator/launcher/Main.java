@@ -30,7 +30,7 @@ import simulator.model.Simulator;
 
 public class Main {
 
-	private enum ExecMode {
+	private enum ExecMode { //to select the view mode
 		BATCH("batch", "Batch mode"), GUI("gui", "Graphical User Interface mode");
 
 		private String tag;
@@ -51,12 +51,10 @@ public class Main {
 	}
 
 	// default values for some parameters
-	//
 	private final static Double DEFAULT_TIME = 10.0; // in seconds
 	private final static Double DEFAULT_DTIME = 0.03; // in seconds
 
 	// some attributes to stores values corresponding to command-line parameters
-	//
 	private static Double time = null;
 	private static Double dt = null;
 	private static String inFile = null;
@@ -64,7 +62,6 @@ public class Main {
 	private static boolean sv = true;
  	private static ExecMode mode = ExecMode.BATCH;
 	
-	private static Factory <SelectionStrategy> SsFactory;
 	private static Factory <Animal> AnFactory;
 	private static Factory <Region> RnFactory;
 
@@ -183,12 +180,7 @@ public class Main {
 		}
 	}
 
-	private static void initFactories() {
-		List <Builder<SelectionStrategy>> bss = new ArrayList<>();
-		bss.add(new SelectFirstBuilder(Constants.TYPE_SELECT_FIRST, Constants.DESC_SELECT_FIRST));
-		bss.add(new SelectClosestBuilder(Constants.TYPE_SELECT_CLOSEST, Constants.DESC_SELECT_CLOSEST));
-		bss.add(new SelectYoungestBuilder(Constants.TYPE_SELECT_YOUNGEST, Constants.DESC_SELECT_YOUNGEST));
-		SsFactory = new BuilderBasedFactory<SelectionStrategy>(bss);
+	private static void initFactories() { //initialize the factories that will be pass to the Simulation constructor
 		List <Builder<Animal>> ba = new ArrayList<>();
 		ba.add(new SheepBuilder(Constants.TYPE_SHEEP_BUILDER, Constants.DESC_SHEEP_BUILDER));
 		ba.add(new WolfBuilder(Constants.TYPE_WOLF_BUILDER, Constants.DESC_WOLF_BUILDER));
@@ -199,28 +191,27 @@ public class Main {
 		RnFactory = new BuilderBasedFactory<Region>(br);
 	}
 
-	private static JSONObject loadJSONFile(InputStream in) {
+	private static JSONObject loadJSONFile(InputStream in) { //utility function
 		return new JSONObject(new JSONTokener(in));
 	}
 
 
-	private static void startBatchMode() throws Exception {
+	private static void startBatchMode() throws Exception { //if we choose the Batch mode
 		InputStream is = new FileInputStream(new File(inFile));
 		
-		JSONObject jo = loadJSONFile(is);
+		JSONObject jo = loadJSONFile(is); //analyze some data to pass to the simulation
 		int cols = jo.getInt("cols");
 		int rows = jo.getInt("rows");
 		int width = jo.getInt("width");
 		int height = jo.getInt("height");
 		
-		Simulator sim = new Simulator(cols, rows, width, height, AnFactory, RnFactory);
-		Controller controler = new Controller(sim);
-		//JSONObject data = jo.has("data") ? jo.getJSONObject("data") : new JSONObject();
-		controler.loadData(jo);
-		OutputStream out = new FileOutputStream(outFile);
-		PrintStream p = new PrintStream(out);
-		controler.run(time, dt, sv, p);
-		out.close();
+		Simulator sim = new Simulator(cols, rows, width, height, AnFactory, RnFactory); //create the instance of the simulation to pass to the controller constructor
+		Controller controler = new Controller(sim); //Create the instances of the controller containing the simulation
+		controler.loadData(jo); // load data to the simulation
+		OutputStream out = new FileOutputStream(outFile); //initialize the output file
+		PrintStream p = new PrintStream(out); //Stream to print in that output file
+		controler.run(time, dt, sv, p); //start the simulation passing the time, differential time, batch mode and output file
+		out.close();//when finishing the simulation, close the output file
 	}
 
 	private static void startGUIMode() throws Exception {
@@ -229,22 +220,22 @@ public class Main {
 	}
 
 	private static void start(String[] args) throws Exception {
-		initFactories();
-		parseArgs(args);
+		initFactories(); //initialize factories to pass to the simulator
+		parseArgs(args); //analyze the entered parameters as -i or -o for input/output files
 		switch (mode) {
 		case BATCH:
-			startBatchMode();
+			startBatchMode(); //start batch mode with the sv
 			break;
 		case GUI:
-			startGUIMode();
+			startGUIMode(); //start GUI mode
 			break;
 		}
 	}
 
 	public static void main(String[] args) {
-		Utils.RAND.setSeed(2147483647l);
+		Utils.RAND.setSeed(2147483647l); //creates always the same simulation
 		try {
-			start(args);
+			start(args); //initialize the preparations
 		} catch (Exception e) {
 			System.err.println("Something went wrong ...");
 			System.err.println();

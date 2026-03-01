@@ -20,30 +20,23 @@ public class Wolf extends Animal {
 		this.huntingStrategy = p1.huntingStrategy;
 		huntTarget = null;
 	}
-	
-	@Override
+
 	protected void setNormalStateAction() {
 		huntTarget = null;
 		mateTarget = null;
-		// TODO...
-
 	}
 
-	@Override
 	protected void setMateStateAction() {
 		huntTarget = null;
 	}
 
-	@Override
 	protected void setHungerStateAction() {
 		mateTarget = null;
 	}
 
-	@Override
 	protected void setDangerStateAction() {
 	}
 
-	@Override
 	protected void setDeadStateAction() {
 		huntTarget = null;
 		mateTarget = null;
@@ -55,10 +48,10 @@ public class Wolf extends Animal {
 		}
 		move(speed * dt * Math.exp((energy - 100.0) * 0.007));
 		age += dt;
-		energy -= 18*dt;
+		energy -= 18 * dt;
 		if (energy < 0) energy = 0;
 		if (energy > 100) energy = 100;
-		desire += 40 * dt;
+		desire += 30 * dt;
 		if (desire < 0) desire = 0;
 		if (desire > 100) desire = 100;
 		
@@ -86,7 +79,7 @@ public class Wolf extends Animal {
 			energy -= 18 * dt;
 			if (energy < 0) energy = 0;
 			if (energy > 100) energy = 100;
-			desire += 40 * dt;
+			desire += 30 * dt;
 			if (desire < 0) desire = 0;
 			if (desire > 100) desire = 100;
 		}
@@ -97,7 +90,7 @@ public class Wolf extends Animal {
 			energy -= 18.0 * 1.2 * dt;
 			if (energy < 0) energy = 0;
 			if (energy > 100) energy = 100;
-			desire += 20 * dt;
+			desire += 30 * dt;
 			if (desire < 0) desire = 0;
 			if (desire > 100) desire = 100;
 			if (pos.distanceTo(huntTarget.getPosition()) < 8) {
@@ -133,7 +126,7 @@ public class Wolf extends Animal {
 			energy -= 18 * dt;
 			if (energy < 0) energy = 0;
 			if (energy > 100) energy = 100;
-			desire += 40 * dt;
+			desire += 30 * dt;
 			if (desire < 0) desire = 0;
 			if (desire > 100) desire = 100;
 		}
@@ -144,7 +137,7 @@ public class Wolf extends Animal {
 			energy -= 18 * dt;
 			if (energy < 0) energy = 0;
 			if (energy > 100) energy = 100;
-			desire += 20 * dt;
+			desire += 30 * dt;
 			if (desire < 0) desire = 0;
 			if (desire > 100) desire = 100;
 			
@@ -198,7 +191,7 @@ public class Wolf extends Animal {
 				setState(State.NORMAL);
 			}
 			
-			if(energy <= 0.0 || age > 8.0) {
+			if(energy <= 0.0 || age > 14.0) {
 				setState(State.DEAD);
 			}
 			

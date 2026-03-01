@@ -51,6 +51,7 @@ public class Sheep extends Animal {
 	}
 	
 	protected void doNormalAction(double dt) {
+		
 		if (pos.distanceTo(dest) < 8) {
 			dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 		}
@@ -59,7 +60,7 @@ public class Sheep extends Animal {
 		energy -= 20 * dt;
 		if (energy < 0) energy = 0;
 		if (energy > 100) energy = 100;
-		desire += 20 * dt;
+		desire += 40 * dt;
 		if (desire < 0) desire = 0;
 		if (desire > 100) desire = 100;
 		
@@ -85,21 +86,21 @@ public class Sheep extends Animal {
 			if (pos.distanceTo(dest) < 8) {
 				dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 			}
-			move(speed*dt*Math.exp((energy-100.0)*0.007));
+			move(speed * dt * Math.exp((energy-100.0) * 0.007));
 			age += dt;
-			energy -= 20*dt;
+			energy -= 20 * dt;
 			if (energy < 0) energy = 0;
-			desire += 20*dt;
+			desire += 40 * dt;
 			if (desire > 100) desire = 100;
 		}
 		else {
 			dest = pos.plus(pos.minus(dangerSource.getPosition()).direction());
-			move(2.0*speed*dt*Math.exp((energy-100.0)*0.007));
+			move(2.0 * speed * dt * Math.exp((energy - 100.0) * 0.007));
 			age += dt;
-			energy -= 20.0*1.2*dt;
+			energy -= 20.0 * 1.2 * dt;
 			if (energy < 0) energy = 0;
 			else if (energy > 100) energy = 100;
-			desire += 40*dt;
+			desire += 40 * dt;
 			if (desire > 100) desire = 100;
 		}
 		
@@ -109,10 +110,10 @@ public class Sheep extends Animal {
 				dangerSource = dangerStrategy.select(this, dangerous_animals);
 				setState(State.DANGER);
 			}
-			if (dangerSource == null) {
-				if (desire > 65) setState(State.MATE);
-				else setState(State.NORMAL);
-			}
+		}
+		if (dangerSource == null) {
+			if (desire > 65) setState(State.MATE);
+			else setState(State.NORMAL);
 		}
 	}
 	
@@ -130,12 +131,12 @@ public class Sheep extends Animal {
 				if (pos.distanceTo(dest) < 8) {
 					dest = Vector2D.getRandomVector(0, regionMngr.getWidth() > regionMngr.getHeight() ? regionMngr.getWidth() : regionMngr.getHeight());
 				}
-				move(speed*dt*Math.exp((energy-100.0)*0.007));
+				move(speed * dt * Math.exp((energy-100.0) * 0.007));
 				age += dt;
-				energy -= 20*dt;
+				energy -= 20 * dt;
 				if (energy < 0) energy = 0;
 				if (energy > 100) energy = 100;
-				desire += 40*dt;
+				desire += 40 * dt;
 				if (desire > 100) desire = 100;
 				if(desire < 0) desire = 0;
 			}
@@ -150,7 +151,7 @@ public class Sheep extends Animal {
 			desire += 40 * dt;
 			if (desire > 100) desire = 100;
 			
-			if (pos.distanceTo(dest) > 8) {
+			if (pos.distanceTo(dest) < 8) {
 				desire = mateTarget.desire = 0;
 				if (Utils.RAND.nextInt(10) != 9 && baby == null) {
 					baby = new Sheep(this, mateTarget);

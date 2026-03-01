@@ -5,8 +5,8 @@ import org.json.JSONObject;
 import simulator.model.Animal;
 
 public abstract class Builder<T> {  
-	private String typeTag;  
-	private String desc;
+	private String typeTag;  //say the king of builder it is, a.k.a. the T variable value
+	private String desc; //to say what the builders does
 
 	public Builder(String typeTag, String desc) throws IllegalArgumentException {
     if (typeTag == null || desc == null || typeTag.isBlank() || desc.isBlank())  
@@ -26,7 +26,7 @@ public abstract class Builder<T> {
 		JSONObject data = new JSONObject();  
 		fillInData(data);
 		info.put("data", data);  
-		return info;  
+		return info;  //to visualize some info about the builder
 	}
 
 	abstract void fillInData(JSONObject o); // subclasses will override this method 
@@ -36,6 +36,6 @@ public abstract class Builder<T> {
 		return desc;  
 	}
 
-	protected abstract T createInstance(JSONObject data);  
+	protected abstract T createInstance(JSONObject data);  //this is the real important method where the classes are created
 	
 }

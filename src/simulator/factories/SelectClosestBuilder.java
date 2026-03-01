@@ -19,7 +19,7 @@ public class SelectClosestBuilder extends Builder<SelectionStrategy>{
 	}
 	
 	protected SelectionStrategy createInstance(JSONObject data) {
-		return new SelectClosest();
+		return new SelectClosest(); //these are simple classes that need no special treatment
 	}
 
 	void fillInData(JSONObject o) {

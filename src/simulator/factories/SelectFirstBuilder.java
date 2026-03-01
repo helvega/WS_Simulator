@@ -18,8 +18,7 @@ public class SelectFirstBuilder extends Builder<SelectionStrategy> {
 	}
 
 	protected SelectFirst createInstance(JSONObject data) {
-		
-		return new SelectFirst();
+		return new SelectFirst();//these are simple classes that need no special treatment
 	}
 
 	void fillInData(JSONObject o) {

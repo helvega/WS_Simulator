@@ -18,7 +18,7 @@ public class SelectYoungestBuilder extends Builder<SelectionStrategy>{
 	}
 	
 	protected SelectionStrategy createInstance(JSONObject data) {
-		return new SelectYoungest();
+		return new SelectYoungest();//these are simple classes that need no special treatment
 	}
 	
 	void fillInData(JSONObject o) {

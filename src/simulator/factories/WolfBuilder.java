@@ -10,6 +10,7 @@ import simulator.misc.Utils;
 import simulator.misc.Vector2D;
 import simulator.model.Animal;
 import simulator.model.SelectClosest;
+import simulator.model.SelectFirst;
 import simulator.model.SelectYoungest;
 import simulator.model.SelectionStrategy;
 import simulator.model.Wolf;
@@ -29,22 +30,19 @@ public class WolfBuilder extends Builder<Animal>{
 //	  }
 //	}
 
-
 	public WolfBuilder(String typeTag, String desc) throws IllegalArgumentException {
 		super(typeTag, desc);
 		bss.add(new SelectFirstBuilder(Constants.TYPE_SELECT_FIRST, Constants.DESC_SELECT_FIRST));
 		bss.add(new SelectClosestBuilder(Constants.TYPE_SELECT_CLOSEST, Constants.DESC_SELECT_CLOSEST));
 		bss.add(new SelectYoungestBuilder(Constants.TYPE_SELECT_YOUNGEST, Constants.DESC_SELECT_YOUNGEST));
 		strategy_factory = new BuilderBasedFactory<SelectionStrategy>(bss);
-		// TODO Auto-generated constructor stub
 	}
 	
-	@Override
+	//same as for sheep createInstance
 	protected Animal createInstance(JSONObject data) {
-		Wolf w = null;	
 		Vector2D p = null;
 		
-		SelectionStrategy sel_mate = new SelectClosest(), sel_hunt = new SelectYoungest();
+		SelectionStrategy sel_mate = new SelectFirst(), sel_hunt = new SelectYoungest();
 		if(data.has("pos")) {
 			JSONObject pos = data.getJSONObject("pos");
 			int max_x = pos.getJSONArray("x_range").getInt(1);
@@ -65,13 +63,10 @@ public class WolfBuilder extends Builder<Animal>{
 		if (data.has("hunt_strategy")) {
 			sel_hunt = strategy_factory.createInstance(data.getJSONObject("hunt_strategy"));
 		}
-
-		w = new Wolf(sel_mate, sel_hunt, p);
 		
-		return w;
+		return new Wolf(sel_mate, sel_hunt, p);
 	}
 
 	void fillInData(JSONObject o) {
-		
 	}
 }

@@ -15,16 +15,13 @@ public class DefaultRegionBuilder extends Builder<Region>{
 
 	public DefaultRegionBuilder(String typeTag, String desc) throws IllegalArgumentException {
 		super(typeTag, desc);
-		// TODO Auto-generated constructor stub
 	}
 	
-	@Override
 	protected Region createInstance(JSONObject data) {
 		
-		return new DefaultRegion();
+		return new DefaultRegion(); // this is a simple class that needs no special treatment to be created
 	}
-	
-	@Override
+
 	void fillInData(JSONObject o) {
 		
 	}
