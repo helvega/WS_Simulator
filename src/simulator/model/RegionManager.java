@@ -71,7 +71,7 @@ public class RegionManager implements AnimalMapView{
 	}
 
 	public List<Animal> getAnimalsInRange(Animal e, Predicate<Animal> filter) {
-		List<Animal> animals = new ArrayList();
+		List<Animal> animals = new ArrayList<>();
 		
 		double sr = (int) e.getSightRange(); // sight range
 		
@@ -94,7 +94,7 @@ public class RegionManager implements AnimalMapView{
 		for(int i = minR; i <= maxR && i < rows; i++) { //for possible regions
 			for(int j = minC; j <= maxC && j < cols; j++) {
 				for(Animal a: region[i][j].getAnimals()) //get animals of that region
-					if(!a.getPosition().equals(e.getPosition()) && filter.test(a)) //it's not the animal itself
+					if(!a.equals(e) && filter.test(a)) //it's not the animal itself
 						animals.add(a);
 			}
 		}
@@ -105,6 +105,7 @@ public class RegionManager implements AnimalMapView{
 	public void setRegion(int row, int col, Region r) {
 		List<Animal> aux = region[row][col].getAnimals(); // get in a  variable the list of animals of the region that is about to be replaced
 		for(Animal a : aux) { // for all animals
+			region[row][col].addAnimal(a);
 			animalRegion.replace(a, region[row][col], r); // replace the old region with the new region
 		}
 		region[row][col] = r;
@@ -153,8 +154,6 @@ public class RegionManager implements AnimalMapView{
 	}
 	
 	public void updateRegion(Animal a, double dt) {
-		int x = (int) Math.floor(a.getPosition().getX() / cellWidth);
-		int y = (int) Math.floor(a.getPosition().getY() / cellHeight);
 		Region aux = animalRegion.get(a);
 		aux.update(dt);
 		updateAnimalRegion(a);
@@ -172,12 +171,11 @@ public class RegionManager implements AnimalMapView{
 		JSONObject obj = new JSONObject();
 	    
 		JSONArray ja = new JSONArray(); //JSON Array for regions
-		JSONArray an = new JSONArray(); //JSON Array for animals
 		
 	    for(int ri = 0; ri < region.length; ri++) {
+	    	
 	    	for(int rj = 0; rj < region.length; rj++) { //for every region in the matrix
 	    		JSONObject rng = new JSONObject(); //a region is an object to add to the array
-	    		JSONObject anm = new JSONObject();
 	    		rng.put("row", ri); //put row
 	    		rng.put("col", rj); //put col
 	    		rng.put("data", region[ri][rj].asJSON()); //put region object

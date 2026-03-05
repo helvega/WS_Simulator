@@ -62,18 +62,31 @@ public class Simulator implements JSONable{
 				participant.remove(i);
 				aux--;
 			}
-			
-			else {
+		}
+		
+		aux = participant.size();
+		
+		for(int i = 0; i < aux; i++) { 
+			Animal a = participant.get(i);
+			a.update(dt);
+		}
+		
+		for (int i = 0; i < aux; i++) {
+			if(participant.get(i).getState() != State.DEAD) {
 				Animal a = participant.get(i);
-				a.update(dt);
-				if(a.isPregnant()) { //don't know if we have to add baby after update, before or it doesn't matter
-					addAnimal(a.deliverBaby());
-				}
-				rgMngr.updateRegion(a, dt); //does it make sense to update one region at every animal and then, update all regions at once???? 
+				rgMngr.updateRegion(a, dt);
 			}
 		}
-		rgMngr.updateAllRegions(dt);
 		
+		
+		for(int i = 0; i < aux; i++) { 
+			Animal a = participant.get(i);
+			if (a.isPregnant()){
+				addAnimal(a.deliverBaby());
+			}
+		}	
+		
+		rgMngr.updateAllRegions(dt);
 	}
 	
 	public JSONObject asJSON() {

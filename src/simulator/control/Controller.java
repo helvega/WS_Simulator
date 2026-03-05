@@ -1,6 +1,8 @@
 package simulator.control;
 
+import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +50,13 @@ public class Controller {
 		 *   "out": finalState
  		 *	}
 		 */
+		PrintStream p = new PrintStream(out);
+		
+		JSONObject j = sim.asJSON();
+		
+		String input_writer = j.toString();
+		
+		p.println(input_writer);
 		
 		SimpleObjectViewer view = null;  //the object that will act as an interface to see the simulation
 		if (sv) {  //if the simple view mode is selected
@@ -62,6 +71,14 @@ public class Controller {
 			if (sv) view.update(toAnimalsInfo(sim.getAnimals()), sim.getTime(), dt); //we see the simulation representation here
 
 		}
+		
+		p.println("\n \n".getBytes());
+		j = sim.asJSON();
+			
+		String output = j.toString();
+			
+		p.println(output);
+		
 		if (sv) view.close();
 	}
 	

@@ -203,6 +203,10 @@ public abstract class Animal implements Entity, AnimalInfo {
 	    return obj;
 	}
 	
+	public boolean outOfBounds() {
+		return (0 > pos.getX() || pos.getX() > regionMngr.getWidth() || 0 > pos.getY() || pos.getY() > regionMngr.getHeight());
+	}
+	
 	public Vector2D fixPosition() {
 		int w = regionMngr.getWidth();
 		int h = regionMngr.getHeight();

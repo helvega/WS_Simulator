@@ -187,7 +187,7 @@ public class Wolf extends Animal {
 				break;
 			}
 			
-			if (0 > pos.getX() || pos.getX() > regionMngr.getWidth() || 0 > pos.getY() || pos.getY() > regionMngr.getHeight()) {
+			if (this.outOfBounds()) {
 				pos = fixPosition();
 				setState(State.NORMAL);
 			}
