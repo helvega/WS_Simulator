@@ -1,5 +1,7 @@
 package simulator.model;
 
+import simulator.misc.Messages;
+
 public class DefaultRegion extends Region {
 	
 	public DefaultRegion(){} //Empty Constructor
@@ -18,6 +20,6 @@ public class DefaultRegion extends Region {
 	@Override
 	public String toString() {
 		
-		return null;
+		return Messages.DEFAULT_REGION;
 	}
 }

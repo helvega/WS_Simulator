@@ -1,5 +1,6 @@
 package simulator.model;
 
+import simulator.misc.Messages;
 import simulator.misc.Utils;
 
 public class DynamicSupplyRegion extends Region {
@@ -30,7 +31,7 @@ public class DynamicSupplyRegion extends Region {
 	@Override
 	public String toString() {
 		
-		return null;
+		return Messages.DYNAMIC_SUPPLY_REGION;
 	}
 
 }

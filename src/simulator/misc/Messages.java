@@ -41,10 +41,12 @@ public class Messages {
 	final static double FOOD_EAT_RATE_HERBS = 60.0;
 	final static double FOOD_SHORTAGE_TH_HERBS = 5.0;
 	final static double FOOD_SHORTAGE_EXP_HERBS = 2.0;
+	public final static String DEFAULT_REGION = "Default Region";
 
 	// used in DynamicSupplyRegion
 	final static double INIT_FOOD = 100.0;
 	final static double FACTOR = 2.0;
+	public final static String DYNAMIC_SUPPLY_REGION = "Dynamic Supply Region";
 	
 	// desc for builders
 	public final static String DESC_SELECT_FIRST = "build a Select Firs class";
