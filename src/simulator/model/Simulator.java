@@ -6,8 +6,6 @@ import java.util.List;
 import org.json.JSONObject;
 
 import simulator.factories.Factory;
-import simulator.misc.Utils;
-import simulator.misc.Vector2D;
 
 public class Simulator implements JSONable{
 	private Factory<Animal> animalsFactory;
@@ -94,6 +92,12 @@ public class Simulator implements JSONable{
 		jo.put("time", time);
 		jo.put("state", rgMngr.asJSON());
 		return jo;
+	}
+	
+	public void reset(int cols, int rows, int width, int height) {
+		participant = new ArrayList<Animal>(); //empty animal list
+		rgMngr = new RegionManager(cols, rows, width, height); //replace with a new region manager
+		time = 0.0; // set time to 0
 	}
 	
 }

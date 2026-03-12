@@ -1,6 +1,6 @@
 package simulator.misc;
 
-public class Constants {
+public class Messages {
     // used in Animal and subclasses
 	final static double INIT_ENERGY = 100.0;
 	final static double MUTATION_TOLERANCE = 0.2;

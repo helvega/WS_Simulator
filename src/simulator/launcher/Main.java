@@ -1,6 +1,7 @@
 package simulator.launcher;
 
-import simulator.misc.Constants;
+import simulator.misc.Messages;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -182,12 +183,12 @@ public class Main {
 
 	private static void initFactories() { //initialize the factories that will be pass to the Simulation constructor
 		List <Builder<Animal>> ba = new ArrayList<>();
-		ba.add(new SheepBuilder(Constants.TYPE_SHEEP_BUILDER, Constants.DESC_SHEEP_BUILDER));
-		ba.add(new WolfBuilder(Constants.TYPE_WOLF_BUILDER, Constants.DESC_WOLF_BUILDER));
+		ba.add(new SheepBuilder(Messages.TYPE_SHEEP_BUILDER, Messages.DESC_SHEEP_BUILDER));
+		ba.add(new WolfBuilder(Messages.TYPE_WOLF_BUILDER, Messages.DESC_WOLF_BUILDER));
 		AnFactory = new BuilderBasedFactory<Animal>(ba);
 		List <Builder<Region>> br = new ArrayList<>();
-		br.add(new DefaultRegionBuilder(Constants.TYPE_DEFAULT_REGION_BUILDER, Constants.DESC_DEFAULT_REGION_BUILDER));
-		br.add(new DynamicSupplyRegionBuilder(Constants.TYPE_DYNAMIC_REGION_BUILDER, Constants.DESC_DYNAMIC_REGION_BUILDER));
+		br.add(new DefaultRegionBuilder(Messages.TYPE_DEFAULT_REGION_BUILDER, Messages.DESC_DEFAULT_REGION_BUILDER));
+		br.add(new DynamicSupplyRegionBuilder(Messages.TYPE_DYNAMIC_REGION_BUILDER, Messages.DESC_DYNAMIC_REGION_BUILDER));
 		RnFactory = new BuilderBasedFactory<Region>(br);
 	}
 

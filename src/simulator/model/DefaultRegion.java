@@ -14,4 +14,10 @@ public class DefaultRegion extends Region {
 		else 
 			return 60.0 * Math.exp(-Math.max(0, herbivore() - 5.0) * 2.0) * dt;
 	}
+
+	@Override
+	public String toString() {
+		
+		return null;
+	}
 }

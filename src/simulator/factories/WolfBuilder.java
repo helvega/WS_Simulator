@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import simulator.misc.Constants;
+import simulator.misc.Messages;
 import simulator.misc.Utils;
 import simulator.misc.Vector2D;
 import simulator.model.Animal;
@@ -32,9 +32,9 @@ public class WolfBuilder extends Builder<Animal>{
 
 	public WolfBuilder(String typeTag, String desc) throws IllegalArgumentException {
 		super(typeTag, desc);
-		bss.add(new SelectFirstBuilder(Constants.TYPE_SELECT_FIRST, Constants.DESC_SELECT_FIRST));
-		bss.add(new SelectClosestBuilder(Constants.TYPE_SELECT_CLOSEST, Constants.DESC_SELECT_CLOSEST));
-		bss.add(new SelectYoungestBuilder(Constants.TYPE_SELECT_YOUNGEST, Constants.DESC_SELECT_YOUNGEST));
+		bss.add(new SelectFirstBuilder(Messages.TYPE_SELECT_FIRST, Messages.DESC_SELECT_FIRST));
+		bss.add(new SelectClosestBuilder(Messages.TYPE_SELECT_CLOSEST, Messages.DESC_SELECT_CLOSEST));
+		bss.add(new SelectYoungestBuilder(Messages.TYPE_SELECT_YOUNGEST, Messages.DESC_SELECT_YOUNGEST));
 		strategy_factory = new BuilderBasedFactory<SelectionStrategy>(bss);
 	}
 	

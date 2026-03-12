@@ -1,17 +1,13 @@
 package simulator.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import simulator.misc.Vector2D;
 
 public class RegionManager implements AnimalMapView{
 	

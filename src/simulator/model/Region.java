@@ -58,4 +58,6 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo { //imp
 		}
 		return count;
 	}
+	
+	abstract public String toString();
 }
