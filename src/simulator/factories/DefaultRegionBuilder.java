@@ -2,15 +2,18 @@ package simulator.factories;
 
 import org.json.JSONObject;
 
+import simulator.misc.Messages;
 import simulator.model.DefaultRegion;
 import simulator.model.Region;
 
 public class DefaultRegionBuilder extends Builder<Region>{  
 	
-//	{  
-//	  "type" : "default",  
-//	  "data" : { }  
-//	}
+//	 {
+//		   "type": "default",
+//		   "desc": "Infinite food supply",
+//		   "data": {}
+//		 }
+
 
 
 	public DefaultRegionBuilder(String typeTag, String desc) throws IllegalArgumentException {
@@ -23,6 +26,8 @@ public class DefaultRegionBuilder extends Builder<Region>{
 	}
 
 	void fillInData(JSONObject o) {
-		
+		o.put("type", "default");
+		o.put("desc", Messages.DEFAULT_REGION);
+		o.put("data", " ");
 	}
 }

@@ -2,18 +2,21 @@ package simulator.factories;
 
 import org.json.JSONObject;
 
+import simulator.misc.Messages;
 import simulator.model.DynamicSupplyRegion;
 import simulator.model.Region;
 
 public class DynamicSupplyRegionBuilder extends Builder<Region>{  
 	
-//	{
-//	  "type" : "dynamic",
-//	  "data" : {
-//	     "factor" : 2.5,
-//	     "food" : 1250.0
-//	   }
-//	}
+//	 {
+//		   "type": "dynamic",
+//		   "desc": "Dynamic food supply",
+//		   "data": {
+//		     "factor": "food increase factor (optional, default 2.0)",
+//		     "food": "initial amount of food (optional, default 100.0)"
+//		   }
+//		 }
+
 
 	public DynamicSupplyRegionBuilder(String typeTag, String desc) throws IllegalArgumentException {
 		super(typeTag, desc);
@@ -27,5 +30,11 @@ public class DynamicSupplyRegionBuilder extends Builder<Region>{
 	}
 
 	void fillInData(JSONObject o) {
+		o.put("type", "dynamic");
+		o.put("desc", Messages.DYNAMIC_SUPPLY_REGION);
+		JSONObject jo = new JSONObject();
+		jo.put("factor", Messages.DYNAMIC_FACTOR);
+		jo.put("food", Messages.DYNAMIC_FOOD);
+		o.put("data", jo);
 	}
 }

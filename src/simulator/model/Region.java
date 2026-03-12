@@ -1,6 +1,7 @@
 package simulator.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -60,4 +61,9 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo { //imp
 	}
 	
 	abstract public String toString();
+	
+	public List<AnimalInfo> getAnimalsInfo() {
+		  return Collections.unmodifiableList(animal);
+	}
+
 }

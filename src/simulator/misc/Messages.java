@@ -47,6 +47,8 @@ public class Messages {
 	final static double INIT_FOOD = 100.0;
 	final static double FACTOR = 2.0;
 	public final static String DYNAMIC_SUPPLY_REGION = "Dynamic Supply Region";
+	public final static String DYNAMIC_FACTOR = "food increase factor (optional, default 2.0)";
+	public final static String DYNAMIC_FOOD = "initial amount of food (optional, default 100.0)";
 	
 	// desc for builders
 	public final static String DESC_SELECT_FIRST = "build a Select Firs class";
