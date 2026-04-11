@@ -57,14 +57,14 @@ public class Main {
 
 	// some attributes to stores values corresponding to command-line parameters
 	private static Double time = null;
-	private static Double dt = null;
+	public static Double dt = null; // said by statement
 	private static String inFile = null;
 	private static String outFile = null;
 	private static boolean sv = true;
  	private static ExecMode mode = ExecMode.BATCH;
 	
-	private static Factory <Animal> AnFactory;
-	private static Factory <Region> RnFactory;
+	public static Factory <Animal> AnFactory; // said by statement
+	public static Factory <Region> RnFactory; // said by statement
 
 	private static void parseArgs(String[] args) {
 

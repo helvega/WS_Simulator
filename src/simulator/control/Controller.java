@@ -1,6 +1,5 @@
 package simulator.control;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import simulator.view.SimpleObjectViewer;
 import simulator.view.SimpleObjectViewer.ObjInfo;
 
 import simulator.model.AnimalInfo;
+import simulator.model.EcoSysObserver;
 import simulator.model.MapInfo;
 import simulator.model.Simulator;
 
@@ -34,11 +34,7 @@ public class Controller {
 		if (data.has("region")) { //Regions go second
 			JSONArray region = data.getJSONArray("region"); //Regions is also an array of JSONObjects
 			for(int z = 0; z < region.length(); z++) { //We traverse the array
-				JSONArray range_r = region.getJSONObject(z).getJSONArray("row"); //first take rows and columns range
-				JSONArray range_c = region.getJSONObject(z).getJSONArray("col");
-				for (int i = range_r.getInt(0); i < range_r.getInt(1); i++)
-					for (int j = range_c.getInt(0); j < range_c.getInt(1); j++) // then we fill the range of r and c with the kind of region defined
-						sim.setRegion(i, j, region.getJSONObject(z).getJSONObject("spec")); //"spec" as data
+				setRegions(region.getJSONObject(z));
 			}
 		}
 	}
@@ -56,7 +52,7 @@ public class Controller {
 		
 		String input_writer = j.toString();
 		
-		p.println(input_writer);
+		p.println(input_writer); //initial state
 		
 		SimpleObjectViewer view = null;  //the object that will act as an interface to see the simulation
 		if (sv) {  //if the simple view mode is selected
@@ -77,7 +73,7 @@ public class Controller {
 			
 		String output = j.toString();
 			
-		p.println(output);
+		p.println(output); // final state
 		
 		if (sv) view.close();
 	}
@@ -89,6 +85,29 @@ public class Controller {
 			//formatting correctly the animal info
 		return ol;
 	}
-
+	
+	public void reset(int cols, int rows, int width, int height) {
+		sim.reset(cols, rows, width, height);
+	}
+	
+	public void setRegions(JSONObject rs) {
+		JSONArray range_r = rs.getJSONArray("row"); //first take rows and columns range
+		JSONArray range_c = rs.getJSONArray("col");
+		for (int i = range_r.getInt(0); i < range_r.getInt(1); i++)
+			for (int j = range_c.getInt(0); j < range_c.getInt(1); j++) // then we fill the range of r and c with the kind of region defined
+				sim.setRegion(i, j, rs.getJSONObject("spec")); //"spec" as data
+	}
+	
+	public void advance(double dt) {
+		sim.advance(dt);
+	}
+	
+	public void addObserver(EcoSysObserver o) {
+		sim.addOberserver(o);
+	}
+	
+	public void removeObserver(EcoSysObserver o) {
+		sim.removeObserver(o);
+	}
 	
 }
