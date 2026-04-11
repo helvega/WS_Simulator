@@ -11,6 +11,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -23,6 +25,7 @@ import org.json.JSONTokener;
 
 import simulator.control.Controller;
 import simulator.factories.*;
+import simulator.gui.MainWindow;
 import simulator.misc.Utils;
 import simulator.model.Animal;
 import simulator.model.Region;
@@ -229,11 +232,11 @@ public class Main {
 		int height = jo.getInt("height");
 		
 		Simulator sim = new Simulator(cols, rows, width, height, AnFactory, RnFactory); //create the instance of the simulation to pass to the controller constructor
-		Controller controler = new Controller(sim); //Create the instances of the controller containing the simulation
-		controler.loadData(jo); // load data to the simulation
+		Controller controller = new Controller(sim); //Create the instances of the controller containing the simulation
+		controller.loadData(jo); // load data to the simulation
 		OutputStream out = new FileOutputStream(outFile); //initialize the output file
 		PrintStream p = new PrintStream(out); //Stream to print in that output file
-		controler.run(time, dt, sv, p); //start the simulation passing the time, differential time, batch mode and output file
+		controller.run(time, dt, sv, p); //start the simulation passing the time, differential time, batch mode and output file
 		out.close();//when finishing the simulation, close the output file
 	}
 
@@ -249,14 +252,14 @@ public class Main {
 			int height = jo.getInt("height");
 			
 			Simulator sim = new Simulator(cols, rows, width, height, AnFactory, RnFactory); //create the instance of the simulation to pass to the controller constructor
-			Controller controler = new Controller(sim); //Create the instances of the controller containing the simulation
-			controler.loadData(jo); // load data to the simulation
-			//SwingUtilities.invokeAndWait(() -> new MainWindow(controler));
+			Controller controller = new Controller(sim); //Create the instances of the controller containing the simulation
+			controller.loadData(jo); // load data to the simulation
+			SwingUtilities.invokeAndWait(() -> new MainWindow(controller));
 		}
 		else {
 			Simulator sim = new Simulator(800, 600, 15, 20, AnFactory, RnFactory); //create the instance of the simulation to pass to the controller constructor
-			Controller controler = new Controller(sim); //Create the instances of the controller containing the simulation
-			//SwingUtilities.invokeAndWait(() -> new MainWindow(controler));
+			Controller controller = new Controller(sim); //Create the instances of the controller containing the simulation
+			SwingUtilities.invokeAndWait(() -> new MainWindow(controller));
 		}
 	}
 
