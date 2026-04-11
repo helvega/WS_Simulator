@@ -237,9 +237,27 @@ public class Main {
 		out.close();//when finishing the simulation, close the output file
 	}
 
-	private static void startGUIMode() throws Exception {
-		// implementation for the next assignment
-		throw new UnsupportedOperationException("GUI mode is not ready yet ...");
+	private static void startGUIMode() throws Exception { // Exceptions for input/output methods
+		
+		if(inFile != null) {
+			InputStream is = new FileInputStream(new File(inFile));
+			
+			JSONObject jo = loadJSONFile(is); //analyze some data to pass to the simulation
+			int cols = jo.getInt("cols");
+			int rows = jo.getInt("rows");
+			int width = jo.getInt("width");
+			int height = jo.getInt("height");
+			
+			Simulator sim = new Simulator(cols, rows, width, height, AnFactory, RnFactory); //create the instance of the simulation to pass to the controller constructor
+			Controller controler = new Controller(sim); //Create the instances of the controller containing the simulation
+			controler.loadData(jo); // load data to the simulation
+			//SwingUtilities.invokeAndWait(() -> new MainWindow(controler));
+		}
+		else {
+			Simulator sim = new Simulator(800, 600, 15, 20, AnFactory, RnFactory); //create the instance of the simulation to pass to the controller constructor
+			Controller controler = new Controller(sim); //Create the instances of the controller containing the simulation
+			//SwingUtilities.invokeAndWait(() -> new MainWindow(controler));
+		}
 	}
 
 	private static void start(String[] args) throws Exception {
