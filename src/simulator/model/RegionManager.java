@@ -1,15 +1,18 @@
 package simulator.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class RegionManager implements AnimalMapView{
+public class RegionManager implements AnimalMapView, MapInfo{
 	
 	private Map<Animal, Region> animalRegion;
 	private Region[][] region;
@@ -184,4 +187,34 @@ public class RegionManager implements AnimalMapView{
 		return obj;
 	}
 
+	@Override
+	public Iterator<RegionData> iterator() { // don't know how this works
+		
+		return new Iterator<RegionData>(){
+				private int currentRow = 0;
+				private int currentCol = 0;
+				
+				@Override
+				public boolean hasNext() {
+					
+					return currentRow < rows;
+				}
+				
+				@Override
+				public RegionData next() {
+					if(!hasNext()) throw new NoSuchElementException();
+					
+					RegionInfo r = region[currentRow][currentCol];
+					RegionData data = new RegionData(currentRow, currentCol, r);
+					
+					currentCol++;
+					if(currentCol >= cols) {
+						currentCol = 0;
+						currentRow++;
+					}
+					
+					return data;
+				}
+		};
+	}
 }

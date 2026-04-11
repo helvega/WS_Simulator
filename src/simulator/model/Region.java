@@ -63,7 +63,7 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo { //imp
 	abstract public String toString();
 	
 	public List<AnimalInfo> getAnimalsInfo() {
-		  return Collections.unmodifiableList(animal);
+		  return new ArrayList<>(animal);
 	}
 
 }
