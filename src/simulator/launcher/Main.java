@@ -25,7 +25,7 @@ import org.json.JSONTokener;
 
 import simulator.control.Controller;
 import simulator.factories.*;
-import simulator.gui.MainWindow;
+import simulator.view.MainWindow;
 import simulator.misc.Utils;
 import simulator.model.Animal;
 import simulator.model.Region;

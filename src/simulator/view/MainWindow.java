@@ -1,4 +1,4 @@
-package simulator.gui;
+package simulator.view;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
@@ -46,4 +46,3 @@ public class MainWindow extends JFrame {
 	    setVisible(true);
 	   }
 	}
-
