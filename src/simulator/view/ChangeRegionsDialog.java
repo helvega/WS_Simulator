@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import org.json.JSONObject;
 
 import simulator.control.Controller;
+import simulator.launcher.Main;
 import simulator.model.AnimalInfo;
 import simulator.model.EcoSysObserver;
 import simulator.model.MapInfo;
@@ -54,7 +55,7 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 	    //      add it to the corresponding dialog panel (See the Figures section).
 
 	    // this.regionsInfo will be used to set the information in the table.
-	    this.regionsInfo = Main.regionsFactory.getInfo();
+	    this.regionsInfo = Main.RnFactory.getInfo();
 
 	    // this.dataTableModel is a table model that includes all the parameters of
 	    // the region.
@@ -62,6 +63,7 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 	      @Override
 	      public boolean isCellEditable(int row, int column) {
 	        // TODO Make only column 1 editable.
+	    	  return true;
 	      }
 	    };
 	    this.dataTableModel.setColumnIdentifiers(this.headers);

@@ -13,9 +13,13 @@ import simulator.model.RegionInfo;
 class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  // TODO Declare necessary fields.
+	  Controller ctrl_;
+	  String[] columns;
 
 	  SpeciesTableModel(Controller ctrl) {
 	    // TODO Initialize corresponding data structures.
+		  this.ctrl_ = ctrl;
+		  //this.columns = {"Species, NORMAL, MATE, HUNGER, DANGER, DEAD"};
 	    // TODO Register the 'this' object as an observer.
 	  }
 	  // TODO The rest of methods.

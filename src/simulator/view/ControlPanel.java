@@ -43,7 +43,7 @@ class ControlPanel extends JPanel {
 	    //      between the components that need it
 	    
 	    // Button to open files
-	    this.toolaBar.add(Box.createGlue()); // this aligns the button to the right
+	    this.toolaBar.add(Box.createGlue());
 	    this.openButton = new JButton();
 	    this.openButton.setToolTipText("Open");
 	    this.openButton.setIcon(new ImageIcon("resources/icons/open.png"));
@@ -53,7 +53,7 @@ class ControlPanel extends JPanel {
 	    this.toolaBar.addSeparator();
 	    
 	    // Button to open the map
-	    this.toolaBar.add(Box.createGlue()); // this aligns the button to the right
+	    this.toolaBar.add(Box.createGlue());
 	    this.viewerButton = new JButton();
 	    this.viewerButton.setToolTipText("Viewer");
 	    this.viewerButton.setIcon(new ImageIcon("resources/icons/viewer.png"));
@@ -63,7 +63,6 @@ class ControlPanel extends JPanel {
 	    this.toolaBar.add(viewerButton);
 	    
 	    // Button to open the region viewer
-	    this.toolaBar.add(Box.createGlue()); // this aligns the button to the right
 	    this.regionsButton = new JButton();
 	    this.regionsButton.setToolTipText("Regions");
 	    this.regionsButton.setIcon(new ImageIcon("resources/icons/regions.png"));
@@ -71,9 +70,9 @@ class ControlPanel extends JPanel {
 	    this.regionsButton.setToolTipText("Opens the region viewer");
 	    this.toolaBar.add(regionsButton);
 	    this.toolaBar.addSeparator();
+	    this.toolaBar.add(Box.createGlue());
 	    
 	    // Button to start the simulation
-	    this.toolaBar.add(Box.createGlue()); // this aligns the button to the right
 	    this.runButton = new JButton();
 	    this.runButton.setToolTipText("Run");
 	    this.runButton.setIcon(new ImageIcon("resources/icons/run.png"));
@@ -82,7 +81,6 @@ class ControlPanel extends JPanel {
 	    this.toolaBar.add(runButton);
 	    
 	    // Button to stop the simulation
-	    this.toolaBar.add(Box.createGlue()); // this aligns the button to the right
 	    this.stopButton = new JButton();
 	    this.stopButton.setToolTipText("Stop");
 	    this.stopButton.setIcon(new ImageIcon("resources/icons/stop.png"));

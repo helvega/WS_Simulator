@@ -24,10 +24,14 @@ public class MainWindow extends JFrame {
 	    setContentPane(mainPanel);
 
 	    // TODO create a ControlPanel and add it to PAGE_START of mainPanel
+	    JPanel controlPanel = new ControlPanel(this.ctrl);
+	    mainPanel.add(controlPanel, BorderLayout.PAGE_START);
 
 	    // TODO create a StatusBar and add it to PAGE_END of mainPanel
+	    JPanel statusBar = new StatusBar(this.ctrl);
+	    mainPanel.add(statusBar, BorderLayout.PAGE_END);
 
-	    // A pabel for the tables (it uses vertical BoxLayout)
+	    // A panel for the tables (it uses vertical BoxLayout)
 	    JPanel contentPanel = new JPanel();
 	    contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 	    mainPanel.add(contentPanel, BorderLayout.CENTER);
