@@ -1,6 +1,8 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.*;
 
 import simulator.control.Controller;
@@ -21,6 +23,7 @@ public class MainWindow extends JFrame {
 
 	  private void initGUI() {
 	    JPanel mainPanel = new JPanel(new BorderLayout());
+	    mainPanel.setPreferredSize(new Dimension(500, 500));
 	    setContentPane(mainPanel);
 
 	    // TODO create a ControlPanel and add it to PAGE_START of mainPanel

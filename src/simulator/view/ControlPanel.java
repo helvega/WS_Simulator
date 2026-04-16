@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 
 import javax.swing.Box;
@@ -35,7 +36,9 @@ class ControlPanel extends JPanel {
 	  private void initGUI() {
 	    setLayout(new BorderLayout());
 	    toolaBar = new JToolBar();
+	    toolaBar.setPreferredSize(new Dimension(200, 40));
 	    add(toolaBar, BorderLayout.PAGE_START);
+	    
 
 	    // TODO create the different widgets (buttons, etc.) and add them to toolaBar.
 	    //      All of them must have their corresponding tooltip. You can use
@@ -43,14 +46,14 @@ class ControlPanel extends JPanel {
 	    //      between the components that need it
 	    
 	    // Button to open files
-	    this.toolaBar.add(Box.createGlue());
 	    this.openButton = new JButton();
 	    this.openButton.setToolTipText("Open");
 	    this.openButton.setIcon(new ImageIcon("resources/icons/open.png"));
 	    this.openButton.addActionListener((e) -> openFiles());
 	    this.openButton.setToolTipText("Opens a file from which to load the data");
-	    this.toolaBar.add(openButton);
 	    this.toolaBar.addSeparator();
+	    this.toolaBar.add(openButton);
+	    
 	    
 	    // Button to open the map
 	    this.toolaBar.add(Box.createGlue());
