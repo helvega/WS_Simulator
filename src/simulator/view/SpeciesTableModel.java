@@ -22,8 +22,7 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  SpeciesTableModel(Controller ctrl) {
 	    // TODO Initialize corresponding data structures.
 		  this.ctrl_ = ctrl;
-		  
-		  int k = 0; 
+
 		  animal_rows = new Object[numRows][columns.length]; 
 		  
 		  animal_rows[0][0] = "Wolfs";
@@ -34,9 +33,15 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 				  animal_rows[i][j] = 0;
 		  
 	    // TODO Register the 'this' object as an observer.
+		  ctrl.addObserver(this);
 	  }
 	  
 	  // TODO The rest of methods.
+	  
+	  @Override
+	  public String getColumnName(int columnIndex) {
+		  return columns[columnIndex];
+	  }
 
 	  @Override
 	  public int getRowCount() {
@@ -67,11 +72,11 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 		  for (int k = 0; k < animals.size(); k++) {
 			  
 			  switch(animals.get(k).getGeneticCode()) {
-			  case "Wolf":
+			  case "wolf":
 				  row = 0;
 				  break;
 				  
-			  case "Sheep":
+			  case "sheep":
 				  row = 1;
 				  break;
 				  
