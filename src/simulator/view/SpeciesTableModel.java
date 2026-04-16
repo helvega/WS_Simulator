@@ -16,21 +16,21 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  // TODO Declare necessary fields.
 	  Controller ctrl_;
 	  String[] columns = {"Species", "NORMAL", "MATE", "HUNGER", "DANGER", "DEAD"};
-	  Object[][] animal_rows;
+	  Object[][] animal_data;
 	  static final int numRows = 2;
 	  
 	  SpeciesTableModel(Controller ctrl) {
 	    // TODO Initialize corresponding data structures.
 		  this.ctrl_ = ctrl;
 
-		  animal_rows = new Object[numRows][columns.length]; 
+		  animal_data = new Object[numRows][columns.length]; 
 		  
-		  animal_rows[0][0] = "Wolfs";
-		  animal_rows[1][0] = "Sheeps";
+		  animal_data[0][0] = "Wolfs";
+		  animal_data[1][0] = "Sheeps";
 		  
-		  for(int i = 0; i < animal_rows.length; i++) 
+		  for(int i = 0; i < animal_data.length; i++) 
 			  for(int j = 1; j < columns.length; j++) 
-				  animal_rows[i][j] = 0;
+				  animal_data[i][j] = 0;
 		  
 	    // TODO Register the 'this' object as an observer.
 		  ctrl.addObserver(this);
@@ -61,13 +61,17 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
 		
-		return animal_rows[rowIndex][columnIndex];
+		return animal_data[rowIndex][columnIndex];
 	  }
 
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
 		// TODO Auto-generated method stub
 		  int row = 0, col = 0;
+		  
+		  for(int i = 0; i < animal_data.length; i++) 
+			  for(int j = 1; j < columns.length; j++) 
+				  animal_data[i][j] = 0;
 		  
 		  for (int k = 0; k < animals.size(); k++) {
 			  
@@ -104,17 +108,17 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 				  break;
 			  }
 			  
-			  int aux = (int)animal_rows[row][col] + 1 ;
-			  animal_rows[row][col] = aux;
+			  int aux = (int)animal_data[row][col] + 1 ;
+			  animal_data[row][col] = aux;
 		  }
 	  }
 
 	  @Override
 	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
 		// TODO Auto-generated method stub
-		  for(int i = 0; i < animal_rows.length; i++) 
+		  for(int i = 0; i < animal_data.length; i++) 
 			  for(int j = 1; j < columns.length; j++) 
-				  animal_rows[i][j] = 0;
+				  animal_data[i][j] = 0;
 	  }
 
 	  @Override
@@ -154,8 +158,8 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 			  break;
 		  }
 		  
-		  int aux = (int)animal_rows[row][col] + 1 ;
-		  animal_rows[row][col] = aux;
+		  int aux = (int)animal_data[row][col] + 1 ;
+		  animal_data[row][col] = aux;
 	  }
 
 	  @Override
@@ -204,8 +208,8 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 				  break;
 			  }
 			  
-			  int aux = (int)animal_rows[row][col] + 1 ;
-			  animal_rows[row][col] = aux;
+			  int aux = (int)animal_data[row][col] + 1 ;
+			  animal_data[row][col] = aux;
 		  }
 	  }
 	}

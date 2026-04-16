@@ -110,4 +110,12 @@ public class Controller {
 		sim.removeObserver(o);
 	}
 	
+	public int getNumCols() {
+		return sim.getMapInfo().getCols();
+	}
+	
+	public int getNumRows() {
+		return sim.getMapInfo().getRows();
+	}
+	
 }

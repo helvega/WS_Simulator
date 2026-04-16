@@ -47,6 +47,9 @@ public class MainWindow extends JFrame {
 
 	    // TODO Create the regions table and add it to contentPanel.
 	    //      Usa setPreferredSize(new Dimension(500, 250)) to set the size.
+	    InfoTable regionsTable = new InfoTable("Regions", new RegionsTableModel(ctrl));
+	    regionsTable.setPreferredSize(new Dimension(500, 250));
+	    mainPanel.add(regionsTable);
 
 	    // TODO call ViewUtils.quit(MainWindow.this) in the windowClosing method.
 	    //addWindowListener(...);
