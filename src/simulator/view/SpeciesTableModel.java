@@ -18,19 +18,19 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  Integer[][] animal_rows;
 	  static final int numRows = 2;
 	  
-	  SpeciesTableModel(Controller ctrl) {
-	    // TODO Initialize corresponding data structures.
-		  this.ctrl_ = ctrl;
-		  
-		  int k = 0; 
-		  animal_rows = new Integer[numRows][columns.length]; 
-		  for(int i=0; i<rows.length; i++) 
-			  for(int j=0; j<columns.length; j++) 
-				  rows[i][j] = new Integer(k++);
-		  
-	    // TODO Register the 'this' object as an observer.
-	  }
-	  // TODO The rest of methods.
+//	  SpeciesTableModel(Controller ctrl) {
+//	    // TODO Initialize corresponding data structures.
+//		  this.ctrl_ = ctrl;
+//		  
+//		  int k = 0; 
+//		  animal_rows = new Integer[numRows][columns.length]; 
+//		  for(int i=0; i<rows.length; i++) 
+//			  for(int j=0; j<columns.length; j++) 
+//				  rows[i][j] = new Integer(k++);
+//		  
+//	    // TODO Register the 'this' object as an observer.
+//	  }
+//	  // TODO The rest of methods.
 
 	  @Override
 	  public int getRowCount() {
