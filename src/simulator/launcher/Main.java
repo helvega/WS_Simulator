@@ -29,7 +29,6 @@ import simulator.view.MainWindow;
 import simulator.misc.Utils;
 import simulator.model.Animal;
 import simulator.model.Region;
-import simulator.model.SelectionStrategy;
 import simulator.model.Simulator;
 
 public class Main {
