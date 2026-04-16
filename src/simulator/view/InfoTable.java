@@ -29,7 +29,7 @@ public class InfoTable extends JPanel {
 	    // TODO add a titled border to the JPanel, with the text this.title
 		  Border b = BorderFactory.createLineBorder(Color.black, 2);
 		  
-		  newPanel.setBorder(b);
+		  newPanel.setBorder(BorderFactory.createTitledBorder(b, this.title));
 		  
 	    // TODO add a JTable (with a vertical scroll bar) that uses
 	    //      this.tableModel

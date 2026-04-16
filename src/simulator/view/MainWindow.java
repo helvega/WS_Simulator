@@ -41,6 +41,9 @@ public class MainWindow extends JFrame {
 
 	    // TODO create the species table and add it to contentPanel.
 	    //      Use setPreferredSize(new Dimension(500, 250)) to set the size.
+	    InfoTable speciesTable = new InfoTable("Species", new SpeciesTableModel(ctrl));
+	    speciesTable.setPreferredSize(new Dimension(500, 250));
+	    mainPanel.add(speciesTable);
 
 	    // TODO Create the regions table and add it to contentPanel.
 	    //      Usa setPreferredSize(new Dimension(500, 250)) to set the size.

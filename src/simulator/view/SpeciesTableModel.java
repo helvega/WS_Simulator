@@ -1,5 +1,6 @@
 package simulator.view;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -14,58 +15,142 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  // TODO Declare necessary fields.
 	  Controller ctrl_;
-	  String[] columns = {"Species, NORMAL, MATE, HUNGER, DANGER, DEAD"};
-	  Integer[][] animal_rows;
+	  String[] columns = {"Species", "NORMAL", "MATE", "HUNGER", "DANGER", "DEAD"};
+	  Object[][] animal_rows;
 	  static final int numRows = 2;
 	  
-//	  SpeciesTableModel(Controller ctrl) {
-//	    // TODO Initialize corresponding data structures.
-//		  this.ctrl_ = ctrl;
-//		  
-//		  int k = 0; 
-//		  animal_rows = new Integer[numRows][columns.length]; 
-//		  for(int i=0; i<rows.length; i++) 
-//			  for(int j=0; j<columns.length; j++) 
-//				  rows[i][j] = new Integer(k++);
-//		  
-//	    // TODO Register the 'this' object as an observer.
-//	  }
-//	  // TODO The rest of methods.
+	  SpeciesTableModel(Controller ctrl) {
+	    // TODO Initialize corresponding data structures.
+		  this.ctrl_ = ctrl;
+		  
+		  int k = 0; 
+		  animal_rows = new Object[numRows][columns.length]; 
+		  
+		  animal_rows[0][0] = "Wolfs";
+		  animal_rows[1][0] = "Sheeps";
+		  
+		  for(int i = 0; i < animal_rows.length; i++) 
+			  for(int j = 1; j < columns.length; j++) 
+				  animal_rows[i][j] = 0;
+		  
+	    // TODO Register the 'this' object as an observer.
+	  }
+	  
+	  // TODO The rest of methods.
 
 	  @Override
 	  public int getRowCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		  
+		return numRows;
 	  }
 
 	  @Override
 	  public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		  
+		return columns.length;
 	  }
 
 	  @Override
 	  public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return animal_rows[rowIndex][columnIndex];
 	  }
 
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
 		// TODO Auto-generated method stub
-		
+		  int row = 0, col = 0;
+		  
+		  for (int k = 0; k < animals.size(); k++) {
+			  
+			  switch(animals.get(k).getGeneticCode()) {
+			  case "Wolf":
+				  row = 0;
+				  break;
+				  
+			  case "Sheep":
+				  row = 1;
+				  break;
+				  
+			  }
+			  
+			  switch(animals.get(k).getState()) {
+			  case NORMAL:
+				  col = 1;
+				  break;
+				  
+			  case MATE:
+				  col = 2;
+				  break;
+				  
+			  case HUNGER:
+				  col = 3;
+				  break;
+				  
+			  case DANGER:
+				  col = 4;
+				  break;
+				  
+			  case DEAD:
+				  col = 5;
+				  break;
+			  }
+			  
+			  int aux = (int)animal_rows[row][col] + 1 ;
+			  animal_rows[row][col] = aux;
+		  }
 	  }
 
 	  @Override
 	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
 		// TODO Auto-generated method stub
-		
+		  for(int i = 0; i < animal_rows.length; i++) 
+			  for(int j = 1; j < columns.length; j++) 
+				  animal_rows[i][j] = 0;
 	  }
 
 	  @Override
 	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
 		// TODO Auto-generated method stub
-		
+		  int row = 0, col = 0; 
+		  switch(a.getGeneticCode()) {
+		  case "Wolf":
+			  row = 0;
+			  break;
+			  
+		  case "Sheep":
+			  row = 1;
+			  break;
+			  
+		  }
+		  
+		  switch(a.getState()) {
+		  case NORMAL:
+			  col = 1;
+			  break;
+			  
+		  case MATE:
+			  col = 2;
+			  break;
+			  
+		  case HUNGER:
+			  col = 3;
+			  break;
+			  
+		  case DANGER:
+			  col = 4;
+			  break;
+			  
+		  case DEAD:
+			  col = 5;
+			  break;
+		  }
+		  
+		  int aux = (int)animal_rows[row][col] + 1 ;
+		  animal_rows[row][col] = aux;
 	  }
 
 	  @Override
@@ -77,6 +162,45 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  @Override
 	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
 		// TODO Auto-generated method stub
-		
+		  int row = 0, col = 0;
+		  
+		  for (int k = 0; k < animals.size(); k++) {
+			  
+			  switch(animals.get(k).getGeneticCode()) {
+			  case "Wolf":
+				  row = 0;
+				  break;
+				  
+			  case "Sheep":
+				  row = 1;
+				  break;
+				  
+			  }
+			  
+			  switch(animals.get(k).getState()) {
+			  case NORMAL:
+				  col = 1;
+				  break;
+				  
+			  case MATE:
+				  col = 2;
+				  break;
+				  
+			  case HUNGER:
+				  col = 3;
+				  break;
+				  
+			  case DANGER:
+				  col = 4;
+				  break;
+				  
+			  case DEAD:
+				  col = 5;
+				  break;
+			  }
+			  
+			  int aux = (int)animal_rows[row][col] + 1 ;
+			  animal_rows[row][col] = aux;
+		  }
 	  }
 	}

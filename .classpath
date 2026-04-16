@@ -6,8 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/hlocal/Universidad/Segundo/Technology of Programming II/Project/Wolf-Sheep_Simulator/WS_Simulator/lib/commons-cli-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/hlocal/Universidad/Segundo/Technology of Programming II/Project/Wolf-Sheep_Simulator/WS_Simulator/lib/json.jar"/>
-	<classpathentry kind="lib" path="C:/hlocal/Universidad/Segundo/Technology of Programming II/Project/Wolf-Sheep_Simulator/WS_Simulator/lib/viewer.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/json.jar"/>
+	<classpathentry kind="lib" path="lib/viewer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
