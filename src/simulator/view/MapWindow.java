@@ -24,13 +24,14 @@ class MapWindow extends JFrame implements EcoSysObserver {
 	    this.ctrl = ctrl;
 	    this.parent = parent;
 	    intiGUI();
-	    // TODO Register the 'this' object as an observer.
+	    ctrl.addObserver(this);
 	  }
 
 	  private void intiGUI() {
 	    JPanel mainPanel = new JPanel(new BorderLayout());
 	    // TODO Set contentPane to mainPanel.
-
+	    
+	    viewer = new MapViewer();
 	    // TODO Create the viewer and add it to mainPanel (in the center).
 
 	    // TODO In the windowClosing method, remove 'MapWindow.this' from the
