@@ -118,5 +118,13 @@ public class Controller {
 		return sim.getMapInfo().getRows();
 	}
 	
+	public int getMapWidth() {
+		return sim.getMapInfo().getWidth();
+	}
+	
+	public int getMapHeight() {
+		return sim.getMapInfo().getHeight();
+	}
+	
 	
 }

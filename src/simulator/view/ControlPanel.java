@@ -55,7 +55,7 @@ class ControlPanel extends JPanel {
 	    this.viewerButton = new JButton();
 //	    this.viewerButton.setToolTipText("Viewer"); Not really used
 	    this.viewerButton.setIcon(new ImageIcon("resources/icons/viewer.png"));
-	 // TODO create an instance of MapWindow
+	    // 	create an instance of MapWindow
 	    this.viewerButton.addActionListener((e) -> new MapWindow(ViewUtils.getWindow(this), ctrl));
 	    this.viewerButton.setToolTipText("Opens a map representation");
 	    this.toolaBar.add(viewerButton);

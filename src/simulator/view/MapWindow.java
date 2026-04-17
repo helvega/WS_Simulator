@@ -27,7 +27,6 @@ class MapWindow extends JFrame implements EcoSysObserver {
 	  private Controller ctrl;
 	  private AbstractMapViewer viewer;
 	  private Frame parent;
-	  private Collection<AnimalInfo> objs;
 
 	  public MapWindow(Frame parent, Controller ctrl) {
 	    super("[MAP VIEWER]");
@@ -39,8 +38,8 @@ class MapWindow extends JFrame implements EcoSysObserver {
 
 	private void intiGUI() {
 	    JPanel mainPanel = new JPanel(new BorderLayout());
-	    // TODO Set contentPane to mainPanel.
-	    mainPanel.setPreferredSize(new Dimension(500, 500));
+	    // Set contentPane to mainPanel.
+	    mainPanel.setPreferredSize(new Dimension(ctrl.getMapWidth(), ctrl.getMapHeight()));
 	    setContentPane(mainPanel);
 	    // Create the viewer and add it to mainPanel (in the center).
 	    viewer = new MapViewer();
@@ -90,8 +89,7 @@ class MapWindow extends JFrame implements EcoSysObserver {
 
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
-		
-		
+		  viewer.reset(time, map, animals);
 	  }
 
 	  @Override

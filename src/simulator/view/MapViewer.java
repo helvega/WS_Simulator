@@ -161,6 +161,7 @@ public class MapViewer extends AbstractMapViewer {
 
 		//      Draw a grid of regions.
 		Graphics2D grid = g;
+		grid.setPaint(Color.LIGHT_GRAY);
 		for (int x = 0; x <= width; x += rWidth) {
             grid.drawLine(x, 0, x, height);
         }
