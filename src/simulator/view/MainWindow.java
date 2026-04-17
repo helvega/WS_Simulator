@@ -2,6 +2,8 @@ package simulator.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
@@ -26,11 +28,11 @@ public class MainWindow extends JFrame {
 	    mainPanel.setPreferredSize(new Dimension(500, 500));
 	    setContentPane(mainPanel);
 
-	    // TODO create a ControlPanel and add it to PAGE_START of mainPanel
+	    // 	create a ControlPanel and add it to PAGE_START of mainPanel
 	    JPanel controlPanel = new ControlPanel(this.ctrl);
 	    mainPanel.add(controlPanel, BorderLayout.PAGE_START);
 
-	    // TODO create a StatusBar and add it to PAGE_END of mainPanel
+	    // 	 	create a StatusBar and add it to PAGE_END of mainPanel
 	    JPanel statusBar = new StatusBar(this.ctrl);
 	    mainPanel.add(statusBar, BorderLayout.PAGE_END);
 
@@ -39,20 +41,26 @@ public class MainWindow extends JFrame {
 	    contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 	    mainPanel.add(contentPanel, BorderLayout.CENTER);
 
-	    // TODO create the species table and add it to contentPanel.
+	    // 		create the species table and add it to contentPanel.
 	    //      Use setPreferredSize(new Dimension(500, 250)) to set the size.
 	    InfoTable speciesTable = new InfoTable("Species", new SpeciesTableModel(ctrl));
 	    speciesTable.setPreferredSize(new Dimension(500, 250));
 	    contentPanel.add(speciesTable);
 
-	    // TODO Create the regions table and add it to contentPanel.
+	    // 	Create the regions table and add it to contentPanel.
 	    //      Usa setPreferredSize(new Dimension(500, 250)) to set the size.
 	    InfoTable regionsTable = new InfoTable("Regions", new RegionsTableModel(ctrl));
 	    regionsTable.setPreferredSize(new Dimension(500, 250));
 	    contentPanel.add(regionsTable);
 
-	    // TODO call ViewUtils.quit(MainWindow.this) in the windowClosing method.
-	    //addWindowListener(...);
+	    // 	Call ViewUtils.quit(MainWindow.this) in the windowClosing method.
+	    this.addWindowListener(new WindowAdapter() {
+	    	public void windowClosing(WindowEvent e) {
+	    		if(e.getID() == WindowEvent.WINDOW_CLOSING) {
+	    			ViewUtils.quit(MainWindow.this);
+	    		}
+	    	}
+	    });
 
 	    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	    pack();
