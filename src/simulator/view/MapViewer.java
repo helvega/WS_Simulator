@@ -1,5 +1,6 @@
 package simulator.view;
 
+import simulator.misc.Vector2D;
 import simulator.model.Animal;
 import simulator.model.AnimalInfo;
 import simulator.model.MapInfo;
@@ -162,11 +163,7 @@ public class MapViewer extends AbstractMapViewer {
 		//      Draw a grid of regions.
 		//	
 		
-		
-		// Dibujar los animales.
-		//
 		// Draw the animals
-		//
 		for (AnimalInfo a : animals) {
 			// If the animal is not visible, we skip to the next iteration. 
 			if (!visible(a))
@@ -183,28 +180,26 @@ public class MapViewer extends AbstractMapViewer {
 			//      Increment the counter of the species (i.e., the one inside speciesInfo).
 			kindsInfo.get(gcode).count++;
 
-			// TODO 
 			//      Draw the animal at the corresponding position, using the color 
 			//      speciesInfo.color. Its size should be relative to the animal's age, e.g.,
 			//      age/2+2. For drawing you can use fillRoundRect, fillRect or fillOval.
+			Vector2D pos = a.getPosition();
+			double age = a.getAge();
+			int size = (int) Math.round((age / 2 + 2)); 
+			g.fillRect( (int) Math.round(pos.getX()), (int) Math.round(pos.getY()), size, size); //set rectangle
+			g.setPaint(kindsInfo.get(gcode).color); //set color
 			
 		}
 
-		// TODO Dibujar la etiqueta del estado visible, usando currState.toString(), si no 
-		//      es null.
-		//
+		// TODO 
 		//      Draw the tag of the visible state, using currState.toString(), if it is not null.
 		
 		
-		// TODO Dibujar la etiqueta del tiempo. Para escribir solo 3 decimales puede
-		//      usar String.format("%.3f", time).
-		//
+		// TODO 
 		//      Draw the time. To use only 3 decimals you can use String.format("%.3f", time).
 		
 		
-		// TODO Dibujar la información de todas la especies. Al final de la iteración
-		//      poner el contador de la especie correspondiente a 0 (para resetear el cuento)
-		//
+		// TODO 
 		//      Draw the information of each species. At the end of the iteration, reset the 
 		//      species count.
 		//

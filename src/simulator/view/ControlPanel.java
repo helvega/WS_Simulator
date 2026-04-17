@@ -100,7 +100,6 @@ class ControlPanel extends JPanel {
 	    this.toolaBar.add(deltaTime);
 	    
 	    
-
 	    // Quit Button
 	    this.toolaBar.add(Box.createGlue()); // this aligns the button to the right
 	    this.toolaBar.addSeparator();
@@ -114,7 +113,8 @@ class ControlPanel extends JPanel {
 	    fc = new JFileChooser();
 	    this.fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "/resources/examples"));
 	   
-	    // TODO Initialize this.changeRegionsDialog with a corresponding instance.
+	    //Initialize this.changeRegionsDialog with a corresponding instance.
+	    this.changeRegionsDialog = new ChangeRegionsDialog(ctrl);
 
 	  } 
 	  
@@ -143,8 +143,8 @@ class ControlPanel extends JPanel {
 		      SwingUtilities.invokeLater(() -> runSim(n - 1, dt));
 		      
 		    } catch (Exception e) {
-		      // TODO think of an error message
-		      ViewUtils.showErrorMsg("Idk what to say here");
+		      // Think of an error message
+		      ViewUtils.showErrorMsg(e.getMessage());
 		      
 		      this.stopped = true;
 		      enableButtons(stopped);
