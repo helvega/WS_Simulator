@@ -15,11 +15,15 @@ import simulator.model.RegionInfo;
 
 class MapWindow extends JFrame implements EcoSysObserver {
 
+	  /**
+	 * 
+	 */
+	  private static final long serialVersionUID = 1L;
 	  private Controller ctrl;
 	  private AbstractMapViewer viewer;
 	  private Frame parent;
 
-	  MapWindow(Frame parent, Controller ctrl) {
+	  public MapWindow(Frame parent, Controller ctrl) {
 	    super("[MAP VIEWER]");
 	    this.ctrl = ctrl;
 	    this.parent = parent;
@@ -27,11 +31,11 @@ class MapWindow extends JFrame implements EcoSysObserver {
 	    ctrl.addObserver(this);
 	  }
 
-	  private void intiGUI() {
+	private void intiGUI() {
 	    JPanel mainPanel = new JPanel(new BorderLayout());
 	    // TODO Set contentPane to mainPanel.
 	    
-	    // TODO Create the viewer and add it to mainPanel (in the center).
+	    // Create the viewer and add it to mainPanel (in the center).
 	    viewer = new MapViewer();
 	    mainPanel.add(viewer, BorderLayout.CENTER);
 

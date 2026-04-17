@@ -4,14 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import simulator.control.Controller;
 
@@ -24,6 +17,7 @@ class ControlPanel extends JPanel {
 	  private JFileChooser fc;
 	  private boolean stopped = true; // used for the buttons run/stop
 	  private JButton quitButton, openButton, viewerButton, regionsButton, runButton, stopButton;
+	  private JSpinner steps;
 	  private double dt;
 
 	  // TODO add fields here
@@ -61,7 +55,7 @@ class ControlPanel extends JPanel {
 	    this.viewerButton.setToolTipText("Viewer");
 	    this.viewerButton.setIcon(new ImageIcon("resources/icons/viewer.png"));
 	 // TODO create an instance of MapWindow
-	    this.viewerButton.addActionListener((e) -> ViewUtils.quit(this));
+	    this.viewerButton.addActionListener((e) -> new MapWindow(ViewUtils.getWindow(this), ctrl));
 	    this.viewerButton.setToolTipText("Opens a map representation");
 	    this.toolaBar.add(viewerButton);
 	    
@@ -90,6 +84,11 @@ class ControlPanel extends JPanel {
 	    this.stopButton.addActionListener((e) -> this.stopped = true);
 	    this.stopButton.setToolTipText("Stops the simulation if it is already running");
 	    this.toolaBar.add(stopButton);
+	    
+	    //
+	    this.steps = new JSpinner();
+	    this.setToolTipText("Steps:");
+	    this.toolaBar.add(steps);
 
 	    // Quit Button
 	    this.toolaBar.add(Box.createGlue()); // this aligns the button to the right
