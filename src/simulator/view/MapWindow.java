@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import simulator.control.Controller;
 import simulator.model.AnimalInfo;
@@ -89,17 +90,33 @@ class MapWindow extends JFrame implements EcoSysObserver {
 
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
-		  viewer.reset(time, map, animals);
+		  SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				 viewer.reset(time, map, animals);
+			}
+		  });
+		  
 	  }
 
 	  @Override
 	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
-		viewer.reset(time, map, animals);
+		  SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					 viewer.reset(time, map, animals);
+				}
+		  });
 	  }
 
 	  @Override
 	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		  viewer.update(animals, time);
+		  SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					viewer.update(animals, time);
+				}
+		  });
 	  }
 
 	  @Override
@@ -109,6 +126,11 @@ class MapWindow extends JFrame implements EcoSysObserver {
 
 	  @Override
 	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
-		viewer.update(animals, time);
+		  SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					viewer.update(animals, time);
+				}
+		  });
 	  }
 	}

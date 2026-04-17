@@ -178,11 +178,13 @@ public class MapViewer extends AbstractMapViewer {
 
 			// Information of the species of 'a'
 			String gcode = a.getGeneticCode();
+			System.out.print(gcode);
 			SpeciesInfo speciesInfo = kindsInfo.get(gcode);
 
 			//      If espInfo is null, add a corresponding entry to the map. For the color
 			//      use ViewUtils.getColor(a.getGeneticCode()).
-			kindsInfo.put(gcode, new SpeciesInfo(ViewUtils.getColor(gcode))); //ViewUtils knows if it's wolf or sheep
+			if(speciesInfo == null)
+				kindsInfo.put(gcode, new SpeciesInfo(ViewUtils.getColor(gcode))); //ViewUtils knows if it's wolf or sheep
 
 			//      Increment the counter of the species (i.e., the one inside speciesInfo).
 			kindsInfo.get(gcode).count++;
@@ -197,21 +199,26 @@ public class MapViewer extends AbstractMapViewer {
 			g.setPaint(kindsInfo.get(gcode).color); //set color
 			
 		}
-
-		// TODO 
+		
+		int space = 10;
 		//      Draw the tag of the visible state, using currState.toString(), if it is not null.
+		if(currState != null) {
+			g.setPaint(Color.PINK);
+			drawStringWithRect(g, 80, height - space, "State: " + currState.toString());
+			space += 20;
+		}
 		
-		
-		
-		// TODO 
 		//      Draw the time. To use only 3 decimals you can use String.format("%.3f", time).
-		
-		
-		// TODO 
+		g.setPaint(Color.BLUE);
+		drawStringWithRect(g, 60, height - space, "Time: " + String.format("%.3f", time));
+		space += 20;
 		//      Draw the information of each species. At the end of the iteration, reset the 
 		//      species count.
 		//
 		for (Entry<String, SpeciesInfo> e : kindsInfo.entrySet()) {
+			g.setPaint(kindsInfo.get(e).color);
+			drawStringWithRect(g, 80, height - space, e + ": " + kindsInfo.get(e));
+			space += 20;
 		}
 	}
 
