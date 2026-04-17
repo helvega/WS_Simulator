@@ -1,7 +1,12 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics2D;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -22,6 +27,7 @@ class MapWindow extends JFrame implements EcoSysObserver {
 	  private Controller ctrl;
 	  private AbstractMapViewer viewer;
 	  private Frame parent;
+	  private Collection<AnimalInfo> objs;
 
 	  public MapWindow(Frame parent, Controller ctrl) {
 	    super("[MAP VIEWER]");
@@ -34,14 +40,44 @@ class MapWindow extends JFrame implements EcoSysObserver {
 	private void intiGUI() {
 	    JPanel mainPanel = new JPanel(new BorderLayout());
 	    // TODO Set contentPane to mainPanel.
-	    
+	    mainPanel.setPreferredSize(new Dimension(500, 500));
+	    setContentPane(mainPanel);
 	    // Create the viewer and add it to mainPanel (in the center).
 	    viewer = new MapViewer();
 	    mainPanel.add(viewer, BorderLayout.CENTER);
 
-	    // TODO In the windowClosing method, remove 'MapWindow.this' from the
+	    //		In the windowClosing method, remove 'MapWindow.this' from the
 	    //      observers.
-	    // addWindowListener(new WindowListener() { ... });
+	    this.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				ctrl.removeObserver(MapWindow.this);
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+			} });
 
 	    pack();
 	    if (this.parent != null)
@@ -54,32 +90,27 @@ class MapWindow extends JFrame implements EcoSysObserver {
 
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
+		
 		
 	  }
 
 	  @Override
 	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
-		
+		viewer.reset(time, map, animals);
 	  }
 
 	  @Override
 	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		// TODO Auto-generated method stub
-		
+		  viewer.update(animals, time);
 	  }
 
 	  @Override
 	  public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
-		// TODO Auto-generated method stub
-		
+		  
 	  }
 
 	  @Override
 	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
-		// TODO Auto-generated method stub
-		
+		viewer.update(animals, time);
 	  }
-	  // TODO The rest of methods.
 	}

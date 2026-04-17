@@ -101,7 +101,6 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  @Override
 	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		// TODO Auto-generated method stub
 		  int tablePos = 0, aux = 0;
 		  AnimalInfo currentAnimal = a;
 		  tablePos = ((int)currentAnimal.getPosition().getY())*numRows + (int)currentAnimal.getPosition().getX();

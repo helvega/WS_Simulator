@@ -159,9 +159,15 @@ public class MapViewer extends AbstractMapViewer {
 
 	private void drawObjects(Graphics2D g, Collection<AnimalInfo> animals, Double time) {
 
-		// TODO
 		//      Draw a grid of regions.
-		//	
+		Graphics2D grid = g;
+		for (int x = 0; x <= width; x += rWidth) {
+            grid.drawLine(x, 0, x, height);
+        }
+		for (int y = 0; y <= height; y += rHeight) {
+            grid.drawLine(0, y, width, y);
+        }
+		
 		
 		// Draw the animals
 		for (AnimalInfo a : animals) {
@@ -195,6 +201,7 @@ public class MapViewer extends AbstractMapViewer {
 		//      Draw the tag of the visible state, using currState.toString(), if it is not null.
 		
 		
+		
 		// TODO 
 		//      Draw the time. To use only 3 decimals you can use String.format("%.3f", time).
 		
@@ -216,31 +223,29 @@ public class MapViewer extends AbstractMapViewer {
 
 	@Override
 	public void update(List<AnimalInfo> objs, Double time) {
-		// TODO Almacenar objs y time en los atributos correspondientes y llamar a
-		//      repaint() para redibujar el componente.
-		//
 		//      Store objs and time in the corresponding fields, and call repaint() to
 		//      redraw the component.
+		this.objs = objs;
+		this.time = time;
+		repaint();
 	}
 
 	@Override
 	public void reset(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Actualizar los atributos width, height, cols, rows, etc.
-		//
 		//      Update the fields width, height, cols, rows, etc.
-
-		// Esto cambia el tamaño del componente, y así cambia el tamaño de la ventana
-		// porque en MapWindow llamamos a pack() después de llamar a reset.
-		//
+		this.width = map.getWidth();
+		this.height = map.getHeight();
+		this.cols = map.getCols();
+		this.rows = map.getRows();
+		this.rWidth = map.getRegionWidth();
+		this.rHeight = map.getRegionHeight();
 		// This line changes the size of the component, and thus the size of the window
 		// because MapWindow calls pack() after calling reset().
 		//
 		setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
 
-		// Dibuja el estado.
-		//
 		// Draw the state.
-		//
+		
 		update(animals, time);
 	}
 

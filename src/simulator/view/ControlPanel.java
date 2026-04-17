@@ -134,7 +134,7 @@ class ControlPanel extends JPanel {
 			  this.stopped = false;
 			  enableButtons(stopped);
 			  
-		      // TODO get n and dt
+		      //get n and dt
 			  double dt = Double.parseDouble(deltaTime.getText());
 			  int n = (int)steps.getValue();
 			  
@@ -177,6 +177,5 @@ class ControlPanel extends JPanel {
 		  }
 	  }
 	  
-	  // TODO The rest of methods.
 	}
 
