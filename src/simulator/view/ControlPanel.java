@@ -93,6 +93,7 @@ class ControlPanel extends JPanel {
 	    this.steps = new JSpinner();
 	    this.steps.setPreferredSize(new Dimension(50, 10));
 	    this.toolaBar.add(steps);
+	    
 	    JLabel deltaText = new JLabel("Delta-time:");
 	    deltaText.setToolTipText("Time in seconds for each step");
 	    this.toolaBar.add(deltaText);
@@ -129,11 +130,19 @@ class ControlPanel extends JPanel {
 	  }
 	  
 	  private void run() {
-		  this.stopped = false;
-		  enableButtons(stopped);
-		  
-	      // TODO get n and dt
-	      runSim(0, dt);
+		  try{
+			  this.stopped = false;
+			  enableButtons(stopped);
+			  
+		      // TODO get n and dt
+			  double dt = Double.parseDouble(deltaTime.getText());
+			  int n = (int)steps.getValue();
+			  
+		      runSim(n, dt);
+		  } catch(Exception e) {
+			  ViewUtils.showErrorMsg(e.getMessage());
+			  enableButtons(true);
+		  }
 	  }
 	  
 	  private void runSim(int n, double dt) {
