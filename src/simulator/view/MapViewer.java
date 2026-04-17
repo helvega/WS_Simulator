@@ -90,7 +90,7 @@ public class MapViewer extends AbstractMapViewer {
 					//      comes the first element of Animal.State.values(), and after the last of 
 					//      these values comes null.
 					currState = wheel.get(pc);
-					pc = (pc >= 6 ? 0 : pc + 1);
+					pc = (pc >= 5 ? 0 : pc + 1);
 					repaint();
 				default:
 				}
@@ -112,6 +112,7 @@ public class MapViewer extends AbstractMapViewer {
 		for(State s : State.values()) {
 			wheel.add(s);
 		}
+		
 		wheel.add(null); //null is the sixth element of the wheel
 		
 		// By default, we show all animals.
@@ -146,7 +147,9 @@ public class MapViewer extends AbstractMapViewer {
 		// h: toggle help
 		// s: show animals of a specific state
 		if(showHelp) {
-			
+			gr.setPaint(Color.RED);
+		    gr.drawString("h: toggle help", 10, 15);
+		    gr.drawString("s: show animals of a specific state", 10, 30);
 		}
 
 	}
@@ -154,7 +157,7 @@ public class MapViewer extends AbstractMapViewer {
 	private boolean visible(AnimalInfo a) {
 		//      return true of the animal is visible, i.e., currState is null or its
 		//      state is equal to currState.
-		return currState != null || a.getState() == currState;
+		return currState == null || a.getState() == currState;
 	}
 
 	private void drawObjects(Graphics2D g, Collection<AnimalInfo> animals, Double time) {
@@ -178,7 +181,6 @@ public class MapViewer extends AbstractMapViewer {
 
 			// Information of the species of 'a'
 			String gcode = a.getGeneticCode();
-			System.out.print(gcode);
 			SpeciesInfo speciesInfo = kindsInfo.get(gcode);
 
 			//      If espInfo is null, add a corresponding entry to the map. For the color
@@ -192,19 +194,18 @@ public class MapViewer extends AbstractMapViewer {
 			//      Draw the animal at the corresponding position, using the color 
 			//      speciesInfo.color. Its size should be relative to the animal's age, e.g.,
 			//      age/2+2. For drawing you can use fillRoundRect, fillRect or fillOval.
+			g.setPaint(kindsInfo.get(gcode).color); //set color
 			Vector2D pos = a.getPosition();
 			double age = a.getAge();
 			int size = (int) Math.round((age / 2 + 2)); 
 			g.fillRect( (int) Math.round(pos.getX()), (int) Math.round(pos.getY()), size, size); //set rectangle
-			g.setPaint(kindsInfo.get(gcode).color); //set color
-			
 		}
 		
 		int space = 10;
 		//      Draw the tag of the visible state, using currState.toString(), if it is not null.
 		if(currState != null) {
 			g.setPaint(Color.PINK);
-			drawStringWithRect(g, 80, height - space, "State: " + currState.toString());
+			drawStringWithRect(g, 60, height - space, "State: " + currState.toString());
 			space += 20;
 		}
 		
@@ -214,11 +215,12 @@ public class MapViewer extends AbstractMapViewer {
 		space += 20;
 		//      Draw the information of each species. At the end of the iteration, reset the 
 		//      species count.
-		//
 		for (Entry<String, SpeciesInfo> e : kindsInfo.entrySet()) {
-			g.setPaint(kindsInfo.get(e).color);
-			drawStringWithRect(g, 80, height - space, e + ": " + kindsInfo.get(e));
+			SpeciesInfo info = e.getValue();
+			g.setPaint(kindsInfo.get(e.getKey()).color);
+			drawStringWithRect(g, 60, height - space, e.getKey() + ": " + info.count);
 			space += 20;
+			info.count = 0;
 		}
 	}
 
@@ -249,11 +251,9 @@ public class MapViewer extends AbstractMapViewer {
 		this.rHeight = map.getRegionHeight();
 		// This line changes the size of the component, and thus the size of the window
 		// because MapWindow calls pack() after calling reset().
-		//
 		setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
 
 		// Draw the state.
-		
 		update(animals, time);
 	}
 
