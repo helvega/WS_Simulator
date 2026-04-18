@@ -17,13 +17,14 @@ import simulator.model.RegionInfo;
 
 class StatusBar extends JPanel implements EcoSysObserver {
 
-	  // TODO Add necessary fields.
+	  private Controller ctrl;
 	
 	  JLabel time, animals, dimensions;
 	  
-	  StatusBar(Controller ctrl) {
+	  public StatusBar(Controller ctrl) {
 	    initGUI();
-	    // TODO Register the 'this' object as an observer.
+	    this.ctrl = ctrl;
+	    ctrl.addObserver(this);
 	  }
 
 	  private void initGUI() {
@@ -57,42 +58,36 @@ class StatusBar extends JPanel implements EcoSysObserver {
 
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
-		this.time.setText("Time: " + time);
-		this.animals.setText("Total Animals: " + animals.size());
-		this.dimensions.setText("Dimensions: " + map.getRegionWidth() + "x" + map.getRegionHeight() + " " + map.getCols() + map.getHeight());
+		  setValues(time, map, animals);
 	  }
 
 	  @Override
 	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
-		 this.time.setText("Time: " + time);
-		 this.animals.setText("Total Animals: " + animals.size());
-		 this.dimensions.setText("Dimensions: " + map.getRegionWidth() + "x" + map.getRegionHeight() + " " + map.getCols() + map.getHeight());
+		  setValues(time, map, animals);
 	  }
 
 	  @Override
 	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		// TODO Auto-generated method stub
-		 this.time.setText("Time: " + time);
-		 this.animals.setText("Total Animals: " + animals.size());
-		 this.dimensions.setText("Dimensions: " + map.getRegionWidth() + "x" + map.getRegionHeight() + " " + map.getCols() + map.getHeight());
+		  setValues(time, map, animals);
 	  }
 
 	  @Override
 	  public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
-		 this.dimensions.setText("Dimensions: " + map.getRegionWidth() + "x" + map.getRegionHeight() + " " + col + row);
-		
 	  }
 
 	  @Override
 	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
-		// TODO Auto-generated method stub
-		 this.time.setText("Time: " + time);
-		 this.animals.setText("Total Animals: " + animals.size());
-		 this.dimensions.setText("Dimensions: " + map.getRegionWidth() + "x" + map.getRegionHeight() + " " + map.getCols() + map.getHeight());
-		
+		  setValues(time, map, animals);
 	  }
-
-	  // TODO The rest of methods.
+	  
+	  private void setValues(double time, MapInfo map, List<AnimalInfo> animals) {
+			this.time.setText("Time: " + String.format("%.3f", time));
+			this.animals.setText("Total Animals: " + animals.size());
+			int cols = map.getCols();
+			int rows = map.getRows();
+			int width = map.getWidth();
+			int height = map.getHeight();
+			dimensions.setText(String.valueOf(width) + "x" + String.valueOf(height) + " " + String.valueOf(cols) + "x"
+					+ String.valueOf(rows));
 	}
+}
