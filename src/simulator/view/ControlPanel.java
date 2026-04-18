@@ -45,7 +45,7 @@ class ControlPanel extends JPanel {
 //	    this.openButton.setToolTipText("Open"); Not really used
 	    this.openButton.setIcon(new ImageIcon("resources/icons/open.png"));
 	    this.openButton.addActionListener((e) -> openFiles());
-	    this.openButton.setToolTipText("Opens a file from which to load the data");
+	    this.openButton.setToolTipText("Loas an input file into the simulator");
 	    this.toolaBar.addSeparator();
 	    this.toolaBar.add(openButton);
 	    
@@ -57,7 +57,7 @@ class ControlPanel extends JPanel {
 	    this.viewerButton.setIcon(new ImageIcon("resources/icons/viewer.png"));
 	    // 	create an instance of MapWindow
 	    this.viewerButton.addActionListener((e) -> new MapWindow(ViewUtils.getWindow(this), ctrl));
-	    this.viewerButton.setToolTipText("Opens a map representation");
+	    this.viewerButton.setToolTipText("Map Viewer");
 	    this.toolaBar.add(viewerButton);
 	    
 	    // Button to open the region viewer
@@ -65,7 +65,7 @@ class ControlPanel extends JPanel {
 //	    this.regionsButton.setToolTipText("Regions"); Not really used
 	    this.regionsButton.setIcon(new ImageIcon("resources/icons/regions.png"));
 	    this.regionsButton.addActionListener((e) -> this.changeRegionsDialog.open(ViewUtils.getWindow(this)));
-	    this.regionsButton.setToolTipText("Opens the region viewer");
+	    this.regionsButton.setToolTipText("Change Regions");
 	    this.toolaBar.add(regionsButton);
 	    this.toolaBar.addSeparator();
 	    this.toolaBar.add(Box.createGlue());
@@ -75,7 +75,7 @@ class ControlPanel extends JPanel {
 //	    this.runButton.setToolTipText("Run"); Not really used
 	    this.runButton.setIcon(new ImageIcon("resources/icons/run.png"));
 	    this.runButton.addActionListener((e) -> run());
-	    this.runButton.setToolTipText("Runs the simulation");
+	    this.runButton.setToolTipText("Run the simulator");
 	    this.toolaBar.add(runButton);
 	    
 	    // Button to stop the simulation
@@ -83,19 +83,20 @@ class ControlPanel extends JPanel {
 //	    this.stopButton.setToolTipText("Stop"); Not really used
 	    this.stopButton.setIcon(new ImageIcon("resources/icons/stop.png"));
 	    this.stopButton.addActionListener((e) -> this.stopped = true);
-	    this.stopButton.setToolTipText("Stops the simulation if it is already running");
+	    this.stopButton.setToolTipText("Stop the simulator");
 	    this.toolaBar.add(stopButton);
 	    
 	    // Spinner and Field
 	    JLabel stepText = new JLabel("Steps:");
-	    stepText.setToolTipText("Sets number of steps to the simulation");
 	    this.toolaBar.add(stepText);
 	    this.steps = new JSpinner();
 	    this.steps.setPreferredSize(new Dimension(50, 10));
 	    this.toolaBar.add(steps);
+	    // TODO make the tool tip update when necessary
+	    steps.setToolTipText("Simulations steps to run: 1-" + steps.getValue());
 	    
 	    JLabel deltaText = new JLabel("Delta-time:");
-	    deltaText.setToolTipText("Time in seconds for each step");
+	    deltaText.setToolTipText("Real time (seconds) corresponding to a step");
 	    this.toolaBar.add(deltaText);
 	    this.deltaTime = new JTextField();
 	    this.toolaBar.add(deltaTime);
@@ -108,7 +109,7 @@ class ControlPanel extends JPanel {
 	    this.quitButton.setToolTipText("Quit");
 	    this.quitButton.setIcon(new ImageIcon("resources/icons/exit.png"));
 	    this.quitButton.addActionListener((e) -> ViewUtils.quit(this));
-	    this.quitButton.setToolTipText("Closes the control panel");
+	    this.quitButton.setToolTipText("Exit");
 	    this.toolaBar.add(quitButton);
 
 	    fc = new JFileChooser();
@@ -135,7 +136,7 @@ class ControlPanel extends JPanel {
 			  enableButtons(stopped);
 			  
 		      //get n and dt
-			  double dt = Double.parseDouble(deltaTime.getText());
+			  double dt = Double.parseDouble(deltaTime.getText().replace(",", "."));
 			  int n = (int)steps.getValue();
 			  
 		      runSim(n, dt);
