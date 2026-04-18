@@ -63,6 +63,11 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 		
 		return animal_data[rowIndex][columnIndex];
 	  }
+	  
+	  @Override
+	  public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		  this.animal_data[rowIndex][columnIndex] = aValue;
+	  };
 
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
@@ -71,7 +76,114 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 		  
 		  for(int i = 0; i < animal_data.length; i++) 
 			  for(int j = 1; j < columns.length; j++) 
+				  this.animal_data[i][j] = 0;
+		  
+		  for (int k = 0; k < animals.size(); k++) {
+			  
+			  switch(animals.get(k).getGeneticCode()) {
+			  case "wolf":
+				  row = 0;
+				  break;
+				  
+			  case "sheep":
+				  row = 1;
+				  break;
+				  
+			  }
+			  
+			  switch(animals.get(k).getState()) {
+			  case NORMAL:
+				  col = 1;
+				  break;
+				  
+			  case MATE:
+				  col = 2;
+				  break;
+				  
+			  case HUNGER:
+				  col = 3;
+				  break;
+				  
+			  case DANGER:
+				  col = 4;
+				  break;
+				  
+			  case DEAD:
+				  col = 5;
+				  break;
+			  }
+			  
+			  int aux = (int)animal_data[row][col] + 1 ;
+			  this.animal_data[row][col] = aux;
+			  fireTableCellUpdated(row, col);
+		  }
+	  }
+
+	  @Override
+	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
+		// TODO Auto-generated method stub
+		  for(int i = 0; i < animal_data.length; i++) 
+			  for(int j = 1; j < columns.length; j++) 
 				  animal_data[i][j] = 0;
+	  }
+
+	  @Override
+	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
+		// TODO Auto-generated method stub
+		  int row = 0, col = 0; 
+		  switch(a.getGeneticCode()) {
+		  case "wolf":
+			  row = 0;
+			  break;
+			  
+		  case "sheep":
+			  row = 1;
+			  break;
+			  
+		  }
+		  
+		  switch(a.getState()) {
+		  case NORMAL:
+			  col = 1;
+			  break;
+			  
+		  case MATE:
+			  col = 2;
+			  break;
+			  
+		  case HUNGER:
+			  col = 3;
+			  break;
+			  
+		  case DANGER:
+			  col = 4;
+			  break;
+			  
+		  case DEAD:
+			  col = 5;
+			  break;
+		  }
+		  
+		  int aux = (int)animal_data[row][col] + 1 ;
+		  animal_data[row][col] = aux;
+		  fireTableCellUpdated(row, col);
+	  }
+
+	  @Override
+	  public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
+		// TODO Auto-generated method stub
+		
+	  }
+
+	  @Override
+	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
+		// TODO Auto-generated method stub
+		  
+		  int row = 0, col = 0;
+		  
+		  for(int i = 0; i < animal_data.length; i++) 
+			  for(int j = 1; j < columns.length; j++) 
+				  this.animal_data[i][j] = 0;
 		  
 		  for (int k = 0; k < animals.size(); k++) {
 			  
@@ -110,106 +222,7 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 			  
 			  int aux = (int)animal_data[row][col] + 1 ;
 			  animal_data[row][col] = aux;
-		  }
-	  }
-
-	  @Override
-	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
-		  for(int i = 0; i < animal_data.length; i++) 
-			  for(int j = 1; j < columns.length; j++) 
-				  animal_data[i][j] = 0;
-	  }
-
-	  @Override
-	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		// TODO Auto-generated method stub
-		  int row = 0, col = 0; 
-		  switch(a.getGeneticCode()) {
-		  case "Wolf":
-			  row = 0;
-			  break;
-			  
-		  case "Sheep":
-			  row = 1;
-			  break;
-			  
-		  }
-		  
-		  switch(a.getState()) {
-		  case NORMAL:
-			  col = 1;
-			  break;
-			  
-		  case MATE:
-			  col = 2;
-			  break;
-			  
-		  case HUNGER:
-			  col = 3;
-			  break;
-			  
-		  case DANGER:
-			  col = 4;
-			  break;
-			  
-		  case DEAD:
-			  col = 5;
-			  break;
-		  }
-		  
-		  int aux = (int)animal_data[row][col] + 1 ;
-		  animal_data[row][col] = aux;
-	  }
-
-	  @Override
-	  public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
-		// TODO Auto-generated method stub
-		
-	  }
-
-	  @Override
-	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
-		// TODO Auto-generated method stub
-		  int row = 0, col = 0;
-		  
-		  for (int k = 0; k < animals.size(); k++) {
-			  
-			  switch(animals.get(k).getGeneticCode()) {
-			  case "Wolf":
-				  row = 0;
-				  break;
-				  
-			  case "Sheep":
-				  row = 1;
-				  break;
-				  
-			  }
-			  
-			  switch(animals.get(k).getState()) {
-			  case NORMAL:
-				  col = 1;
-				  break;
-				  
-			  case MATE:
-				  col = 2;
-				  break;
-				  
-			  case HUNGER:
-				  col = 3;
-				  break;
-				  
-			  case DANGER:
-				  col = 4;
-				  break;
-				  
-			  case DEAD:
-				  col = 5;
-				  break;
-			  }
-			  
-			  int aux = (int)animal_data[row][col] + 1 ;
-			  animal_data[row][col] = aux;
+			  fireTableCellUpdated(row, col);
 		  }
 	  }
 	}

@@ -72,22 +72,32 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
 		// TODO Auto-generated method stub
-		  int aux = 0, tablePos = 0;
+		  int aux = 0, tablePos = 0, pos = 0;
+		  
+		  for (int i = 0; i < numRows; i++) {
+			  for (int j = 0; j < numCols; j++) {
+				  pos = i * numCols + j;
+				  regionData[pos][3] = 0;
+				  regionData[pos][4] = 0;
+			  }
+		  }
 		  
 		  for (int i = 0; i < animals.size(); i++) {
 			  AnimalInfo currentAnimal = animals.get(i);
-			  System.out.println((int)currentAnimal.getPosition().getY());
-			  System.out.println(map.getRegionHeight());
 			  tablePos = ((int)currentAnimal.getPosition().getY()/map.getRegionHeight())*numRows + (int)currentAnimal.getPosition().getX()/map.getRegionWidth();
+			  if (tablePos < 0) tablePos = 0;
+			  else if (tablePos >= tableRows) tablePos = tableRows - 1;
 			  switch(currentAnimal.getDiet()) {			  
 			  case HERBIVORE:
 				  aux = (int)regionData[tablePos][4] + 1;
 				  regionData[tablePos][4] = aux;
+				  fireTableCellUpdated(tablePos, 4);
 				  break;
 				  
 			  case CARNIVORE:
 				  aux = (int)regionData[tablePos][3] + 1;
 				  regionData[tablePos][3] = aux;
+				  fireTableCellUpdated(tablePos, 3);
 				  break;
 			  }
 		  }
@@ -101,18 +111,29 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  @Override
 	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		  int tablePos = 0, aux = 0;
+		  int tablePos = 0, aux = 0, pos = 0;
 		  AnimalInfo currentAnimal = a;
-		  tablePos = ((int)currentAnimal.getPosition().getY())*numRows + (int)currentAnimal.getPosition().getX();
+		  tablePos = ((int)currentAnimal.getPosition().getY()/map.getRegionHeight())*numRows + (int)currentAnimal.getPosition().getX()/map.getRegionWidth();
+		  for (int i = 0; i < numRows; i++) {
+			  for (int j = 0; j < numCols; j++) {
+				  pos = i * numCols + j;
+				  regionData[pos][3] = 0;
+				  regionData[pos][4] = 0;
+			  }
+		  }
+		  if (tablePos < 0) tablePos = 0;
+		  else if (tablePos >= tableRows) tablePos = tableRows - 1;
 		  switch(currentAnimal.getDiet()) {			  
 		  case HERBIVORE:
 			  aux = (int)regionData[tablePos][4] + 1;
 			  regionData[tablePos][4] = aux;
+			  fireTableCellUpdated(tablePos, 4);
 			  break;
 			  
 		  case CARNIVORE:
 			  aux = (int)regionData[tablePos][3] + 1;
 			  regionData[tablePos][3] = aux;
+			  fireTableCellUpdated(tablePos, 3);
 			  break;
 		  }
 	  }

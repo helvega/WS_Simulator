@@ -14,12 +14,14 @@ public class Simulator implements JSONable, Observable<EcoSysObserver>{
 	private Factory<Region> regionsFactory;
 	private RegionManager rgMngr;	//THe region manager of the simulation
 	private List <Animal> participant; //All animals participating in the simulation
+	private List<AnimalInfo> ai;
 	private List<EcoSysObserver> observer;
 	private double time;
 	
 	public Simulator(int cols, int rows, int width, int height, Factory<Animal> animalsFactory, Factory<Region> regionsFactory) {
 		rgMngr = new RegionManager(cols, rows, width, height);
 		participant = new ArrayList<Animal>();
+		ai = new ArrayList<AnimalInfo>();
 		this.animalsFactory = animalsFactory;
 		this.regionsFactory = regionsFactory;
 		time = 0.0;
@@ -50,6 +52,7 @@ public class Simulator implements JSONable, Observable<EcoSysObserver>{
 	
 	private void addAnimal(Animal a) {
 		participant.add(a);
+		ai.add(a);
 		rgMngr.registerAnimal(a);
 		notifyOnAnimalAdded(a);
 	}
@@ -66,6 +69,7 @@ public class Simulator implements JSONable, Observable<EcoSysObserver>{
 		for(int i = 0; i < aux; i++) { //remove dead animals
 			if(participant.get(i).getState() == State.DEAD) {
 				participant.remove(i);
+				ai.remove(i);
 				aux--;
 			}
 		}
@@ -105,6 +109,7 @@ public class Simulator implements JSONable, Observable<EcoSysObserver>{
 	
 	public void reset(int cols, int rows, int width, int height) {
 		participant = new ArrayList<Animal>(); //empty animal list
+		ai = new ArrayList<AnimalInfo>();
 		rgMngr = new RegionManager(cols, rows, width, height); //replace with a new region manager
 		time = 0.0; // set time to 0
 		notifyOnReset();
@@ -130,19 +135,16 @@ public class Simulator implements JSONable, Observable<EcoSysObserver>{
 	}
 	
 	private void notifyOnRegister(EcoSysObserver o) {
-		List<AnimalInfo> ai = new ArrayList<>(participant);
 		o.onRegister(time, (MapInfo) rgMngr, ai);
 	}
 	
 	private void notifyOnReset() {
-		List<AnimalInfo> ai = new ArrayList<>(participant);
 		for(EcoSysObserver eso : observer) {
 			eso.onReset(time, (MapInfo) rgMngr, ai);
 		}
 	}
 	
 	private void notifyOnAnimalAdded(AnimalInfo a) {
-		List<AnimalInfo> ai = new ArrayList<>();
 		for(EcoSysObserver eso : observer) {
 			eso.onAnimalAdded(time, (MapInfo) rgMngr, ai, a);
 		}
@@ -154,8 +156,7 @@ public class Simulator implements JSONable, Observable<EcoSysObserver>{
 		}
 	}
 	
-	private void notifyOnAdvance(double dt) {
-		List<AnimalInfo> ai = new ArrayList<>();
+	private void notifyOnAdvance(double dt) {				
 		for(EcoSysObserver eso : observer) {
 			eso.onAdvance(time, (MapInfo) rgMngr, ai, dt);
 		}
