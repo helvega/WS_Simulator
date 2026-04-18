@@ -178,7 +178,7 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		buttonsPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		buttonsPanel.add(okButton);
 
-		setPreferredSize(new Dimension(700, 400)); // puedes usar otro tamaño
+		setPreferredSize(new Dimension(700, 400));
 		pack();
 		setResizable(true);
 		setVisible(false);
@@ -187,16 +187,22 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 	private void updateRegionInfoTable(int index) {
 		JSONObject info = _regionsInfo.get(index);
 		JSONObject data = info.getJSONObject("data");
-		_dataTableModel.setRowCount(0); // Vacio la tabla
+		_dataTableModel.setRowCount(0);
 		for (String str : data.keySet()) {
-			Object rowData[] = { str, "", data.getString(str) };
-			_dataTableModel.addRow(rowData);
+			Object aux = data.get(str);
+			if(aux instanceof JSONObject) {
+				JSONObject obj = (JSONObject) aux;
+				for(String sc: obj.keySet()) {
+					Object rowData[] = { sc, "", obj.get(sc)};
+					_dataTableModel.addRow(rowData);
+				}
+			}
 		}
 	}
 
 	public void open(Frame parent) {
 		setLocation(//
-				parent.getLocation().x + parent.getWidth() / 2 - getWidth() / 2, //
+				parent.getLocation().x + parent.getWidth() / 2 - getWidth() / 2,
 				parent.getLocation().y + parent.getHeight() / 2 - getHeight() / 2);
 		pack();
 		setVisible(true);
@@ -285,10 +291,6 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		updateValues(_fromColModel, map.getCols());
 		updateValues(_toColModel, map.getCols());
 
-	}
-
-	private int getStatus() {
-		return _status;
 	}
 
 	@Override
