@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import simulator.control.Controller;
 import simulator.model.AnimalInfo;
+import simulator.model.Diet;
 import simulator.model.EcoSysObserver;
 import simulator.model.MapInfo;
 import simulator.model.MapInfo.RegionData;
@@ -19,9 +20,30 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 	  Controller ctrl_;
 	  String[] columns = {"Row", "Col", "Desc.", "CARNIVORE", "HERBIVORE"};
 	  Object [][] regionData;
-	  static int numRows = 0, numCols = 0, tableRows = 0;
+	  static int numMapRows = 0, numMapCols = 0, tableRows = 0, tableCols = 3 + Diet.values().length + 1;
 
 	  public RegionsTableModel(Controller ctrl) {
+		  int pos = 0;
+		  
+		  this.ctrl_ = ctrl;
+		  
+		  for (int i = 3; i < tableCols - 1; i++) {
+			  columns[i] = Diet.values()[i - 3].toString();
+		  }
+		  
+		  for (int i = 0; i < numMapRows; i++) {
+			  for (int j = 0; j < numMapCols; j++) {
+				  pos = i * numMapCols + j;
+				  regionData[pos][0] = i;
+				  regionData[pos][1] = j;
+				  regionData[pos][2] = "default";
+				  for (int k = 3; k < tableCols; k++) {
+					  regionData[pos][k] = 0;
+				  }
+			  }
+		  }
+		  
+		  
 	    // Register the 'this' object as an observer.
 		  ctrl.addObserver(this);
 		  
@@ -50,14 +72,14 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
 		  int pos = 0;
-		  numRows = map.getRows();
-		  numCols = map.getCols();
-		  tableRows = numRows * numCols;
+		  numMapRows = map.getRows();
+		  numMapCols = map.getCols();
+		  tableRows = numMapRows * numMapCols;
 		  regionData = new Object[tableRows][5];
 		  
-		  for (int i = 0; i < numRows; i++) {
-			  for (int j = 0; j < numCols; j++) {
-				  pos = i * numCols + j;
+		  for (int i = 0; i < numMapRows; i++) {
+			  for (int j = 0; j < numMapCols; j++) {
+				  pos = i * numMapCols + j;
 				  regionData[pos][0] = i;
 				  regionData[pos][1] = j;
 				  regionData[pos][3] = 0;
@@ -72,9 +94,9 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  @Override
 	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
-		  numRows = map.getRows();
-		  numCols = map.getCols();
-		  tableRows = numRows * numCols;
+		  numMapRows = map.getRows();
+		  numMapCols = map.getCols();
+		  tableRows = numMapRows * numMapCols;
 		  regionSet(map);
 		  animalSet(map, animals);
 		  fireTableDataChanged();
@@ -90,27 +112,22 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 		  row = Math.max(0, Math.min(row, map.getRows() - 1));
 	      col = Math.max(0, Math.min(col, map.getCols() - 1));
 	        
-		  tablePos = (row * numCols + col);
+		  tablePos = (row * numMapCols + col);
 		  
+		  int i = 3;
 		  
-		  switch(currentAnimal.getDiet()) {			  
-		  case HERBIVORE:
-			  aux = (int)regionData[tablePos][4] + 1;
-			  regionData[tablePos][4] = aux;
-			  fireTableCellUpdated(tablePos, 4);
-			  break;
-			  
-		  case CARNIVORE:
-			  aux = (int)regionData[tablePos][3] + 1;
-			  regionData[tablePos][3] = aux;
-			  fireTableCellUpdated(tablePos, 3);
-			  break;
+		  while(i < tableCols && columns[i] != a.getDiet().toString()) {
+				  i++;
 		  }
+		  aux = (int)regionData[tablePos][i] + 1;
+		  regionData[tablePos][i] = aux;
+		  fireTableCellUpdated(tablePos, i);
+
 	  }
 
 	  @Override
 	  public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
-		  int tablePos = row * numCols + col;
+		  int tablePos = row * numMapCols + col;
 		  regionData[tablePos][2] =  r.tag();
 	  }
 
@@ -130,9 +147,9 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 	  
 	  private void animalSet(MapInfo map, List<AnimalInfo> animals) {
 		  int aux = 0, tablePos = 0, pos = 0;
-		  for (int i = 0; i < numRows; i++) {
-			  for (int j = 0; j < numCols; j++) {
-				  pos = i * numCols + j;
+		  for (int i = 0; i < numMapRows; i++) {
+			  for (int j = 0; j < numMapCols; j++) {
+				  pos = i * numMapCols + j;
 				  regionData[pos][3] = 0;
 				  regionData[pos][4] = 0;
 			  }
@@ -146,19 +163,16 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 			  row = Math.max(0, Math.min(row, map.getRows() - 1));
 		      col = Math.max(0, Math.min(col, map.getCols() - 1));
 		        
-			  tablePos = (row * numCols + col);
+			  tablePos = (row * numMapCols + col);
 			  
-			  switch(currentAnimal.getDiet()) {			  
-			  case HERBIVORE:
-				  aux = (int)regionData[tablePos][4] + 1;
-				  regionData[tablePos][4] = aux;
-				  break;
-				  
-			  case CARNIVORE:
-				  aux = (int)regionData[tablePos][3] + 1;
-				  regionData[tablePos][3] = aux;
-				  break;
+			  int j = 3;
+			  
+			  while(j < tableCols && columns[j] != animals.get(i).getDiet().toString()) {
+					  j++;
 			  }
+			  aux = (int)regionData[tablePos][j] + 1;
+			  regionData[tablePos][j] = aux;
+			  fireTableCellUpdated(tablePos, j);
 		  }
 	  }
 	  
