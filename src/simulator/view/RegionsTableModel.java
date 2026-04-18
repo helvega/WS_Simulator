@@ -129,6 +129,7 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 	  public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
 		  int tablePos = row * numMapCols + col;
 		  regionData[tablePos][2] =  r.tag();
+		  fireTableCellUpdated(tablePos, 2);
 	  }
 
 	  @Override

@@ -107,7 +107,6 @@ public class RegionManager implements AnimalMapView, MapInfo{
 	public void setRegion(int row, int col, Region r) {
 		List<Animal> aux = region[row][col].getAnimals(); // get in a  variable the list of animals of the region that is about to be replaced
 		for(Animal a : aux) { // for all animals
-			region[row][col].addAnimal(a);
 			animalRegion.replace(a, region[row][col], r); // replace the old region with the new region
 		}
 		region[row][col] = r;

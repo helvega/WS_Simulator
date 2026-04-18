@@ -240,9 +240,9 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		spec.put("type", region_type);
 
 		int row_from = Integer.valueOf(_fromRowModel.getSelectedItem().toString());
-		int row_to = Integer.valueOf(_toRowModel.getSelectedItem().toString());
+		int row_to = Integer.valueOf(_toRowModel.getSelectedItem().toString()) + 1;
 		int col_from = Integer.valueOf(_fromColModel.getSelectedItem().toString());
-		int col_to = Integer.valueOf(_toColModel.getSelectedItem().toString());
+		int col_to = Integer.valueOf(_toColModel.getSelectedItem().toString()) + 1;
 		JSONArray rowRange = new JSONArray();
 		rowRange.put(row_from);
 		rowRange.put(row_to);
@@ -304,7 +304,7 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 
 	@Override
 	public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
-
+		
 	}
 
 	@Override
