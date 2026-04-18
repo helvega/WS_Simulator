@@ -3,7 +3,10 @@ package simulator.view;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -88,6 +91,7 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		_regionsInfo = Main.RnFactory.getInfo();
 		
 		_dataTableModel = new DefaultTableModel() {
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return column == 1; // Columna value.
@@ -116,6 +120,7 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		updateRegionInfoTable(0);
 		regionsComboBox.addActionListener((e) -> {
 			int index = regionsComboBox.getSelectedIndex();
+			System.out.println(index);
 			updateRegionInfoTable(index);
 
 		});
@@ -161,9 +166,9 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 				this._status = 1;
 				setVisible(false);
 
-			} catch (Exception exc) {
-				exc.printStackTrace();
-				ViewUtils.showErrorMsg("Ha ocurrido un error al parsear los datos introducidos");
+			} catch (Exception ec) {
+				ec.printStackTrace();
+				ViewUtils.showErrorMsg(ec.getMessage());
 			}
 
 		});
@@ -178,7 +183,7 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		buttonsPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		buttonsPanel.add(okButton);
 
-		setPreferredSize(new Dimension(700, 400)); // puedes usar otro tamaño
+		setPreferredSize(new Dimension(700, 400)); 
 		pack();
 		setResizable(true);
 		setVisible(false);
@@ -187,16 +192,23 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 	private void updateRegionInfoTable(int index) {
 		JSONObject info = _regionsInfo.get(index);
 		JSONObject data = info.getJSONObject("data");
-		_dataTableModel.setRowCount(0); // Vacio la tabla
+		_dataTableModel.setRowCount(0); 
+
 		for (String str : data.keySet()) {
-			Object rowData[] = { str, "", data.getString(str) };
-			_dataTableModel.addRow(rowData);
+			Object aux = data.get(str);
+			if(aux instanceof JSONObject) {
+				JSONObject obj = (JSONObject) aux;
+				for(String sc: obj.keySet()) {
+					Object rowData[] = { sc, "", obj.get(sc)};
+					_dataTableModel.addRow(rowData);
+				}
+			}
 		}
 	}
 
 	public void open(Frame parent) {
 		setLocation(//
-				parent.getLocation().x + parent.getWidth() / 2 - getWidth() / 2, //
+				parent.getLocation().x + parent.getWidth() / 2 - getWidth() / 2, 
 				parent.getLocation().y + parent.getHeight() / 2 - getHeight() / 2);
 		pack();
 		setVisible(true);
@@ -285,10 +297,6 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		updateValues(_fromColModel, map.getCols());
 		updateValues(_toColModel, map.getCols());
 
-	}
-
-	private int getStatus() {
-		return _status;
 	}
 
 	@Override
