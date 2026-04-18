@@ -5,22 +5,32 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import simulator.control.Controller;
+import simulator.model.Animal;
 import simulator.model.AnimalInfo;
 import simulator.model.EcoSysObserver;
 import simulator.model.MapInfo;
 import simulator.model.RegionInfo;
+import simulator.model.State;
 
 class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  // Declare necessary fields.
 	  Controller ctrl_;
-	  String[] columns = {"Species", "NORMAL", "MATE", "HUNGER", "DANGER", "DEAD"};
+	  String[] columns;
 	  Object[][] animal_data;
-	  static final int numRows = 2;
+	  static final int numRows = 2, numCols = State.values().length + 1;
 	  
 	  SpeciesTableModel(Controller ctrl) {
 	    // Initialize corresponding data structures.
 		  this.ctrl_ = ctrl;
+		  
+		  columns = new String[numCols];
+		  
+		  columns[0] = "Species";
+		  
+		  for (int i = 1; i < numCols; i++) {
+			  columns[i] = State.values()[i - 1].toString();
+		  }
 
 		  animal_data = new Object[numRows][columns.length]; 
 		  
