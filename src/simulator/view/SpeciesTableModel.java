@@ -18,7 +18,7 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  Controller ctrl_;
 	  String[] columns;
 	  Object[][] animal_data;
-	  static final int numRows = 2, numCols = State.values().length + 1;
+	  static final int numRows = 0, numCols = State.values().length + 1;
 	  
 	  public SpeciesTableModel(Controller ctrl) {
 	    // Initialize corresponding data structures.
@@ -34,15 +34,29 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 		  animal_data = new Object[numRows][columns.length]; 
 		  
-		  animal_data[0][0] = "Wolfs";
-		  animal_data[1][0] = "Sheeps";
-		  
-		  for(int i = 0; i < animal_data.length; i++) 
-			  for(int j = 1; j < columns.length; j++) 
-				  animal_data[i][j] = 0;
-		  
 	    // Register the 'this' object as an observer.
 		  ctrl.addObserver(this);
+	  }
+	  
+	  void addRow(String newSpecies){
+		  Object[][] newTable = new Object[animal_data.length + 1][numCols];
+		  
+		  int newRowMax = animal_data.length;
+		  
+		  for (int i = 0; i < newRowMax; i++) {
+			  newTable[i] = animal_data[i];
+		  }
+		  
+		  newTable[newRowMax][0] = newSpecies;
+		  
+		  for (int i = 1; i < numCols; i++) {
+			  newTable[animal_data.length][i] = 0;
+		  }
+		  
+		  
+		  animal_data = newTable;
+		  this.fireTableRowsInserted(newRowMax, newRowMax);
+		  
 	  }
 	  
 	  @Override
@@ -52,7 +66,7 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  @Override
 	  public int getRowCount() {
-		return numRows;
+		return animal_data.length;
 	  }
 
 	  @Override
@@ -73,7 +87,6 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
 		  animalSet(map, animals);
-		  fireTableDataChanged();
 	  }
 
 	  @Override
@@ -84,43 +97,17 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  @Override
 	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		  int row = 0, col = 0; 
-		  switch(a.getGeneticCode()) {
-		  case "wolf":
-			  row = 0;
-			  break;
-			  
-		  case "sheep":
-			  row = 1;
-			  break;
-			  
-		  }
+		  int row = 0, col = 1; 
 		  
-		  switch(a.getState()) {
-		  case NORMAL:
-			  col = 1;
-			  break;
-			  
-		  case MATE:
-			  col = 2;
-			  break;
-			  
-		  case HUNGER:
-			  col = 3;
-			  break;
-			  
-		  case DANGER:
-			  col = 4;
-			  break;
-			  
-		  case DEAD:
-			  col = 5;
-			  break;
-		  }
+		 while ( row < animal_data.length && animal_data[row][0] != a.getGeneticCode()) row++;
+		 
+		 if (row == animal_data.length) addRow(a.getGeneticCode());
+		  
+		 while ( col < columns.length && columns[col] != a.getState().toString()) col++;
 		  
 		  int aux = (int)animal_data[row][col] + 1 ;
 		  animal_data[row][col] = aux;
-		  fireTableDataChanged();
+		  fireTableCellUpdated(row, col);
 	  }
 	  
 
@@ -131,11 +118,10 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  @Override
 	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
 		  animalSet(map, animals);
-		  fireTableDataChanged();
 	  }
 	  
 	  private void animalSet(MapInfo map, List<AnimalInfo> animals) {
-		  int row = 0, col = 0;
+		  int row = 0, col = 1;
 		  
 		  for(int i = 0; i < animal_data.length; i++) 
 			  for(int j = 1; j < columns.length; j++) 
@@ -143,42 +129,18 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 		  
 		  for (int k = 0; k < animals.size(); k++) {
 			  
-			  switch(animals.get(k).getGeneticCode()) {
-			  case "wolf":
-				  row = 0;
-				  break;
-				  
-			  case "sheep":
-				  row = 1;
-				  break;
-				  
-			  }
+			  while (row < animal_data.length && animal_data[row][0] != animals.get(k).getGeneticCode()) row++;
+				 
+			  if (row == animal_data.length) addRow(animals.get(k).getGeneticCode());
 			  
-			  switch(animals.get(k).getState()) {
-			  case NORMAL:
-				  col = 1;
-				  break;
-				  
-			  case MATE:
-				  col = 2;
-				  break;
-				  
-			  case HUNGER:
-				  col = 3;
-				  break;
-				  
-			  case DANGER:
-				  col = 4;
-				  break;
-				  
-			  case DEAD:
-				  col = 5;
-				  break;
-			  }
+			  while ( col < columns.length && columns[col] != animals.get(k).getState().toString()) col++;
 			  
 			  int aux = (int)animal_data[row][col] + 1 ;
 			  animal_data[row][col] = aux;
 			  fireTableCellUpdated(row, col);
+			  
+			  row = 0;
+			  col = 1;
 		  }
 	  }
 	}

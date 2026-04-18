@@ -18,7 +18,7 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  // TODO Declare necessary fields.
 	  Controller ctrl_;
-	  String[] columns = {"Row", "Col", "Desc.", "CARNIVORE", "HERBIVORE"};
+	  String[] columns;
 	  Object [][] regionData;
 	  static int numMapRows = 0, numMapCols = 0, tableRows = 0, tableCols = 3 + Diet.values().length + 1;
 
@@ -26,6 +26,13 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 		  int pos = 0;
 		  
 		  this.ctrl_ = ctrl;
+		  
+		  columns = new String[tableCols];
+		  
+		  numMapRows = ctrl.getNumRows();
+		  numMapCols = ctrl.getNumCols();
+		  tableRows = numMapRows * numMapCols;
+		  regionData = new Object[tableRows][tableCols];
 		  
 		  for (int i = 3; i < tableCols - 1; i++) {
 			  columns[i] = Diet.values()[i - 3].toString();
@@ -75,7 +82,7 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 		  numMapRows = map.getRows();
 		  numMapCols = map.getCols();
 		  tableRows = numMapRows * numMapCols;
-		  regionData = new Object[tableRows][5];
+		  regionData = new Object[tableRows][tableCols];
 		  
 		  for (int i = 0; i < numMapRows; i++) {
 			  for (int j = 0; j < numMapCols; j++) {

@@ -51,7 +51,7 @@ class ControlPanel extends JPanel {
 //	    this.openButton.setToolTipText("Open"); Not really used
 	    this.openButton.setIcon(new ImageIcon("resources/icons/open.png"));
 	    this.openButton.addActionListener((e) -> openFiles());
-	    this.openButton.setToolTipText("Loas an input file into the simulator");
+	    this.openButton.setToolTipText("Load an input file into the simulator");
 	    this.toolaBar.addSeparator();
 	    this.toolaBar.add(openButton);
 	    
@@ -95,7 +95,7 @@ class ControlPanel extends JPanel {
 	    // Spinner and Field
 	    JLabel stepText = new JLabel("Steps:");
 	    this.toolaBar.add(stepText);
-	    this.steps = new JSpinner();
+	    this.steps = new JSpinner(new SpinnerNumberModel(0, 0, 100000000, 100));
 	    this.steps.setPreferredSize(new Dimension(50, 10));
 	    this.toolaBar.add(steps);
 	    // TODO make the tool tip update when necessary

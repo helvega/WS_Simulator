@@ -34,6 +34,7 @@ public class DynamicSupplyRegionBuilder extends Builder<Region>{
 		JSONObject jo = new JSONObject();
 		jo.put("factor", Messages.DYNAMIC_FACTOR);
 		jo.put("food", Messages.DYNAMIC_FOOD);
+		
 		o.put("data", jo);
 	}
 }
