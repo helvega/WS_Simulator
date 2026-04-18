@@ -20,7 +20,7 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  Object[][] animal_data;
 	  static final int numRows = 2, numCols = State.values().length + 1;
 	  
-	  SpeciesTableModel(Controller ctrl) {
+	  public SpeciesTableModel(Controller ctrl) {
 	    // Initialize corresponding data structures.
 		  this.ctrl_ = ctrl;
 		  
@@ -72,56 +72,14 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  @Override
 	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
-		  int row = 0, col = 0;
-		  
-		  for(int i = 0; i < animal_data.length; i++) 
-			  for(int j = 1; j < columns.length; j++) 
-				  this.animal_data[i][j] = 0;
-		  
-		  for (int k = 0; k < animals.size(); k++) {
-			  
-			  switch(animals.get(k).getGeneticCode()) {
-			  case "wolf":
-				  row = 0;
-				  break;
-				  
-			  case "sheep":
-				  row = 1;
-				  break;
-				  
-			  }
-			  
-			  switch(animals.get(k).getState()) {
-			  case NORMAL:
-				  col = 1;
-				  break;
-				  
-			  case MATE:
-				  col = 2;
-				  break;
-				  
-			  case HUNGER:
-				  col = 3;
-				  break;
-				  
-			  case DANGER:
-				  col = 4;
-				  break;
-				  
-			  case DEAD:
-				  col = 5;
-				  break;
-			  }
-			  
-			  int aux = (int)animal_data[row][col] + 1 ;
-			  this.animal_data[row][col] = aux;
-			  fireTableCellUpdated(row, col);
-		  }
+		  animalSet(map, animals);
+		  fireTableDataChanged();
 	  }
 
 	  @Override
 	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
-		
+		  animalSet(map, animals);
+		  fireTableDataChanged();
 	  }
 
 	  @Override
@@ -162,8 +120,9 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 		  
 		  int aux = (int)animal_data[row][col] + 1 ;
 		  animal_data[row][col] = aux;
-		  fireTableCellUpdated(row, col);
+		  fireTableDataChanged();
 	  }
+	  
 
 	  @Override
 	  public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
@@ -171,6 +130,11 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  @Override
 	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
+		  animalSet(map, animals);
+		  fireTableDataChanged();
+	  }
+	  
+	  private void animalSet(MapInfo map, List<AnimalInfo> animals) {
 		  int row = 0, col = 0;
 		  
 		  for(int i = 0; i < animal_data.length; i++) 

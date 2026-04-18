@@ -179,12 +179,12 @@ class ControlPanel extends JPanel {
 				File file = fc.getSelectedFile();
 				InputStream is = new FileInputStream(file);
 				JSONObject jo = new JSONObject(new JSONTokener(is));
-				this.ctrl.loadData(jo);
 				int cols = jo.getInt("cols");
 				int rows = jo.getInt("rows");
 				int width = jo.getInt("width");
 				int height = jo.getInt("height");
 				this.ctrl.reset(cols, rows, width, height);
+				this.ctrl.loadData(jo);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
