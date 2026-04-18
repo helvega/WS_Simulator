@@ -3,8 +3,11 @@ package simulator.model;
 import simulator.misc.Messages;
 
 public class DefaultRegion extends Region {
+	private String tag;
 	
-	public DefaultRegion(){} //Empty Constructor
+	public DefaultRegion(String tag){
+		this.tag = tag;
+	} //Empty Constructor
 	
 	public void update(double dt) {
 		//Does nothing
@@ -21,5 +24,9 @@ public class DefaultRegion extends Region {
 	public String toString() {
 		
 		return Messages.DEFAULT_REGION;
+	}
+	
+	public String tag() {
+		return tag;
 	}
 }

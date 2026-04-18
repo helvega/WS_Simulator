@@ -43,7 +43,7 @@ public class Simulator implements JSONable, Observable<EcoSysObserver>{
 	
 	private void setRegion(int row, int col, Region r) {
 		rgMngr.setRegion(row, col, r);
-		notifyOnRegionSet(r);
+		notifyOnRegionSet(row, col, r);
 	}
 	
 	public void setRegion(int row, int col, JSONObject rJson) {
@@ -150,9 +150,9 @@ public class Simulator implements JSONable, Observable<EcoSysObserver>{
 		}
 	}
 	
-	private void notifyOnRegionSet(Region r) {
+	private void notifyOnRegionSet(int row, int col, Region r) {
 		for(EcoSysObserver eso : observer) {
-			eso.onRegionSet(rgMngr.getRows(), rgMngr.getCols(), (MapInfo) rgMngr, r);
+			eso.onRegionSet(row, col, (MapInfo) rgMngr, r);
 		}
 	}
 	

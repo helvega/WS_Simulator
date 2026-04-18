@@ -7,10 +7,12 @@ public class DynamicSupplyRegion extends Region {
 
 	private double foodAmount; //Amount of food in the region
 	private double growthFactor; //Growth factor to increase or decrease amount of food
+	private String tag;
 	
-	public DynamicSupplyRegion(double initFood, double growthFactor) {
+	public DynamicSupplyRegion(double initFood, double growthFactor, String tag) {
 		this.foodAmount = initFood; // initial amount of food passed as parameter
 		this.growthFactor = growthFactor; // growth factor 
+		this.tag = tag;
 	}
 	
 	public void update(double dt) { 
@@ -33,5 +35,8 @@ public class DynamicSupplyRegion extends Region {
 		
 		return Messages.DYNAMIC_SUPPLY_REGION;
 	}
-
+	
+	public String tag() {
+		return tag;
+	}
 }

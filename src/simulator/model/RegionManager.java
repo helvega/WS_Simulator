@@ -33,7 +33,7 @@ public class RegionManager implements AnimalMapView, MapInfo{
 		region = new Region[rows][cols];
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++)
-				region[i][j] = new DefaultRegion();
+				region[i][j] = new DefaultRegion("default");
 		}
 		animalRegion = new HashMap<>(); //initialize map object	
 	}
@@ -61,7 +61,10 @@ public class RegionManager implements AnimalMapView, MapInfo{
 	public int getRegionHeight() {
 		return cellHeight;
 	}
-
+	
+	public Region[][] getRegions(){
+		return region;
+	}
 	public double getFood(AnimalInfo a, double dt) {
 		int x = (int) Math.floor(a.getPosition().getX() / cellWidth); //in order to know which cell corresponds just divide 
 		//by the size of the cell to know the cell number

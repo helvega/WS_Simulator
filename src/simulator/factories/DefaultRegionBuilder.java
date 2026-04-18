@@ -22,7 +22,7 @@ public class DefaultRegionBuilder extends Builder<Region>{
 	
 	protected Region createInstance(JSONObject data) {
 		
-		return new DefaultRegion(); // this is a simple class that needs no special treatment to be created
+		return new DefaultRegion(super.getTypeTag()); // this is a simple class that needs no special treatment to be created
 	}
 
 	void fillInData(JSONObject o) {

@@ -86,6 +86,7 @@ class MapWindow extends JFrame implements EcoSysObserver {
 	             this.parent.getLocation().y + parent.getHeight()/2 - getHeight()/2);
 	      setResizable(false);
 	      setVisible(true);
+	      this.setLocationRelativeTo(null);
 	  }
 
 	  @Override

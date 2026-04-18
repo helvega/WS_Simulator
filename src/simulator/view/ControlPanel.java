@@ -3,8 +3,14 @@ package simulator.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import javax.swing.*;
+
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import simulator.control.Controller;
 
@@ -167,11 +173,20 @@ class ControlPanel extends JPanel {
 	  private void openFiles() {
 		  int returnVal = this.fc.showOpenDialog(ViewUtils.getWindow(this));
 		  if (returnVal == JFileChooser.APPROVE_OPTION) {
-			  File file = fc.getSelectedFile();
-			  System.out.println("Loading: " + file.getName());
 			  
-			  // TODO convert to JSon
-			  this.ctrl.reset(returnVal, returnVal, returnVal, returnVal);
+			try {
+				File file = fc.getSelectedFile();
+				InputStream is = new FileInputStream(file);
+				JSONObject jo = new JSONObject(new JSONTokener(is));
+				this.ctrl.loadData(jo);
+				int cols = jo.getInt("cols");
+				int rows = jo.getInt("rows");
+				int width = jo.getInt("width");
+				int height = jo.getInt("height");
+				this.ctrl.reset(cols, rows, width, height);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		  } else {
 			  System.out.println("Load cancelled by user.");
 		  }
