@@ -161,9 +161,9 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 				this._status = 1;
 				setVisible(false);
 
-			} catch (Exception exc) {
-				exc.printStackTrace();
-				ViewUtils.showErrorMsg("Ha ocurrido un error al parsear los datos introducidos");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				ViewUtils.showErrorMsg(ex.getMessage());
 			}
 
 		});

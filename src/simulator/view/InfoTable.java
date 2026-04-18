@@ -24,20 +24,24 @@ public class InfoTable extends JPanel {
 	  private void initGUI() {
 	    // TODO change the panel's layout to BorderLayout()
 		  
-		  JPanel newPanel = new JPanel(new BorderLayout());
+		this.setLayout(new BorderLayout());
 		  
 	    // TODO add a titled border to the JPanel, with the text this.title
-		  Border b = BorderFactory.createLineBorder(Color.black, 2);
-		  
-		  newPanel.setBorder(BorderFactory.createTitledBorder(b, this.title));
+		Border b = BorderFactory.createLineBorder(Color.black, 2);
 		  
 	    // TODO add a JTable (with a vertical scroll bar) that uses
 	    //      this.tableModel
 		  
-		  JTable newTable = new JTable(tableModel);
+		JTable newTable = new JTable(tableModel);
+		
+		newTable.setShowHorizontalLines(false);
+		newTable.setShowVerticalLines(false);
+		
+		
+		this.add(newTable);
 		  
-		  newPanel.add(new JScrollPane(newTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
-		  
-		  this.add(newPanel);
+		this.add(new JScrollPane(newTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
+		
+		this.setBorder(BorderFactory.createTitledBorder(b, this.title));
 	  }
 	}
