@@ -256,13 +256,7 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		singleRegion.put("col", colRange);
 		singleRegion.put("spec", spec);
 
-		JSONArray regions = new JSONArray();
-		regions.put(singleRegion);
-
-		JSONObject rjson = new JSONObject();
-		rjson.put("regions", regions);
-
-		return rjson;
+		return singleRegion;
 	}
 
 	private JComboBox<String> createComboBox(DefaultComboBoxModel<String> model, int x, int y) {
