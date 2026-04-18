@@ -7,7 +7,9 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONObject;
@@ -50,9 +52,25 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 	    // TODO create several panels to organize the visual components in the
 	    //      dialog, and add them to mainpanel. E.g., one for the help text,
 	    //      one for the table, one for the comboboxes, and one for the buttons.
+	    
+	    JPanel textPanel = new JPanel();
+	    mainPanel.add(textPanel);
+	    
+	    JPanel tablePanel = new JPanel();
+	    mainPanel.add(tablePanel);
+	    
+	    JPanel boxesPanel = new JPanel();
+	    mainPanel.add(boxesPanel);
+	    
+	    JPanel buttonsPanel = new JPanel();
+	    mainPanel.add(buttonsPanel);
 
 	    // TODO create the help text that appears at the top of the dialog and
 	    //      add it to the corresponding dialog panel (See the Figures section).
+	    
+	    JLabel infoText = new JLabel("Select a region type, the rows/cols interval, and provide the values for the aprameters in the Value column (default values are used for parameters with no value");
+	    
+	    textPanel.add(infoText);
 
 	    // this.regionsInfo will be used to set the information in the table.
 	    this.regionsInfo = Main.RnFactory.getInfo();
