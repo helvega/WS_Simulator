@@ -1,5 +1,5 @@
 package simulator.model;
 
 public enum State {
-	NORMAL, MATE, HUNGER, DANGER, DEAD, SLEEP;
+	NORMAL, MATE, HUNGER, DANGER, DEAD;
 }
