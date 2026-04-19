@@ -20,7 +20,8 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 	  Controller ctrl_;
 	  String[] columns;
 	  Object [][] regionData;
-	  static int numMapRows = 0, numMapCols = 0, tableRows = 0, tableCols = 3 + Diet.values().length + 1;
+	  private static final String [] threeColumnNames = {"Row", "Col", "Desc."};
+	  static int numMapRows = 0, numMapCols = 0, tableRows = 0, tableCols = 3 + Diet.values().length;
 
 	  public RegionsTableModel(Controller ctrl) {
 		  int pos = 0;
@@ -28,32 +29,14 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 		  this.ctrl_ = ctrl;
 		  
 		  columns = new String[tableCols];
+		  for(int i = 0; i < threeColumnNames.length; i++) 
+			  columns[i] = threeColumnNames[i];
 		  
-		  numMapRows = ctrl.getNumRows();
-		  numMapCols = ctrl.getNumCols();
-		  tableRows = numMapRows * numMapCols;
-		  regionData = new Object[tableRows][tableCols];
+		  for (int i = 0; i < Diet.values().length; i++) 
+			  columns[3 + i] = Diet.values()[i].toString();
 		  
-		  for (int i = 3; i < tableCols - 1; i++) {
-			  columns[i] = Diet.values()[i - 3].toString();
-		  }
-		  
-		  for (int i = 0; i < numMapRows; i++) {
-			  for (int j = 0; j < numMapCols; j++) {
-				  pos = i * numMapCols + j;
-				  regionData[pos][0] = i;
-				  regionData[pos][1] = j;
-				  regionData[pos][2] = "default";
-				  for (int k = 3; k < tableCols; k++) {
-					  regionData[pos][k] = 0;
-				  }
-			  }
-		  }
-		  
-		  
-	    // Register the 'this' object as an observer.
+		  fireTableDataChanged();
 		  ctrl.addObserver(this);
-		  
 	  }
 	  
 	  @Override
@@ -89,13 +72,12 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 				  pos = i * numMapCols + j;
 				  regionData[pos][0] = i;
 				  regionData[pos][1] = j;
-				  regionData[pos][3] = 0;
-				  regionData[pos][4] = 0;
+				  regionData[pos][2] = "default";
 			  }
 		  }
 		  
-		 regionSet(map);
 		 animalSet(map, animals);
+		 regionSet(map);
 		 fireTableDataChanged();
 	  }
 
@@ -154,12 +136,11 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 	  }
 	  
 	  private void animalSet(MapInfo map, List<AnimalInfo> animals) {
-		  int aux = 0, tablePos = 0, pos = 0;
-		  for (int i = 0; i < numMapRows; i++) {
-			  for (int j = 0; j < numMapCols; j++) {
-				  pos = i * numMapCols + j;
-				  regionData[pos][3] = 0;
-				  regionData[pos][4] = 0;
+		  int aux = 0, tablePos = 0;
+		  
+		  for(int k = 3; k < tableCols; k++) {
+			  for (int i = 0; i < tableRows; i++) {
+				  regionData[i][k] = 0;
 			  }
 		  }
 		  
