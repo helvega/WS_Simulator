@@ -95,7 +95,7 @@ class ControlPanel extends JPanel {
 	    // Spinner and Field
 	    JLabel stepText = new JLabel("Steps:");
 	    this.toolaBar.add(stepText);
-	    this.steps = new JSpinner(new SpinnerNumberModel(8, 0, 100000000, 100));
+	    this.steps = new JSpinner(new SpinnerNumberModel(8000, 0, 100000000, 100));
 	    this.steps.setPreferredSize(new Dimension(50, 10));
 	    this.toolaBar.add(steps);
 	    // TODO make the tool tip update when necessary
