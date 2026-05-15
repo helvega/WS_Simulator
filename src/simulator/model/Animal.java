@@ -1,5 +1,7 @@
 package simulator.model;
 
+import java.util.Random;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -78,7 +80,7 @@ public abstract class Animal implements Entity, AnimalInfo {
 	public void init(AnimalMapView regMngr) { // the region manager will invoke this method when adding the animal to the simulation
 		this.regionMngr = regMngr;
 		if(this.pos == null)
-			this.pos = Vector2D.getRandomVector(-1,1).scale(60.0*(Utils.RAND.nextGaussian()+1));
+			initialisePos();
 		else {
 			fixPosition();
 		}
@@ -216,7 +218,17 @@ public abstract class Animal implements Entity, AnimalInfo {
 		while (x < 0) x = (x + w);  
 		while (y >= h) y = (y - h);  
 		while (y < 0) y = (y + h);
-	return new Vector2D(x, y);
+		return new Vector2D(x, y);
+	}
+	
+	public void initialisePos() {
+		Random rand = new Random();
+		int max_x = regionMngr.getWidth();
+		int max_y = regionMngr.getHeight();
+		int x = rand.nextInt(max_x);
+		int y = rand.nextInt(max_y);
+		
+		this.pos = new Vector2D(x, y);
+	}
 }
 
-}
