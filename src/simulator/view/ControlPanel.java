@@ -105,7 +105,7 @@ class ControlPanel extends JPanel {
 	    deltaText.setToolTipText("Real time (seconds) corresponding to a step");
 	    this.toolaBar.add(deltaText);
 	    this.deltaTime = new JTextField();
-	    this.deltaTime.setText("1,000");
+	    this.deltaTime.setText("0.008");
 	    this.toolaBar.add(deltaTime);
 	    
 	    
