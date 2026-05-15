@@ -57,7 +57,7 @@ class ControlPanel extends JPanel {
 	    
 	    
 	    // Button to open the map
-	    this.toolaBar.add(Box.createGlue());
+	    //this.toolaBar.add(Box.createGlue());
 	    this.viewerButton = new JButton();
 //	    this.viewerButton.setToolTipText("Viewer"); Not really used
 	    this.viewerButton.setIcon(new ImageIcon("resources/icons/viewer.png"));
@@ -74,7 +74,7 @@ class ControlPanel extends JPanel {
 	    this.regionsButton.setToolTipText("Change Regions");
 	    this.toolaBar.add(regionsButton);
 	    this.toolaBar.addSeparator();
-	    this.toolaBar.add(Box.createGlue());
+	    //this.toolaBar.add(Box.createGlue());
 	    
 	    // Button to start the simulation
 	    this.runButton = new JButton();
@@ -95,7 +95,7 @@ class ControlPanel extends JPanel {
 	    // Spinner and Field
 	    JLabel stepText = new JLabel("Steps:");
 	    this.toolaBar.add(stepText);
-	    this.steps = new JSpinner(new SpinnerNumberModel(0, 0, 100000000, 100));
+	    this.steps = new JSpinner(new SpinnerNumberModel(8, 0, 100000000, 100));
 	    this.steps.setPreferredSize(new Dimension(50, 10));
 	    this.toolaBar.add(steps);
 	    // TODO make the tool tip update when necessary
@@ -105,6 +105,7 @@ class ControlPanel extends JPanel {
 	    deltaText.setToolTipText("Real time (seconds) corresponding to a step");
 	    this.toolaBar.add(deltaText);
 	    this.deltaTime = new JTextField();
+	    this.deltaTime.setText("1,000");
 	    this.toolaBar.add(deltaTime);
 	    
 	    

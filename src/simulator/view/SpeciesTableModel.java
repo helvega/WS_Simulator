@@ -1,5 +1,6 @@
 package simulator.view;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -19,6 +20,8 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	  String[] columns;
 	  Object[][] animal_data;
 	  static final int numRows = 0, numCols = State.values().length + 1;
+	  HashMap<String, Integer> geneticCodes = new HashMap<String, Integer>();
+	  HashMap<State, Integer> states = new HashMap<State, Integer>();
 	  
 	  public SpeciesTableModel(Controller ctrl) {
 	    // Initialize corresponding data structures.
@@ -30,6 +33,7 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 		  
 		  for (int i = 1; i < numCols; i++) {
 			  columns[i] = State.values()[i - 1].toString();
+			  states.put(State.values()[i - 1], i);
 		  }
 
 		  animal_data = new Object[numRows][columns.length]; 
@@ -52,6 +56,8 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 		  for (int i = 1; i < numCols; i++) {
 			  newTable[animal_data.length][i] = 0;
 		  }
+		  
+		  geneticCodes.put(newSpecies, animal_data.length);
 		  
 		  
 		  animal_data = newTable;
@@ -97,17 +103,17 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	  @Override
 	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		  int row = 0, col = 1; 
+		 int row = 0, col = 1; 
 		  
-		 while ( row < animal_data.length && animal_data[row][0] != a.getGeneticCode()) row++;
+		 if(geneticCodes.get(a.getGeneticCode()) != null) row = geneticCodes.get(a.getGeneticCode());
 		 
-		 if (row == animal_data.length) addRow(a.getGeneticCode());
+		 else addRow(a.getGeneticCode());
 		  
-		 while ( col < columns.length && columns[col] != a.getState().toString()) col++;
+		 col = states.get(a.getState());
 		  
-		  int aux = (int)animal_data[row][col] + 1 ;
-		  animal_data[row][col] = aux;
-		  fireTableCellUpdated(row, col);
+		 int aux = (int)animal_data[row][col] + 1 ;
+		 animal_data[row][col] = aux;
+		 fireTableCellUpdated(row, col);
 	  }
 	  
 
@@ -129,11 +135,11 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 		  
 		  for (int k = 0; k < animals.size(); k++) {
 			  
-			  while (row < animal_data.length && animal_data[row][0] != animals.get(k).getGeneticCode()) row++;
+			  if (geneticCodes.get(animals.get(k).getGeneticCode()) != null) row = geneticCodes.get(animals.get(k).getGeneticCode());
 				 
-			  if (row == animal_data.length) addRow(animals.get(k).getGeneticCode());
+			  else addRow(animals.get(k).getGeneticCode());
 			  
-			  while ( col < columns.length && columns[col] != animals.get(k).getState().toString()) col++;
+			  col = states.get(animals.get(k).getState());
 			  
 			  int aux = (int)animal_data[row][col] + 1 ;
 			  animal_data[row][col] = aux;

@@ -166,8 +166,8 @@ public class Main {
 	private static void parseModeOption(CommandLine line) throws ParseException {
 		String ex = line.getOptionValue("m");
 		if(ex == null)
-			throw new ParseException("Select one mode");
-		if(ex.equals("batch"))
+			mode = ExecMode.GUI;
+		else if(ex.equals("batch"))
 			mode = ExecMode.BATCH;
 		else if(ex.equals("gui"))
 			mode = ExecMode.GUI;

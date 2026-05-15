@@ -12,7 +12,6 @@ import simulator.model.EcoSysObserver;
 import simulator.model.MapInfo;
 import simulator.model.MapInfo.RegionData;
 import simulator.model.RegionInfo;
-import simulator.misc.Vector2D;
 
 class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 
@@ -24,8 +23,6 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 	  static int numMapRows = 0, numMapCols = 0, tableRows = 0, tableCols = 3 + Diet.values().length;
 
 	  public RegionsTableModel(Controller ctrl) {
-		  int pos = 0;
-		  
 		  this.ctrl_ = ctrl;
 		  
 		  columns = new String[tableCols];
